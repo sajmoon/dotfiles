@@ -1,6 +1,5 @@
 git://github.com/tpope/vim-haml.git
 git://github.com/tpope/vim-rails.git
-git://github.com/taq/vim-rspec.git
 git://github.com/tpope/vim-surround.git
 git://github.com/kana/vim-textobj-user.git
 git://github.com/nelstrom/vim-textobj-rubyblock.git

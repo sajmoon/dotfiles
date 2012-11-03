@@ -1,4 +1,7 @@
+#!/usr/bin/env zsh
+
 mkdir -p ~/.vim/bundle
+
 cd ~/.vim/bundle
 
 for plugin in `cat ../plugins.txt`; do
