@@ -8,4 +8,5 @@ git://github.com/tomtom/tcomment_vim.git
 git://github.com/kien/ctrlp.vim.git
 git://github.com/tpope/vim-endwise.git
 git://github.com/tpope/vim-bundler.git
-git@github.com:skwp/vim-rspec.git
+git://github.com/skwp/vim-rspec.git
+git://github.com/scrooloose/nerdtree.git
