@@ -10,3 +10,6 @@ git://github.com/tpope/vim-endwise.git
 git://github.com/tpope/vim-bundler.git
 git://github.com/skwp/vim-rspec.git
 git://github.com/scrooloose/nerdtree.git
+git://github.com/Rip-Rip/clang_complete.git
+git://github.com/fishman/ctags.git
+git://github.com/jiangmiao/auto-pairs.git
