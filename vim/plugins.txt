@@ -13,3 +13,4 @@ git://github.com/scrooloose/nerdtree.git
 git://github.com/Rip-Rip/clang_complete.git
 git://github.com/fishman/ctags.git
 git://github.com/jiangmiao/auto-pairs.git
+git://github.com/scrooloose/syntastic.git
