@@ -36,3 +36,4 @@ source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 export PATH=/home/sten/.rbenv/plugins/ruby-build/bin:/home/sten/.rbenv/shims:/home/sten/.rbenv/bin:/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
+export PATH="$HOME/.rbenv/bin:$PATH"
