@@ -17,6 +17,10 @@ if [ ! -L ~/.zshrc ]; then
   ln -s ~/dotfiles/zshrc ~/.zshrc
 fi
 
+if [ ! -L ~/.gemrc ]; then
+  ln -s ~/dotfiles/gemrc ~/.gemrc
+fi
+
 printf "OhMyZsh\n"
 #Install 
 if [ -d ~/.oh-my-zsh ]; then
