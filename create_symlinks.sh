@@ -14,7 +14,7 @@ if [ ! -L ~/.gitconfig ]; then
 fi
 
 if [ ! -L ~/.zshrc ]; then
-  ln -s ~/ditfiles/zshrc ~/.zshrc
+  ln -s ~/dotfiles/zshrc ~/.zshrc
 fi
 
 printf "OhMyZsh\n"
