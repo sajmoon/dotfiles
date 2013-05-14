@@ -9,6 +9,10 @@ if [ ! -L ~/.vimrc ]; then
   ln -s ~/dotfiles/vim/vimrc ~/.vimrc;
 fi
 
+if [ ! -L ~/.gitconfig ]; then
+  ln -s ~/dotfiles/git/gitconfig ~/.gitconfig
+fi
+
 if [ ! -L ~/.zshrc ]; then
   ln -s ~/ditfiles/zshrc ~/.zshrc
 fi

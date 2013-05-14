@@ -1,0 +1,9 @@
+[user]
+  name = Simon Strom
+  email = simon.strom@gmail.com
+
+[color]
+  diff = auto
+  branch = auto
+  status = auto
+
