@@ -1,6 +1,6 @@
 printf "Configuring system\n"
 
-printf "Checking for configfiles\n"
+printf "=> Checking for configfiles\n"
 if [ ! -L ~/.vim ]; then
   ln -s ~/dotfiles/vim ~/.vim;
 fi
@@ -21,7 +21,7 @@ if [ ! -L ~/.gemrc ]; then
   ln -s ~/dotfiles/gemrc ~/.gemrc
 fi
 
-printf "OhMyZsh\n"
+printf "=> Install/Upgrad OhMyZsh\n"
 #Install 
 if [ -d ~/.oh-my-zsh ]; then
   # upgrade 
@@ -33,7 +33,7 @@ else
 fi
 
 
-printf "RBENV\n"
+printf "=> Install/upgrade rbenv\n"
 #rbenv
 if [ -d ~/.rbenv ]; then
   cd ~/.rbenv
@@ -42,3 +42,6 @@ else
   git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
   git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
 fi
+
+printf "=>Install/Upgrad vim plugins..\n"
+zsh ~/dotfiles/vim/setup.sh
