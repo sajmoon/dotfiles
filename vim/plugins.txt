@@ -14,5 +14,10 @@ git://github.com/Rip-Rip/clang_complete.git
 git://github.com/fishman/ctags.git
 git://github.com/jiangmiao/auto-pairs.git
 git://github.com/scrooloose/syntastic.git
-git://github.com/xolox/vim-notes.git
 git://github.com/kchmck/vim-coffee-script.git
+git://github.com/yaymukund/vim-rabl.git
+git://github.com/maciakl/vim-neatstatus.git
+git://github.com/guns/vim-clojure-static.git
+git://github.com/tpope/vim-foreplay.git
+git://github.com/kien/rainbow_parentheses.vim.git
+git://github.com/digitaltoad/vim-jade.git
