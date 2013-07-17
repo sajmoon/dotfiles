@@ -39,6 +39,7 @@ export PATH=/home/sten/.rbenv/plugins/ruby-build/bin:/home/sten/.rbenv/shims:/ho
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+export PATH="/usr/local/android-studio/bin:$PATH"
 
 alias .zshrc="editor ~/.zshrc"
 alias reload="source ~/.zshrc"
@@ -46,5 +47,7 @@ alias reload="source ~/.zshrc"
 alias be="bundle exec"
 alias e="editor"
 
-alias gs="git status"
+alias gs="git status -s"
 eval "$(rbenv init -)"
+
+alias vpngit="env GIT_SSL_NO_VERIFY=true git"

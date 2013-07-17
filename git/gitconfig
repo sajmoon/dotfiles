@@ -3,7 +3,24 @@
   email = simon.strom@gmail.com
 
 [color]
-  diff = auto
-  branch = auto
-  status = auto
+  ui = true
 
+[core]
+  whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
+
+[grep]
+  lineNumber = true
+
+[alias]
+  olog = log --online
+  s = status -s
+  a = add
+  master = checkout master
+  ci = commit
+  co = checkout
+
+  # list aliases
+  alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\t=> \\2/' | sort
+
+[push]
+	default = simple
