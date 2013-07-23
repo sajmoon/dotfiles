@@ -43,3 +43,5 @@ set backspace=indent,eol,start
 
 color desert
 
+nnoremap ,m :w <BAR> !lessc % > %:t:r.css<CR><space>
+
