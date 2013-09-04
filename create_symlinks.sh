@@ -21,6 +21,11 @@ if [ ! -L ~/.gemrc ]; then
   ln -s ~/dotfiles/gemrc ~/.gemrc
 fi
 
+if [ ! -L ~/.xmonad/xmonad.hs ]; then
+  mkdir ~/.xmonad
+  ln -s ~/dotfiles/xmonad.hs ~/.xmonad/xmonad.hs
+fi
+
 printf "=> Install/Upgrad OhMyZsh\n"
 #Install 
 if [ -d ~/.oh-my-zsh ]; then
