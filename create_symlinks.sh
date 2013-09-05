@@ -24,6 +24,7 @@ fi
 if [ ! -L ~/.xmonad/xmonad.hs ]; then
   mkdir ~/.xmonad
   ln -s ~/dotfiles/xmonad.hs ~/.xmonad/xmonad.hs
+  ln -s ~/dotfiles/xmobarrc ~/.xmobarrc
 fi
 
 printf "=> Install/Upgrad OhMyZsh\n"
