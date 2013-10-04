@@ -21,6 +21,10 @@ if [ ! -L ~/.gemrc ]; then
   ln -s ~/dotfiles/gemrc ~/.gemrc
 fi
 
+if [ ! -L ~/.tmux.conf ]; then
+  ln -s ~/dotfiles/tmux.conf ~/.tmux.conf
+fi
+
 printf "=> Install/Upgrad OhMyZsh\n"
 #Install 
 if [ -d ~/.oh-my-zsh ]; then
