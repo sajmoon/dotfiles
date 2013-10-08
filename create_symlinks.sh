@@ -25,6 +25,12 @@ if [ ! -L ~/.tmux.conf ]; then
   ln -s ~/dotfiles/tmux.conf ~/.tmux.conf
 fi
 
+if [ ! -L ~/.xmonad/xmonad.hs ]; then
+  mkdir ~/.xmonad
+  ln -s ~/dotfiles/xmonad.hs ~/.xmonad/xmonad.hs
+  ln -s ~/dotfiles/xmobarrc ~/.xmobarrc
+fi
+
 printf "=> Install/Upgrad OhMyZsh\n"
 #Install 
 if [ -d ~/.oh-my-zsh ]; then
