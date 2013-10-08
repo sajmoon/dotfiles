@@ -42,6 +42,9 @@ printf "=> Install/upgrade rbenv\n"
 if [ -d ~/.rbenv ]; then
   cd ~/.rbenv
   git pull
+  
+  cd ~/.rbenv/plugins/ruby-build
+  git pull
 else
   git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
   git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
