@@ -3,7 +3,7 @@
   email = simon.strom@gmail.com
 
 [color]
-  ui = true
+    ui = auto
 
 [core]
   whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
@@ -22,5 +22,5 @@
   # list aliases
   alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\t=> \\2/' | sort
 
-[push]
-	default = simple
+[include]
+    path = .gitconfig.local
