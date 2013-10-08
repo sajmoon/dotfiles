@@ -21,6 +21,10 @@ if [ ! -L ~/.gemrc ]; then
   ln -s ~/dotfiles/gemrc ~/.gemrc
 fi
 
+if [ ! -L ~/.tmux.conf ]; then
+  ln -s ~/dotfiles/tmux.conf ~/.tmux.conf
+fi
+
 if [ ! -L ~/.xmonad/xmonad.hs ]; then
   mkdir ~/.xmonad
   ln -s ~/dotfiles/xmonad.hs ~/.xmonad/xmonad.hs
@@ -43,6 +47,9 @@ printf "=> Install/upgrade rbenv\n"
 #rbenv
 if [ -d ~/.rbenv ]; then
   cd ~/.rbenv
+  git pull
+  
+  cd ~/.rbenv/plugins/ruby-build
   git pull
 else
   git clone git://github.com/sstephenson/rbenv.git ~/.rbenv

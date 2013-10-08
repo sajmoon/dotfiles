@@ -42,7 +42,7 @@ export PATH="/usr/local/heroku/bin:$PATH"
 export PATH="/usr/local/android-studio/bin:$PATH"
 
 alias .zshrc="editor ~/.zshrc"
-alias reload="source ~/.zshrc"
+alias reload-shell="source ~/.zshrc"
 
 alias be="bundle exec"
 alias e="editor"
