@@ -51,3 +51,5 @@ alias gs="git status -s"
 eval "$(rbenv init -)"
 
 alias vpngit="env GIT_SSL_NO_VERIFY=true git"
+
+alias h="history | grep -i"
