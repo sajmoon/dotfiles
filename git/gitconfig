@@ -22,5 +22,8 @@
   # list aliases
   alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\t=> \\2/' | sort
 
+[push]
+	default = simple
+
 [include]
     path = .gitconfig.local
