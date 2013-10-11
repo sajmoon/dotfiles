@@ -14,3 +14,12 @@ for plugin in `cat ../plugins.txt`; do
     git clone $plugin $pluginname
   fi
 done
+
+# clang
+mkdir -p ~/.vim/tags/stl
+ch ~/.vim/tags
+ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++
+rm -rf stl
+
+mkdir stl
+mv TAGS stl/
