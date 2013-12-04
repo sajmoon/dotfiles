@@ -1,5 +1,39 @@
 printf "Configuring system\n"
 
+printf "=> Install/Upgrad zsh configurator\n"
+
+# #Install 
+# if [ -d ~/.oh-my-zsh ]; then
+#   # upgrade 
+#   cd ~/.oh-my-zsh
+#   git pull
+# else
+#   # install
+#   curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh
+# fi
+
+# if [ ! -L ~/.zshrc ]; then
+#   ln -s ~/dotfiles/zshrc ~/.zshrc
+# fi
+
+if [ -d ~/.prezto ]; then
+  #upgrade
+  cd  ~/.zprezto
+  git pull && git submodule update --init --recursive
+else
+  printf "Installing prezto"
+  git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
+fi
+
+if [ ! -L ~/.zpreztorc ]; then
+  ln -s ~/.zprezto/runcoms/zlogin ~/.zlogin
+  ln -s ~/.zprezto/runcoms/zlogout ~/.zlogout
+  ln -s ~/.zprezto/runcoms/zpreztorc ~/.zpreztorc
+  ln -s ~/.zprezto/runcoms/zprofile ~/.zprofile
+  ln -s ~/.zprezto/runcoms/zshenv ~/.zshenv
+  ln -s ~/.zprezto/runcoms/zshrc ~/.zshrc
+fi
+
 printf "=> Checking for configfiles\n"
 if [ ! -L ~/.vim ]; then
   ln -s ~/dotfiles/vim ~/.vim;
@@ -11,10 +45,6 @@ fi
 
 if [ ! -L ~/.gitconfig ]; then
   ln -s ~/dotfiles/git/gitconfig ~/.gitconfig
-fi
-
-if [ ! -L ~/.zshrc ]; then
-  ln -s ~/dotfiles/zshrc ~/.zshrc
 fi
 
 if [ ! -L ~/.gemrc ]; then
@@ -30,18 +60,6 @@ if [ ! -L ~/.xmonad/xmonad.hs ]; then
   ln -s ~/dotfiles/xmonad.hs ~/.xmonad/xmonad.hs
   ln -s ~/dotfiles/xmobarrc ~/.xmobarrc
 fi
-
-printf "=> Install/Upgrad OhMyZsh\n"
-#Install 
-if [ -d ~/.oh-my-zsh ]; then
-  # upgrade 
-  cd ~/.oh-my-zsh
-  git pull
-else
-  # install
-  curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh
-fi
-
 
 printf "=> Install/upgrade rbenv\n"
 #rbenv

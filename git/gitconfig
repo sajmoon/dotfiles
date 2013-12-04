@@ -25,5 +25,8 @@
 [push]
 	default = matching
 
+[url "https://"]
+	insteadOf = git://
+
 [include]
     path = .gitconfig.local
