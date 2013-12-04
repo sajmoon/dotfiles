@@ -23,7 +23,7 @@
   alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\t=> \\2/' | sort
 
 [push]
-	default = simple
+	default = matching
 
 [include]
     path = .gitconfig.local
