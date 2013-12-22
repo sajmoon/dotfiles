@@ -17,9 +17,9 @@ done
 
 # clang
 mkdir -p ~/.vim/tags/stl
-ch ~/.vim/tags
+cd ~/.vim/tags
 ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++
 rm -rf stl
 
 mkdir stl
-mv TAGS stl/
+mv tags stl/
