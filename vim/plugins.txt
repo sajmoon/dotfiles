@@ -13,7 +13,6 @@ git://github.com/scrooloose/nerdtree.git
 git://github.com/fishman/ctags.git
 git://github.com/jiangmiao/auto-pairs.git
 git://github.com/scrooloose/syntastic.git
-git://github.com/kchmck/vim-coffee-script.git
 git://github.com/yaymukund/vim-rabl.git
 git://github.com/maciakl/vim-neatstatus.git
 git://github.com/guns/vim-clojure-static.git
@@ -24,3 +23,4 @@ git://github.com/groenewege/vim-less.git
 git://github.com/skammer/vim-css-color.git
 git@github.com:hail2u/vim-css3-syntax.git
 git://github.com/vim-scripts/OmniCppComplete.git
+https://github.com/SirVer/ultisnips.git

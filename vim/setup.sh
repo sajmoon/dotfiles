@@ -22,4 +22,4 @@ ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++
 rm -rf stl
 
 mkdir stl
-mv TAGS stl/
+mv tags stl/
