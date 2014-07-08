@@ -16,10 +16,10 @@ for plugin in `cat ../plugins.txt`; do
 done
 
 # clang
-mkdir -p ~/.vim/tags/stl
-cd ~/.vim/tags
-ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++
-rm -rf stl
+# mkdir -p ~/.vim/tags/stl
+# cd ~/.vim/tags
+# ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++
+# rm -rf stl
 
-mkdir stl
-mv tags stl/
+# mkdir stl
+# mv tags stl/
