@@ -24,3 +24,10 @@ git://github.com/skammer/vim-css-color.git
 git@github.com:hail2u/vim-css3-syntax.git
 git://github.com/vim-scripts/OmniCppComplete.git
 https://github.com/SirVer/ultisnips.git
+https://github.com/adragomir/javacomplete.git
+https://github.com/flazz/vim-colorschemes.git
+https://github.com/guns/vim-clojure-static.git
+https://github.com/Shougo/unite.vim.git
+https://github.com/alpaca-tc/vim-unite-watson.vim.git
+https://github.com/cmather/vim-meteor-snippets.git
+https://github.com/mustache/vim-mustache-handlebars.git
