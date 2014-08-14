@@ -24,24 +24,8 @@ if [ ! -d ~/.prezto ]; then
 else
   printf "=> Installing prezto\n"
   git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
+  printf "[INFO] Make sure all symlinks are in place!"
 fi
-
-if [ -L ~/.zpreztorc ]; then
-  printf "=> Setting prezto symlinks\n"
-  rm ~/.zlogin
-  rm ~/.zlogout
-  rm ~/.zpreztorc
-  rm ~/.zprofile
-  rm ~/.zshenv
-  rm ~/.zshrc
-fi
-
-ln -s ~/.zprezto/runcoms/zlogin ~/.zlogin
-ln -s ~/.zprezto/runcoms/zlogout ~/.zlogout
-ln -s ~/dotfiles/prezto/zpreztorc ~/.zpreztorc
-ln -s ~/dotfiles/prezto/zprofile ~/.zprofile
-ln -s ~/.zprezto/runcoms/zshenv ~/.zshenv
-ln -s ~/.zprezto/runcoms/zshrc ~/.zshrc
 
 printf "=> Checking for configfiles\n"
 if [ ! -L ~/.vim ]; then
