@@ -37,7 +37,8 @@ zstyle ':prezto:load' pmodule \
   'tmux' \
   'history-substring-search' \
   'prompt' \
-  'yum'
+  'osx' \
+  'homebrew'
 
 #
 # Editor
