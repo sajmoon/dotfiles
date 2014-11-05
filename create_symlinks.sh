@@ -56,9 +56,13 @@ if [ -d ~/.rbenv ]; then
   
   cd ~/.rbenv/plugins/ruby-build
   git pull
+
+  cd ~/.rbenv/plugins/bundler
+  git pull
 else
   git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
   git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+  git clone git://github.com/carsomyr/rbenv-bundler.git ~/.rbenv/plugins/bundler
 fi
 
 printf "=>Install/Upgrad vim plugins..\n"
