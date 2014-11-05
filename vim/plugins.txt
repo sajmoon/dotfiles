@@ -22,7 +22,6 @@ git://github.com/digitaltoad/vim-jade.git
 git://github.com/groenewege/vim-less.git
 git://github.com/skammer/vim-css-color.git
 git@github.com:hail2u/vim-css3-syntax.git
-git://github.com/vim-scripts/OmniCppComplete.git
 https://github.com/SirVer/ultisnips.git
 https://github.com/adragomir/javacomplete.git
 https://github.com/flazz/vim-colorschemes.git
@@ -31,3 +30,6 @@ https://github.com/Shougo/unite.vim.git
 https://github.com/alpaca-tc/vim-unite-watson.vim.git
 https://github.com/cmather/vim-meteor-snippets.git
 https://github.com/mustache/vim-mustache-handlebars.git
+git@github.com:airblade/vim-gitgutter.git
+https://github.com/fatih/vim-go.git
+git@github.com:Valloric/YouCompleteMe.git

@@ -23,3 +23,7 @@ done
 
 # mkdir stl
 # mv tags stl/
+
+cd YouCompleteMe
+git submodule update --init --recursive
+sh install.sh
