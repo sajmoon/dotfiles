@@ -26,4 +26,4 @@ done
 
 cd YouCompleteMe
 git submodule update --init --recursive
-sh install.sh
+# sh install.sh
