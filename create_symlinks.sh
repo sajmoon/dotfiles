@@ -48,6 +48,14 @@ if [ ! -L ~/.tmux.conf ]; then
   ln -s ~/dotfiles/tmux.conf ~/.tmux.conf
 fi
 
+if [ ! -L ~/.zprofile  ]; then
+  ln -s ~/dotfiles/prezto/zprofile ~/.zprofile
+fi
+
+if [ ! -L ~/.zshrc  ]; then
+  ln -s ~/dotfiles/prezto/zshrc ~/.zshrc
+fi
+
 printf "=> Install/upgrade rbenv\n"
 #rbenv
 if [ -d ~/.rbenv ]; then
