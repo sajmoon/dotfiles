@@ -30,6 +30,7 @@ zstyle ':prezto:load' pmodule \
   'history' \
   'directory' \
   'spectrum' \
+  'gnu-utility' \
   'utility' \
   'completion' \
   'git' \
@@ -38,6 +39,8 @@ zstyle ':prezto:load' pmodule \
   'history-substring-search' \
   'prompt' \
   'osx' \
+  'command-not-found' \
+  'syntax-highlighting' \
   'homebrew'
 
 #
@@ -55,7 +58,7 @@ zstyle ':prezto:module:editor' dot-expansion 'yes'
 #
 
 # Ignore submodules when they are 'dirty', 'untracked', 'all', or 'none'.
-# zstyle ':prezto:module:git:status:ignore' submodules 'all'
+zstyle ':prezto:module:git:status:ignore' submodules 'all'
 
 #
 # GNU Utility
