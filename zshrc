@@ -1,55 +1,48 @@
-# Path to your oh-my-zsh configuration.
-ZSH=$HOME/.oh-my-zsh
+#
+# Executes commands at the start of an interactive session.
+#
+# Authors:
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-#ZSH_THEME="robbyrussell"
-ZSH_THEME="af-magic"
+# Source Prezto.
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
 
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
-# Set to this to use case-sensitive completion
-# CASE_SENSITIVE="true"
-
-# Comment this out to disable weekly auto-update checks
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment following line if you want to disable colors in ls
-# DISABLE_LS_COLORS="true"
-
-# Uncomment following line if you want to disable autosetting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment following line if you want red dots to be displayed while waiting for completion
-# COMPLETION_WAITING_DOTS="true"
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git rails3 heroku git-flow autojump command-not-found)
-
-source $ZSH/oh-my-zsh.sh
-
+eval "$(rbenv init -)
+"
 # Customize to your needs...
-export PATH=/home/sten/.rbenv/plugins/ruby-build/bin:/home/sten/.rbenv/shims:/home/sten/.rbenv/bin:/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
+#export GEM_HOME='/usr/local/Cellar/gems/1.8'
+
+# aliases
+[[ -f ~/.aliases ]] && source ~/.aliases
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
-export PATH="/usr/local/android-studio/bin:$PATH"
 
-alias .zshrc="editor ~/.zshrc"
-alias reload-shell="source ~/.zshrc"
+# z terminal navigation
+# assumes z installed.
+. `brew --prefix`/etc/profile.d/z.sh
 
-alias be="bundle exec"
-alias e="editor"
+## use mvim
+alias vi="mvim -v"
 
-alias gs="git status -s"
-eval "$(rbenv init -)"
+# GOPATHs
+export GOPATH="${HOME}/go"
+export GOBIN="${HOME}/go"
+export PATH=$PATH:/$GOBIN/bin
+export PATH=$PATH:$GOPATH:$GOBIN
 
-alias vpngit="env GIT_SSL_NO_VERIFY=true git"
+#Javahome osx
+export JAVA_HOME=$(/usr/libexec/java_home)
 
-alias h="history | grep -i"
+# Docker env
+export DOCKER_HOST=tcp://192.168.59.103:2376
+export DOCKER_CERT_PATH=/Users/simon/.boot2docker/certs/boot2docker-vm
+export DOCKER_TLS_VERIFY=1
+
+alias gl="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+
+# Local config
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
