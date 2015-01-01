@@ -21,6 +21,10 @@ set ignorecase
 set showmatch
 set smartcase
 
+runtime macros/matchit.vim
+
+let g:ruby_path = system('echo $HOME/.rbenv/shims')
+
 au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,config.ru} set ft=ruby
 au BufRead,BufNewFile {*.json} set ft=javascript
 au BufRead,BufNewFile {*.txt} call s:setupWrapping()
@@ -47,26 +51,6 @@ color desert
 
 nnoremap ,m :w <BAR> !lessc % > %:t:r.css<CR><space>
 
-" CTAGS
-set tags+=~/.vim/tags/stl
-
-" build tags of your own project with CTRL+F12
-"map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
-noremap <F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<cr>
-inoremap <F12> <Esc>:!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<cr>
-
-" OmniCppComplete
-" let OmniCpp_NamespaceSearch = 1
-" let OmniCpp_GlobalScopeSearch = 1
-" let OmniCpp_ShowAccess = 1
-" let OmniCpp_MayCompleteDot = 1
-" let OmniCpp_MayCompleteArrow = 1
-" let OmniCpp_MayCompleteScope = 1
-" let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
-
-" au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
-" set completeopt=menuone,menu,longest,preview
-
 " Go stuff, lint and paths
 set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim
 set rtp+=$GOPATH
@@ -76,3 +60,16 @@ let g:UltiSnipsExpandTrigger="<c-space>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " let g:UltiSnipsEditSplit="vertical"
+
+" RSpec.vim mappings
+map <Leader>t :call RunCurrentSpecFile()<CR>
+map <Leader>s :call RunNearestSpec()<CR>
+map <Leader>l :call RunLastSpec()<CR>
+map <Leader>a :call RunAllSpecs()<CR>
+
+let g:rspec_command = "bundle exec rspec {spec}"
+
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
