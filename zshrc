@@ -10,8 +10,6 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-eval "$(rbenv init -)
-"
 # Customize to your needs...
 #export GEM_HOME='/usr/local/Cellar/gems/1.8'
 
@@ -25,23 +23,20 @@ export PATH="/usr/local/heroku/bin:$PATH"
 # assumes z installed.
 . `brew --prefix`/etc/profile.d/z.sh
 
-## use mvim
-alias vi="mvim -v"
-
 # GOPATHs
-export GOPATH="${HOME}/go"
-export GOBIN="${HOME}/go"
-export PATH=$PATH:/$GOBIN/bin
-export PATH=$PATH:$GOPATH:$GOBIN
+# export GOPATH="${HOME}/go"
+# export GOBIN="${HOME}/go"
+# export PATH=$PATH:/$GOBIN/bin
+# export PATH=$PATH:$GOPATH:$GOBIN
 
 #Javahome osx
 export JAVA_HOME=$(/usr/libexec/java_home)
 
 # Docker env
-export DOCKER_HOST=tcp://192.168.59.103:2376
-export DOCKER_CERT_PATH=/Users/simon/.boot2docker/certs/boot2docker-vm
-export DOCKER_TLS_VERIFY=1
-
+# export DOCKER_HOST=tcp://192.168.59.103:2376
+# export DOCKER_CERT_PATH=/Users/simon/.boot2docker/certs/boot2docker-vm
+# export DOCKER_TLS_VERIFY=1
+#
 alias gl="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 
 # Local config

@@ -75,14 +75,14 @@ if [[ ! -d "$TMPPREFIX" ]]; then
   mkdir -p "$TMPPREFIX"
 fi
 
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
+# export PATH="$HOME/.rbenv/bin:$PATH"
+# eval "$(rbenv init -)"
 
-export PATH=$PATH:$GOPATH/src/go-tools/bin
-export PATH=$PATH:$GOPATH/bin
-export PATH=$PATH:~/gobin
+# export PATH=$PATH:$GOPATH/src/go-tools/bin
+# export PATH=$PATH:$GOPATH/bin
+# export PATH=$PATH:~/gobin
 
 # boot2Docker exports
-export DOCKER_HOST=tcp://192.168.59.103:2376
-export DOCKER_CERT_PATH=/Users/simon/.boot2docker/certs/boot2docker-vm
-export DOCKER_TLS_VERIFY=1
+# export DOCKER_HOST=tcp://192.168.59.103:2376
+# export DOCKER_CERT_PATH=/Users/simon/.boot2docker/certs/boot2docker-vm
+# export DOCKER_TLS_VERIFY=1
