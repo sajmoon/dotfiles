@@ -88,5 +88,7 @@ fi
 # export DOCKER_TLS_VERIFY=1
 
 export GOPATH="/Users/simon/go"
+export GOBIn="${GOPATH}/bin"
 export PATH="${PATH}:${GOPATH}/bin"
 
+export TERM='xterm-256color'
