@@ -33,6 +33,6 @@ alias path="echo $PATH | tr -s ':' '\n'"
 
 ## use mvim
 # alias vi="mvim -v"
+alias vi="nvim"
 
-# Include custom aliases
 [[ -f ~/.aliases.local ]] && source ~/.aliases.local

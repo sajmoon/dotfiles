@@ -37,7 +37,6 @@ export JAVA_HOME=$(/usr/libexec/java_home)
 # export DOCKER_CERT_PATH=/Users/simon/.boot2docker/certs/boot2docker-vm
 # export DOCKER_TLS_VERIFY=1
 #
-alias gl="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 
 # Local config
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
