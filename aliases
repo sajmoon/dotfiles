@@ -32,7 +32,7 @@ alias s="rspec"
 alias path="echo $PATH | tr -s ':' '\n'"
 
 ## use mvim
-# alias vi="mvim -v"
-alias vi="nvim"
+alias vi="mvim -v"
+# alias vi="nvim"
 
 [[ -f ~/.aliases.local ]] && source ~/.aliases.local
