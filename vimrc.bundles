@@ -42,8 +42,6 @@ Plugin 'Raimondi/delimitMate'
 Plugin 'fatih/vim-go'
 Plugin 'elixir-lang/vim-elixir'
 
-Plugin 'floobits/floobits-neovim'
-
 Plugin 'janko-m/vim-test'
 
 Plugin 'bling/vim-airline'

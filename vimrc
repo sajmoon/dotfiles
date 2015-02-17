@@ -15,6 +15,7 @@ set showcmd       " display incomplete commands
 set incsearch     " do incremental searching
 set laststatus=2  " Always display the status line
 set autowrite     " Automatically :write before running commands
+set encoding=utf-8
 
 " Teach vim different fileextensions
 au BufRead,BufNewFile *.md set filetype=markdown
@@ -38,7 +39,7 @@ nmap <silent> <leader>T :TestFile<CR>
 nmap <silent> <leader>a :TestSuite<CR>
 nmap <silent> <leader>l :TestLast<CR>
 
-let g:test#strategy = 'dispatch'
+" let g:test#strategy = 'dispatch'
 
 augroup reload_myvimrc
   au!
@@ -149,6 +150,10 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
 " configure syntastic syntax checking to check on open as well as save
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
 let g:syntastic_check_on_open=1
 let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
 let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': ['go'] }
@@ -162,13 +167,19 @@ set spellfile=$HOME/.vim-spell-en.utf-8.add
 set diffopt+=vertical
 
 " Airline status bar
+
+" set guifont=Liberation\ Mono\ for\ Powerline\ 10 
+
 let g:airline#extensions#tabline#enabled = 1
 " let g:airline_powerline_fonts = 1
+set laststatus=2
 
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-let g:airline_symbols.space = "\ua0"
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+
+let g:bufferline_echo = 0
 
 " Local config
 if filereadable($HOME . "/.vimrc.local")
