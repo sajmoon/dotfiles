@@ -100,9 +100,42 @@ highlight Folded  guibg=#0A0A0A guifg=#9090D0
 " set colorcolumn=80
 " set colorcolumn=+1
 
-" Numbers
+" Line Numbers
+function! SetNormalLineNumbers()
+    set norelativenumber
+    set number
+    highlight LineNr ctermfg=blue
+endfunction
+
+function! SetRelativeLineNumbers()
+    set relativenumber
+    highlight LineNr ctermfg=black
+endfunction
+
+function! NumberToggle()
+  if(&relativenumber == 1)
+    call SetNormalLineNumbers()
+  else
+    call SetRelativeLineNumbers()
+  endif
+endfunc
+
+nnoremap <c-n> :call NumberToggle()<cr>
+
+" Defaults
 set number
-set numberwidth=5
+" relative numbers as default
+call SetRelativeLineNumbers()
+
+" Swithc between relative and unrelative
+" when losing focus
+:au FocusLost * :call SetNormalLineNumbers()
+:au FocusGained * :call SetRelativeLineNumbers()
+
+" toggle relative numbers when
+" switch mode
+autocmd InsertEnter * :call SetNormalLineNumbers()
+autocmd InsertLeave * :call SetRelativeLineNumbers()
 
 " Tab completion
 " will insert tab at beginning of line,
