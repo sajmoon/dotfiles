@@ -91,8 +91,8 @@ if executable('ag')
 endif
 
 " Color scheme
-" colorscheme github
-colorscheme desert
+colorscheme github
+" colorscheme desert
 highlight NonText guibg=#060606
 highlight Folded  guibg=#0A0A0A guifg=#9090D0
 
@@ -168,7 +168,7 @@ set diffopt+=vertical
 
 " Airline status bar
 
-" set guifont=Liberation\ Mono\ for\ Powerline\ 10 
+" set guifont=Liberation\ Mono\ for\ Powerline\ 10
 
 let g:airline#extensions#tabline#enabled = 1
 " let g:airline_powerline_fonts = 1

@@ -4,3 +4,6 @@
 *.swo
 *.swn
 coverage/
+*.iml
+*.ipr
+*.iws

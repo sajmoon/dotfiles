@@ -42,9 +42,14 @@ Plugin 'Raimondi/delimitMate'
 Plugin 'fatih/vim-go'
 Plugin 'elixir-lang/vim-elixir'
 
+Plugin 'pangloss/vim-javascript'
+Plugin 'burnettk/vim-angular'
+
 Plugin 'janko-m/vim-test'
 
 Plugin 'bling/vim-airline'
+
+Plugin 'jeetsukumaran/vim-buffergator'
 
 if filereadable(expand("~/.vimrc.bundles.local"))
   source ~/.vimrc.bundles.local

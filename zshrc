@@ -18,6 +18,8 @@ fi
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+export PATH="/usr/sbin/:$PATH"
+export PATH="/sbin/:$PATH"
 
 # z terminal navigation
 # assumes z installed.

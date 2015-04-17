@@ -90,5 +90,6 @@ fi
 export GOPATH="/Users/simon/go"
 export GOBIn="${GOPATH}/bin"
 export PATH="${PATH}:${GOPATH}/bin"
+export ANDROID_HOME=/usr/local/opt/android-sdk
 
 export TERM='xterm-256color'
