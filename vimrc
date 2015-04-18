@@ -103,6 +103,10 @@ highlight Folded  guibg=#0A0A0A guifg=#9090D0
 " set colorcolumn=80
 " set colorcolumn=+1
 
+"highlight current line
+:set cursorline
+:set cursorcolumn
+
 " Line Numbers
 function! SetNormalLineNumbers()
     set norelativenumber
