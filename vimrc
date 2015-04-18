@@ -91,7 +91,10 @@ if executable('ag')
 endif
 
 " Color scheme
-colorscheme github
+" colorscheme github
+set t_Co=256
+colorscheme kalisi
+set background=dark
 " colorscheme desert
 highlight NonText guibg=#060606
 highlight Folded  guibg=#0A0A0A guifg=#9090D0
@@ -104,12 +107,12 @@ highlight Folded  guibg=#0A0A0A guifg=#9090D0
 function! SetNormalLineNumbers()
     set norelativenumber
     set number
-    highlight LineNr ctermfg=blue
+    highlight LineNr ctermfg=white
 endfunction
 
 function! SetRelativeLineNumbers()
     set relativenumber
-    highlight LineNr ctermfg=black
+    highlight LineNr ctermfg=white
 endfunction
 
 function! NumberToggle()
