@@ -39,9 +39,6 @@ nmap <silent> <leader>T :TestFile<CR>
 nmap <silent> <leader>a :TestSuite<CR>
 nmap <silent> <leader>l :TestLast<CR>
 
-" search elixir doc from vim
-set keywordprg=~/bin/eh
-
 " let g:test#strategy = 'dispatch'
 
 augroup reload_myvimrc
