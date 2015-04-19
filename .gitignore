@@ -2,3 +2,5 @@ vim/bundle/*
 *.swp
 vim/.netrwhist
 vim/tags/*
+
+*.local
