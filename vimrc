@@ -90,6 +90,9 @@ if executable('ag')
   let g:ctrlp_use_caching = 0
 endif
 
+" <leader>lb (list buffers)  ctrp search buffers
+nmap <silent> <leader>L :CtrlPBuffer<CR>
+
 " Color scheme
 " colorscheme github
 set t_Co=256
