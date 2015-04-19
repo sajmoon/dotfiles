@@ -39,6 +39,9 @@ nmap <silent> <leader>T :TestFile<CR>
 nmap <silent> <leader>a :TestSuite<CR>
 nmap <silent> <leader>l :TestLast<CR>
 
+" search elixir doc from vim
+set keywordprg=~/bin/eh
+
 " let g:test#strategy = 'dispatch'
 
 augroup reload_myvimrc
@@ -94,8 +97,11 @@ endif
 " colorscheme github
 set t_Co=256
 colorscheme kalisi
-set background=dark
+
 " colorscheme desert
+
+set background=dark
+
 highlight NonText guibg=#060606
 highlight Folded  guibg=#0A0A0A guifg=#9090D0
 
