@@ -4,6 +4,15 @@
 *.swo
 *.swn
 coverage/
-*.iml
+
 *.ipr
 *.iws
+.settings
+*.iml
+*.idea
+.gitreview
+.idea/
+
+/tablet-retail-system/bundles/
+tablet-retail-system/lifray/
+tablet-retail-system/liferay/

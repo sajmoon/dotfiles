@@ -30,6 +30,7 @@ Plugin 'thoughtbot/vim-rspec'
 
 Plugin 'slim-template/vim-slim'
 Plugin 'kchmck/vim-coffee-script'
+Plugin 'Shutnik/jshint2.vim'
 
 Plugin 'vim-scripts/ctags.vim'
 Plugin 'vim-scripts/matchit.zip'
