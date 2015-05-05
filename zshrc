@@ -40,5 +40,6 @@ export JAVA_HOME=$(/usr/libexec/java_home)
 # export DOCKER_TLS_VERIFY=1
 #
 
+alias mex="iex -S mix"
 # Local config
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
