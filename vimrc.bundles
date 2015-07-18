@@ -10,9 +10,12 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
 " Define bundles via Github repos
-Plugin 'christoomey/vim-run-interactive'
 Plugin 'croaky/vim-colors-github'
 Plugin 'https://github.com/freeo/vim-kalisi'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'sjl/badwolf'
+
+Plugin 'christoomey/vim-run-interactive'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'pbrisbin/vim-mkdir'
 Plugin 'scrooloose/syntastic'

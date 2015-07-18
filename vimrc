@@ -97,8 +97,12 @@ nmap <silent> <leader>L :CtrlPBuffer<CR>
 
 " Color scheme
 " colorscheme github
-set t_Co=256
-colorscheme kalisi
+" set t_Co=256
+" colorscheme kalisi
+" set background=dark
+" colorscheme solarized
+colorscheme badwolf
+let g:badwolf_darkgutter = 1
 
 " colorscheme desert
 
@@ -219,13 +223,13 @@ set diffopt+=vertical
 " set guifont=Liberation\ Mono\ for\ Powerline\ 10
 
 let g:airline#extensions#tabline#enabled = 1
-" let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 1
 set laststatus=2
 
-let g:airline_left_sep = '»'
-let g:airline_left_sep = '▶'
-let g:airline_right_sep = '«'
-let g:airline_right_sep = '◀'
+" let g:airline_left_sep = '»'
+" let g:airline_left_sep = '▶'
+" let g:airline_right_sep = '«'
+" let g:airline_right_sep = '◀'
 
 let g:bufferline_echo = 0
 
