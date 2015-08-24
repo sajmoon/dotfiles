@@ -14,10 +14,12 @@ export PATH="/usr/local/heroku/bin:$PATH"
 export PATH="/usr/sbin/:$PATH"
 export PATH="/sbin/:$PATH"
 
-#Javahome osx
-export JAVA_HOME=$(/usr/libexec/java_home)
-
 alias mex="iex -S mix"
+
+alias setjdk16='export JAVA_HOME=$(/usr/libexec/java_home -v 1.6)'
+alias setjdk17='export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)'
+alias setjdk18='export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)'
+
 # Local config
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
