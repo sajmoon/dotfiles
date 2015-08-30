@@ -50,6 +50,7 @@ Plugin 'elixir-lang/vim-elixir'
 Plugin 'pangloss/vim-javascript'
 Plugin 'burnettk/vim-angular'
 Plugin 'digitaltoad/vim-jade'
+Plugin 'mxw/vim-jsx'
 
 Plugin 'janko-m/vim-test'
 
