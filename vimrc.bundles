@@ -60,6 +60,13 @@ Plugin 'jeetsukumaran/vim-buffergator'
 
 Bundle 'wakatime/vim-wakatime'
 
+"" Clojure stuff
+Plugin 'guns/vim-sexp'
+Plugin 'tpope/vim-sexp-mappings-for-regular-people'
+Plugin 'tpope/vim-fireplace'
+Plugin 'guns/vim-clojure-static'
+Plugin 'guns/vim-clojure-highlight'
+
 if filereadable(expand("~/.vimrc.bundles.local"))
   source ~/.vimrc.bundles.local
 endif
