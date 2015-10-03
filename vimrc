@@ -233,6 +233,9 @@ set laststatus=2
 
 let g:bufferline_echo = 0
 
+" NERDTree toggle on leader -> t
+nmap <silent> <leader>n :NERDTreeToggle<CR>
+
 " Local config
 if filereadable($HOME . "/.vimrc.local")
   source ~/.vimrc.local
