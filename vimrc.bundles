@@ -35,6 +35,8 @@ Plugin 'slim-template/vim-slim'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'Shutnik/jshint2.vim'
 
+Plugin 'lambdatoast/elm.vim'
+
 Plugin 'vim-scripts/ctags.vim'
 Plugin 'vim-scripts/matchit.zip'
 Plugin 'vim-scripts/tComment'
