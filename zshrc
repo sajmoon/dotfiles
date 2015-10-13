@@ -11,8 +11,8 @@ fi
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
-export PATH="/usr/sbin/:$PATH"
-export PATH="/sbin/:$PATH"
+export PATH="/usr/sbin:$PATH"
+export PATH="/sbin:$PATH"
 
 alias mex="iex -S mix"
 
