@@ -11,6 +11,9 @@
   autocrlf = input
   editor = vim
 
+[commit]
+  template = ~/.gitmessage
+
 [grep]
   lineNumber = true
 
