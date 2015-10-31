@@ -9,10 +9,9 @@ call vundle#begin()
 " Let Vundle manage Vundle
 Plugin 'gmarik/Vundle.vim'
 
-" Define bundles via Github repos
-Plugin 'croaky/vim-colors-github'
-Plugin 'https://github.com/freeo/vim-kalisi'
-Plugin 'altercation/vim-colors-solarized'
+Plugin 'sheerun/vim-polyglot'
+
+" Themes
 Plugin 'sjl/badwolf'
 
 Plugin 'christoomey/vim-run-interactive'
@@ -27,11 +26,9 @@ Plugin 'tpope/vim-surround'
 Plugin 'airblade/vim-gitgutter'
 
 Plugin 'tpope/vim-bundler'
-Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-rails'
 Plugin 'thoughtbot/vim-rspec'
 
-Plugin 'slim-template/vim-slim'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'Shutnik/jshint2.vim'
 
@@ -47,7 +44,6 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'Raimondi/delimitMate'
 
 Plugin 'fatih/vim-go'
-Plugin 'elixir-lang/vim-elixir'
 
 Plugin 'pangloss/vim-javascript'
 Plugin 'burnettk/vim-angular'
@@ -56,7 +52,7 @@ Plugin 'mxw/vim-jsx'
 
 Plugin 'janko-m/vim-test'
 
-Plugin 'bling/vim-airline'
+Plugin 'itchyny/lightline.vim'
 
 Plugin 'jeetsukumaran/vim-buffergator'
 

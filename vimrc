@@ -18,10 +18,18 @@ set incsearch     " do incremental searching
 set laststatus=2  " Always display the status line
 set autowrite     " Automatically :write before running commands
 set encoding=utf-8
+set pastetoggle=<F2>
+set mouse=a
+set lazyredraw " only redraw when vim has too
 
 " Teach vim different fileextensions
+
 au BufRead,BufNewFile *.md set filetype=markdown
 au BufRead,BufNewFile *.go set filetype=go
+
+" if you forgot to use sudo for some files,
+" use :w!!
+cmap w!! w !sudo tee % >/dev/null
 
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
@@ -41,7 +49,7 @@ nmap <silent> <leader>T :TestFile<CR>
 nmap <silent> <leader>a :TestSuite<CR>
 nmap <silent> <leader>l :TestLast<CR>
 
-" let g:test#strategy = 'dispatch'
+let g:test#strategy = "dispatch"
 
 augroup reload_myvimrc
   au!
@@ -95,16 +103,8 @@ endif
 " <leader>lb (list buffers)  ctrp search buffers
 nmap <silent> <leader>L :CtrlPBuffer<CR>
 
-" Color scheme
-" colorscheme github
-" set t_Co=256
-" colorscheme kalisi
-" set background=dark
-" colorscheme solarized
 colorscheme badwolf
-let g:badwolf_darkgutter = 1
-
-" colorscheme desert
+let g:badwolf_darkgutter = 0
 
 set background=dark
 
@@ -180,12 +180,6 @@ map <Leader>ct :!ctags -R .<CR>
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
 
-" Get off my lawn
-nnoremap <Left> :echoe "Use h"<CR>
-nnoremap <Right> :echoe "Use l"<CR>
-nnoremap <Up> :echoe "Use k"<CR>
-nnoremap <Down> :echoe "Use j"<CR>
-
 " Treat <li> and <p> tags like the block tags they are
 let g:html_indent_tags = 'li\|p'
 
@@ -203,10 +197,10 @@ nnoremap <C-l> <C-w>l
 
 " configure syntastic syntax checking to check on open as well as save
 set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-let g:syntastic_check_on_open=1
+let g:syntastic_check_on_open = 1
 let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
 let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': ['go'] }
 nnoremap <C-w>E :SyntasticCheck<CR> :SyntasticToggleMode<CR>
@@ -218,18 +212,13 @@ set spellfile=$HOME/.vim-spell-en.utf-8.add
 " Always use vertical diffs
 set diffopt+=vertical
 
-" Airline status bar
-
-" set guifont=Liberation\ Mono\ for\ Powerline\ 10
-
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
-set laststatus=2
-
-" let g:airline_left_sep = '»'
-" let g:airline_left_sep = '▶'
-" let g:airline_right_sep = '«'
-" let g:airline_right_sep = '◀'
+" lightline - status bar
+set encoding=utf-8
+let g:lightline = {
+\ 'colorscheme': 'wombat',
+\ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
+\ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
+\ }
 
 let g:bufferline_echo = 0
 
