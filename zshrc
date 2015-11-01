@@ -23,6 +23,9 @@ alias setjdk18='export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)'
 # eactivate z
 . /usr/local/etc/profile.d/z.sh
 
+# History search
+bindkey '^R' history-incremental-pattern-search-backward
+
 # Local config
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
