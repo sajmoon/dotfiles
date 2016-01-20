@@ -29,3 +29,6 @@ bindkey '^R' history-incremental-pattern-search-backward
 # Local config
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
+
+export PATH="$HOME/.bin:$PATH"
+eval "$(rbenv init - --no-rehash)"

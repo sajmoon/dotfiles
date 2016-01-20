@@ -56,8 +56,6 @@ Plugin 'itchyny/lightline.vim'
 
 Plugin 'jeetsukumaran/vim-buffergator'
 
-Bundle 'wakatime/vim-wakatime'
-
 "" Clojure stuff
 Plugin 'guns/vim-sexp'
 Plugin 'tpope/vim-sexp-mappings-for-regular-people'
