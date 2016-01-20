@@ -2,6 +2,8 @@
 " possible, as it has side effects.
 set nocompatible
 set shell=bash
+set hidden
+set showtabline=0
 
 " Leader
 let mapleader = " "
@@ -52,6 +54,8 @@ nmap <silent> <leader>l :TestLast<CR>
 
 let g:test#strategy = "dispatch"
 
+let test#javascript#jasmine#file_pattern = 'spec\.js'
+
 augroup reload_myvimrc
   au!
   au BufWritePost ~/dotfiles/nvimrc,~/dotfiles/vimrc.bundles,~/dotfiles/vimrc so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
@@ -89,20 +93,19 @@ set shiftwidth=2
 set shiftround
 set expandtab
 
-" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
-if executable('ag')
-  " Use Ag over Grep
-  set grepprg=ag\ --nogroup\ --nocolor
+nnoremap <silent><C-p> :CtrlSpace O<CR>
 
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+let g:CtrlSpaceGlobCommand = 'ag -l --hidden --nocolor -g ""'
 
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
-endif
+let g:CtrlSpaceLoadLastWorkspaceOnStart = 1
+let g:CtrlSpaceSaveWorkspaceOnSwitch = 1
+let g:CtrlSpaceSaveWorkspaceOnExit = 1
 
-" <leader>lb (list buffers)  ctrp search buffers
-nmap <silent> <leader>L :CtrlPBuffer<CR>
+let g:CtrlSpaceSearchTiming = 100
+
+let g:CtrlSpaceProjectRootMarkers = [
+      \ ".git"
+      \ ]
 
 colorscheme badwolf
 let g:badwolf_darkgutter = 0
@@ -113,10 +116,9 @@ highlight NonText guibg=#060606
 highlight Folded  guibg=#0A0A0A guifg=#9090D0
 
 " Make it obvious where 80 characters is
-" set colorcolumn=80
-" set colorcolumn=+1
+set colorcolumn=120
 
-"highlight current line
+" highlight current line
 :set cursorline
 :set cursorcolumn
 
