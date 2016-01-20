@@ -12,6 +12,7 @@ coverage/
 *.idea
 .gitreview
 .idea/
+.git/
 
 /tablet-retail-system/bundles/
 tablet-retail-system/lifray/
