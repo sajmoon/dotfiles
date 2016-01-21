@@ -1,4 +1,5 @@
 #!/bin/bash
+export SHELL="fish"
 
 install-laptop() {
   # thoughtbot laptop script
