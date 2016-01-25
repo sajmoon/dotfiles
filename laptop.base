@@ -1,0 +1,54 @@
+brew_install_or_upgrade 'fish'
+
+fancy_echo "Setting fish to default shell"
+chsh -s /usr/local/bin/fish
+
+fancy_echo "RCUP: Configure dotfiles"
+rcup -v -d ~/dotfiles
+
+brew_install_or_upgrade 'go'
+brew_install_or_upgrade 'ngrok'
+brew_install_or_upgrade 'watch'
+
+if [ -r "$HOME/.rcrc" ]; then
+  fancy_echo "Updating dotfiles ..."
+  rcup
+fi
+
+brew_cask_expand_alias() {
+  brew cask info "$1" 2>/dev/null | head -1 | awk '{gsub(/:/, ""); print $1}'
+}
+
+brew_cask_is_installed() {
+  local NAME=$(brew_cask_expand_alias "$1")
+  brew cask list -1 | grep -Fqx "$NAME"
+}
+
+brew_cask_install() {
+  if ! brew_cask_is_installed "$1"; then
+    brew cask install "$@"
+  fi
+}
+
+brew_cask_install_or_upgrade() {
+  if brew_cask_is_installed "$1"; then
+    echo "$1 is already installed, brew cask upgrade is not yet implemented"
+  else
+    brew cask install "$@"
+  fi
+}
+
+brew tap caskroom/cask
+brew_install_or_upgrade 'brew-cask'
+brew_cask_install 'google-chrome'
+
+brew_install_or_upgrade 'docker'
+brew_install_or_upgrade 'docker-machine'
+brew_install_or_upgrade 'docker-compose'
+
+brew_cask_install 'iterm2'
+brew_install_or_upgrade 'htop'
+brew_install_or_upgrade 'wget'
+brew_install_or_upgrade 'python'
+brew_install_or_upgrade 'entr'
+brew_install_or_upgrade 'tree'

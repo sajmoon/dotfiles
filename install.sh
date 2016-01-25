@@ -7,5 +7,5 @@ install-laptop() {
   sh mac 2>&1 | tee ~/laptop.log
 }
 
-cp ~/dotfiles/laptop.local ~/.laptop.local
+ln -s ~/dotfiles/laptop.base ~/.laptop.local
 install-laptop
