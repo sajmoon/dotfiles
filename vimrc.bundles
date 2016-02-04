@@ -18,6 +18,7 @@ Plugin 'christoomey/vim-run-interactive'
 
 " Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'szw/vim-ctrlspace'
+Plugin 'rking/ag.vim'
 
 Plugin 'pbrisbin/vim-mkdir'
 Plugin 'scrooloose/syntastic'
