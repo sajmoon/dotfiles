@@ -20,6 +20,8 @@ Plugin 'christoomey/vim-run-interactive'
 Plugin 'szw/vim-ctrlspace'
 Plugin 'rking/ag.vim'
 
+Plugin 'bronson/vim-trailing-whitespace'
+
 Plugin 'pbrisbin/vim-mkdir'
 Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-eunuch'
