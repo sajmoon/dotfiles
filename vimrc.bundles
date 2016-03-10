@@ -16,11 +16,12 @@ Plugin 'sjl/badwolf'
 
 Plugin 'christoomey/vim-run-interactive'
 
-" Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'szw/vim-ctrlspace'
+Plugin 'ctrlpvim/ctrlp.vim'
+" Plugin 'szw/vim-ctrlspace'
 Plugin 'rking/ag.vim'
 
 Plugin 'bronson/vim-trailing-whitespace'
+Plugin 'danro/rename.vim'
 
 Plugin 'pbrisbin/vim-mkdir'
 Plugin 'scrooloose/syntastic'
@@ -34,14 +35,8 @@ Plugin 'tpope/vim-bundler'
 Plugin 'tpope/vim-rails'
 Plugin 'thoughtbot/vim-rspec'
 
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'Shutnik/jshint2.vim'
-
-Plugin 'lambdatoast/elm.vim'
-
 Plugin 'vim-scripts/ctags.vim'
 Plugin 'vim-scripts/matchit.zip'
-Plugin 'vim-scripts/tComment'
 Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-endwise'
 
@@ -49,25 +44,13 @@ Plugin 'majutsushi/tagbar'
 Plugin 'scrooloose/nerdtree'
 Plugin 'jiangmiao/auto-pairs'
 
-Plugin 'fatih/vim-go'
-
-Plugin 'pangloss/vim-javascript'
 Plugin 'burnettk/vim-angular'
-Plugin 'digitaltoad/vim-jade'
-Plugin 'mxw/vim-jsx'
 
 Plugin 'janko-m/vim-test'
 
 Plugin 'itchyny/lightline.vim'
 
 Plugin 'jeetsukumaran/vim-buffergator'
-
-"" Clojure stuff
-Plugin 'guns/vim-sexp'
-Plugin 'tpope/vim-sexp-mappings-for-regular-people'
-Plugin 'tpope/vim-fireplace'
-Plugin 'guns/vim-clojure-static'
-Plugin 'guns/vim-clojure-highlight'
 
 if filereadable(expand("~/.vimrc.bundles.local"))
   source ~/.vimrc.bundles.local

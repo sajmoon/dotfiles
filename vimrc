@@ -95,18 +95,6 @@ set expandtab
 
 nnoremap <silent><C-p> :CtrlSpace O<CR>
 
-let g:CtrlSpaceGlobCommand = 'ag -l --hidden --nocolor -g ""'
-
-let g:CtrlSpaceLoadLastWorkspaceOnStart = 1
-let g:CtrlSpaceSaveWorkspaceOnSwitch = 1
-let g:CtrlSpaceSaveWorkspaceOnExit = 1
-
-let g:CtrlSpaceSearchTiming = 100
-
-let g:CtrlSpaceProjectRootMarkers = [
-      \ ".git"
-      \ ]
-
 colorscheme badwolf
 let g:badwolf_darkgutter = 0
 
