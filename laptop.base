@@ -1,7 +1,9 @@
 brew_install_or_upgrade 'fish'
 
-fancy_echo "Setting fish to default shell"
-chsh -s /usr/local/bin/fish
+fancy_echo "##################################"
+fancy_echo "Not setting fish to default shell."
+fancy_echo "To setup fishshell: chsh -s /usr/local/bin/fish"
+fancy_echo "##################################"
 
 fancy_echo "RCUP: Configure dotfiles"
 rcup -v -d ~/dotfiles
