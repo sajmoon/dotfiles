@@ -18,11 +18,11 @@
   lineNumber = true
 
 [alias]
-  olog = log --online
   s = status -s
   a = add
   master = checkout master
   ci = commit
+  commit = commit -v
   co = checkout
   blog = for-each-ref --sort='-authordate:iso8601' --format=' %(authordate:relative)%09%(refname:short)' refs/heads
 
