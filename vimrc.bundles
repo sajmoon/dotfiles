@@ -42,6 +42,7 @@ Plugin 'tpope/vim-endwise'
 
 Plugin 'majutsushi/tagbar'
 Plugin 'scrooloose/nerdtree'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'jiangmiao/auto-pairs'
 
 Plugin 'burnettk/vim-angular'
