@@ -20,7 +20,7 @@ Plugin 'ctrlpvim/ctrlp.vim'
 " Plugin 'szw/vim-ctrlspace'
 Plugin 'rking/ag.vim'
 
-Plugin 'bronson/vim-trailing-whitespace'
+Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'danro/rename.vim'
 
 Plugin 'pbrisbin/vim-mkdir'
