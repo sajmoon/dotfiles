@@ -33,7 +33,6 @@ alias s="rspec"
 # Pretty print the path
 alias path="echo $PATH | tr -s ':' '\n'"
 
-
 alias json="python -m json.tool"
 
 [[ -f ~/.aliases.local ]] && source ~/.aliases.local
