@@ -11,19 +11,14 @@ Plugin 'gmarik/Vundle.vim'
 
 Plugin 'sheerun/vim-polyglot'
 
-" Themes
-Plugin 'sjl/badwolf'
-
 Plugin 'christoomey/vim-run-interactive'
 
 Plugin 'ctrlpvim/ctrlp.vim'
-" Plugin 'szw/vim-ctrlspace'
 Plugin 'rking/ag.vim'
 
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'danro/rename.vim'
 
-Plugin 'pbrisbin/vim-mkdir'
 Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-eunuch'
 Plugin 'tpope/vim-fugitive'

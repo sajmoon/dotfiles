@@ -93,33 +93,19 @@ set shiftwidth=2
 set shiftround
 set expandtab
 
-nnoremap <silent><C-p> :CtrlSpace O<CR>
-
-colorscheme badwolf
-let g:badwolf_darkgutter = 0
-
-set background=dark
-
-highlight NonText guibg=#060606
-highlight Folded  guibg=#0A0A0A guifg=#9090D0
-
-" Make it obvious where 80 characters is
-set colorcolumn=120
-
 " highlight current line
-:set cursorline
-:set cursorcolumn
+set cursorline
 
 " Line Numbers
 function! SetNormalLineNumbers()
     set norelativenumber
     set number
-    highlight LineNr ctermfg=white
+    highlight LineNr ctermfg=black
 endfunction
 
 function! SetRelativeLineNumbers()
     set relativenumber
-    highlight LineNr ctermfg=white
+    highlight LineNr ctermfg=black
 endfunction
 
 function! NumberToggle()
@@ -136,11 +122,6 @@ nnoremap <c-n> :call NumberToggle()<cr>
 set number
 " relative numbers as default
 call SetRelativeLineNumbers()
-
-" Swithc between relative and unrelative
-" when losing focus
-:au FocusLost * :call SetNormalLineNumbers()
-:au FocusGained * :call SetRelativeLineNumbers()
 
 " toggle relative numbers when
 " switch mode
@@ -164,9 +145,6 @@ inoremap <S-Tab> <c-n>
 
 " Exclude Javascript files in :Rtags via rails.vim due to warnings when parsing
 let g:Tlist_Ctags_Cmd="ctags --exclude='*.js'"
-
-" Index ctags from any project
-map <Leader>ct :!ctags -R .<CR>
 
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
