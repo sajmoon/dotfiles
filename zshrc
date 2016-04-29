@@ -20,7 +20,7 @@ alias setjdk16='export JAVA_HOME=$(/usr/libexec/java_home -v 1.6)'
 alias setjdk17='export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)'
 alias setjdk18='export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)'
 
-# eactivate z
+# activate z
 . /usr/local/etc/profile.d/z.sh
 
 # History search
