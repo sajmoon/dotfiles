@@ -14,21 +14,11 @@ alias -g TWO="| awk '{ print \$2}'"
 alias e="$EDITOR"
 alias v="$VISUAL"
 alias -g KILL="| xargs kill -9 $1"
+alias gs='git status --short'
+alias gd='git diff'
 
 # git
 alias gci="git pull --rebase && rake && git push"
-
-# Bundler
-alias b="bundle"
-
-# Tests and Specs
-alias t="ruby -I test"
-
-# Rails
-alias migrate="rake db:migrate db:rollback && rake db:migrate"
-alias m="migrate"
-alias rk="rake"
-alias s="rspec"
 
 # Pretty print the path
 alias path="echo $PATH | tr -s ':' '\n'"
