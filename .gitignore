@@ -2,6 +2,7 @@ vim/bundle/*
 *.swp
 vim/.netrwhist
 vim/tags/*
+tags
 
 *.local
 mac
