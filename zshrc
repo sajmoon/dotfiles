@@ -25,6 +25,11 @@ alias setjdk18='export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)'
 
 # History search
 bindkey '^R' history-incremental-pattern-search-backward
+bindkey '^P' up-history
+bindkey '^N' down-history
+
+# Fix for lag when changing vim modes in zsh
+export KEYTIMEOUT=1
 
 # Local config
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
