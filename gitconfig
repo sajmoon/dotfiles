@@ -37,17 +37,19 @@
   delete-merged-branches = "!git co master && git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
 
 [push]
-  default = matching
+  default = upstream
 
 [url "https://"]
   insteadOf = git://
 
 [include]
   path = .gitconfig.local
+
 [filter "media"]
   required = true
   clean = git media clean %f
   smudge = git media smudge %f
+
 [filter "lfs"]
   required = true
   clean = git-lfs clean %f
@@ -55,6 +57,7 @@
 
 [diff]
   compactionHeuristic = true
+
 [difftool]
   tool = vimdiff
   prompt = false
