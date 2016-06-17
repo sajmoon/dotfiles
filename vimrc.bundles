@@ -42,6 +42,7 @@ Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'jiangmiao/auto-pairs'
 
 Plugin 'burnettk/vim-angular'
+Plugin 'mattn/emmet-vim.git'
 
 Plugin 'janko-m/vim-test'
 
