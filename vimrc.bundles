@@ -13,9 +13,6 @@ Plugin 'sheerun/vim-polyglot'
 
 Plugin 'christoomey/vim-run-interactive'
 
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'rking/ag.vim'
-
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'danro/rename.vim'
 
@@ -36,9 +33,6 @@ Plugin 'vim-scripts/matchit.zip'
 Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-endwise'
 
-Plugin 'majutsushi/tagbar'
-Plugin 'scrooloose/nerdtree'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'jiangmiao/auto-pairs'
 
 Plugin 'burnettk/vim-angular'
@@ -47,8 +41,6 @@ Plugin 'mattn/emmet-vim.git'
 Plugin 'janko-m/vim-test'
 
 Plugin 'itchyny/lightline.vim'
-
-Plugin 'jeetsukumaran/vim-buffergator'
 
 if filereadable(expand("~/.vimrc.bundles.local"))
   source ~/.vimrc.bundles.local

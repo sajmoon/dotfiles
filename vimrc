@@ -1,6 +1,25 @@
-" Use Vim settings, rather then Vi settings. This setting must be as early as
-" possible, as it has side effects.
 set nocompatible
+set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim
+
+filetype plugin indent on
+
+call dein#begin(expand('~/.vim/dein'))
+
+  call dein#add('Shougo/dein.vim')
+  call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
+  call dein#add('Shougo/unite.vim')
+
+  call dein#add('sheerun/vim-polyglot.vim')
+  call dein#add('tpope/vim-fugitive.vim')
+
+  call dein#add('itchyny/lightline.vim')
+
+  " lazy load on command executed
+  call dein#add('scrooloose/nerdtree',
+    \{'on_cmd': 'NERDTreeToggle'})
+
+call dein#end()
+
 set shell=bash
 set hidden
 set showtabline=0
@@ -39,22 +58,6 @@ cmap w!! w !sudo tee % >/dev/null
 if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
   syntax on
 endif
-
-if filereadable(expand("~/.vimrc.bundles"))
-  source ~/.vimrc.bundles
-endif
-
-filetype plugin indent on
-
-" vim-test
-nmap <silent> <leader>t :TestNearest<CR>
-nmap <silent> <leader>T :TestFile<CR>
-nmap <silent> <leader>a :TestSuite<CR>
-nmap <silent> <leader>l :TestLast<CR>
-
-let g:test#strategy = "dispatch"
-
-let test#javascript#jasmine#file_pattern = 'spec\.js'
 
 augroup reload_myvimrc
   au!
@@ -120,39 +123,35 @@ nnoremap <c-n> :call NumberToggle()<cr>
 
 " Defaults
 set number
-" relative numbers as default
-call SetRelativeLineNumbers()
 
 " toggle relative numbers when
 " switch mode
-autocmd InsertEnter * :call SetNormalLineNumbers()
-autocmd InsertLeave * :call SetRelativeLineNumbers()
+" autocmd InsertEnter * :call SetNormalLineNumbers()
+" autocmd InsertLeave * :call SetRelativeLineNumbers()
 
 " Tab completion
 " will insert tab at beginning of line,
 " will use completion if not at beginning
 set wildmode=list:longest,list:full
 function! InsertTabWrapper()
-    let col = col('.') - 1
-    if !col || getline('.')[col - 1] !~ '\k'
-        return "\<tab>"
-    else
-        return "\<c-p>"
-    endif
+  let col = col('.') - 1
+  if !col || getline('.')[col - 1] !~ '\k'
+      return "\<tab>"
+  else
+      return "\<c-p>"
+  endif
 endfunction
 inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
 inoremap <S-Tab> <c-n>
 
 " Exclude Javascript files in :Rtags via rails.vim due to warnings when parsing
-let g:Tlist_Ctags_Cmd="ctags --exclude='*.js'"
+" let g:Tlist_Ctags_Cmd="ctags --exclude='*.js'"
 
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
 
 " Treat <li> and <p> tags like the block tags they are
 let g:html_indent_tags = 'li\|p'
-
-nmap <F4> :TagbarToggle<CR>
 
 " Open new split panes to right and bottom, which feels more natural
 set splitbelow
@@ -175,7 +174,7 @@ nnoremap <C-l> <C-w>l
 
 " let g:syntastic_check_on_open = 1
 " let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
-let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['javascript'],'passive_filetypes': ['go'] }
+let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': ['go', 'javascript'] }
 
 nnoremap <C-w>E :SyntasticCheck<CR> :SyntasticToggleMode<CR>
 let g:syntastic_javascript_checkers = ['eslint']
@@ -199,6 +198,28 @@ let g:bufferline_echo = 0
 
 " NERDTree toggle on leader -> t
 nmap <silent> <leader>n :NERDTreeToggle<CR>
+
+" Unite
+let g:unite_source_history_yank_enable = 1
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+nnoremap <leader>t :<C-u>Unite -buffer-name=files   -start-insert file_rec/async:!<cr>
+nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
+nnoremap <leader>r :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
+nnoremap <leader>o :<C-u>Unite -no-split -buffer-name=outline -start-insert outline<cr>
+nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
+nnoremap <leader>e :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>"
+nnoremap <leader>/ :Unite grep:.<cr>
+
+" Custom mappings for the unite buffer
+autocmd FileType unite call s:unite_settings()
+function! s:unite_settings()
+  " Play nice with supertab
+  let b:SuperTabDisabled=1
+  " Enable navigation with control-j and control-k in insert mode
+  imap <buffer> <C-j>   <Plug>(unite_select_next_line)
+  imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
+endfunction
+
 
 " Local config
 if filereadable($HOME . "/.vimrc.local")
