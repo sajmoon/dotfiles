@@ -8,11 +8,14 @@ call dein#begin(s:dein_root)
   call dein#add('Shougo/dein.vim')
   call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
   call dein#add('Shougo/unite.vim')
+  call dein#add('Shougo/neoyank.vim')
 
   call dein#add('sheerun/vim-polyglot')
   call dein#add('tpope/vim-surround')
 
+  " git stuffs
   call dein#add('tpope/vim-fugitive')
+  call dein#add('airblade/vim-gitgutter')
 
   call dein#add('itchyny/lightline.vim')
 
