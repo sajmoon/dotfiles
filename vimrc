@@ -196,9 +196,21 @@ set diffopt+=vertical
 " lightline - status bar
 set encoding=utf-8
 let g:lightline = {
-\ 'colorscheme': 'wombat',
-\ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
-\ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
+  \ 'colorscheme': 'wombat',
+  \ 'active': {
+  \   'left': [ [ 'mode', 'paste' ],
+  \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
+  \ },
+  \ 'component': {
+  \   'readonly': '%{&filetype=="help"?"":&readonly?"⭤":""}',
+  \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
+  \   'fugitive': '%{exists("*fugitive#statusline()")?fugitive#statusline():""}'
+  \ },
+  \ 'component_visible_condition': {
+  \   'readonly': '(&filetype!="help"&& &readonly)',
+  \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
+  \   'fugitive': '(exists("*fugitive#statusline()") && ""!=fugitive#statusline())'
+  \ },
 \ }
 
 let g:bufferline_echo = 0
