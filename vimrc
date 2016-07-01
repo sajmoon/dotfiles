@@ -1,16 +1,18 @@
 set nocompatible
-set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim
 
-filetype plugin indent on
+let s:dein_root = expand('~/.vim/dein')
+let s:dein_path = expand(s:dein_root . '/repos/github.com/Shougo/dein.vim')
+execute 'set runtimepath^=' . s:dein_path
 
-call dein#begin(expand('~/.vim/dein'))
-
+call dein#begin(s:dein_root)
   call dein#add('Shougo/dein.vim')
   call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
   call dein#add('Shougo/unite.vim')
 
-  call dein#add('sheerun/vim-polyglot.vim')
-  call dein#add('tpope/vim-fugitive.vim')
+  call dein#add('sheerun/vim-polyglot')
+  call dein#add('tpope/vim-surround')
+
+  call dein#add('tpope/vim-fugitive')
 
   call dein#add('itchyny/lightline.vim')
 
@@ -19,6 +21,8 @@ call dein#begin(expand('~/.vim/dein'))
     \{'on_cmd': 'NERDTreeToggle'})
 
 call dein#end()
+
+filetype plugin indent on
 
 set shell=bash
 set hidden
