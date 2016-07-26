@@ -14,6 +14,9 @@ export PATH="/usr/local/heroku/bin:$PATH"
 export PATH="/usr/sbin:$PATH"
 export PATH="/sbin:$PATH"
 
+export VISUAL=vim
+export EDITOR=vim
+
 alias mex="iex -S mix"
 
 alias setjdk16='export JAVA_HOME=$(/usr/libexec/java_home -v 1.6)'
