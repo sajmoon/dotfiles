@@ -25,7 +25,6 @@ Plugin 'airblade/vim-gitgutter'
 
 Plugin 'tpope/vim-bundler'
 Plugin 'tpope/vim-rails'
-Plugin 'thoughtbot/vim-rspec'
 Plugin 'tpope/vim-cucumber'
 
 Plugin 'vim-scripts/ctags.vim'
