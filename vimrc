@@ -27,6 +27,10 @@ call dein#end()
 
 filetype plugin indent on
 
+if dein#check_install()
+  call dein#install()
+endif
+
 set shell=bash
 set hidden
 set showtabline=0
