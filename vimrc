@@ -1,31 +1,37 @@
-set nocompatible
+if &compatible
+  set nocompatible
+endif
 
 let s:dein_root = expand('~/.vim/dein')
 let s:dein_path = expand(s:dein_root . '/repos/github.com/Shougo/dein.vim')
-execute 'set runtimepath^=' . s:dein_path
+set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim
 
-call dein#begin(s:dein_root)
+call dein#begin('~/.vim/dein')
   call dein#add('Shougo/dein.vim')
   call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
-  call dein#add('Shougo/unite.vim')
   call dein#add('Shougo/neoyank.vim')
 
-  call dein#add('sheerun/vim-polyglot')
+  " utils
   call dein#add('tpope/vim-surround')
+  call dein#add('Shougo/unite.vim')
+  call dein#add('scrooloose/nerdtree',
+    \{'on_cmd': 'NERDTreeToggle'})
 
-  " git stuffs
+  " Support for language packs
+  call dein#add('sheerun/vim-polyglot')
+
+  " Git stuffs
   call dein#add('tpope/vim-fugitive')
   call dein#add('airblade/vim-gitgutter')
 
   call dein#add('itchyny/lightline.vim')
 
-  " lazy load on command executed
-  call dein#add('scrooloose/nerdtree',
-    \{'on_cmd': 'NERDTreeToggle'})
-
+  " Elixir stuff
+  call dein#add('slashmili/alchemist.vim')
 call dein#end()
 
 filetype plugin indent on
+syntax enable
 
 if dein#check_install()
   call dein#install()
@@ -34,6 +40,7 @@ endif
 set shell=bash
 set hidden
 set showtabline=0
+set termguicolors
 
 " Leader
 let mapleader = " "
@@ -230,7 +237,10 @@ nnoremap <leader>r :<C-u>Unite -no-split -buffer-name=mru     -start-insert file
 nnoremap <leader>o :<C-u>Unite -no-split -buffer-name=outline -start-insert outline<cr>
 nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
 nnoremap <leader>e :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>"
+
+nnoremap <C-p> :Unite -start-insert -auto-preview file_rec/async<CR>
 nnoremap <leader>/ :Unite grep:.<cr>
+nnoremap <space>s :Unite -quick-match buffer<cr>
 
 " Custom mappings for the unite buffer
 autocmd FileType unite call s:unite_settings()
@@ -241,7 +251,6 @@ function! s:unite_settings()
   imap <buffer> <C-j>   <Plug>(unite_select_next_line)
   imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
 endfunction
-
 
 " Local config
 if filereadable($HOME . "/.vimrc.local")
