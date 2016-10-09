@@ -10,6 +10,7 @@ call dein#begin('~/.vim/dein')
   call dein#add('Shougo/dein.vim')
   call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
   call dein#add('Shougo/neoyank.vim')
+  call dein#add('Shougo/deoplete.nvim')
 
   " utils
   call dein#add('tpope/vim-surround')
@@ -76,11 +77,6 @@ cmap w!! w !sudo tee % >/dev/null
 if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
   syntax on
 endif
-
-augroup reload_myvimrc
-  au!
-  au BufWritePost ~/dotfiles/nvimrc,~/dotfiles/vimrc.bundles,~/dotfiles/vimrc so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
-augroup END
 
 augroup vimrcEx
   autocmd!
@@ -251,6 +247,9 @@ function! s:unite_settings()
   imap <buffer> <C-j>   <Plug>(unite_select_next_line)
   imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
 endfunction
+
+" Enable deoplete
+let g:deoplete#enable_at_startup = 1
 
 " Local config
 if filereadable($HOME . "/.vimrc.local")
