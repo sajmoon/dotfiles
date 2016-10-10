@@ -9,14 +9,15 @@ set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim
 call dein#begin('~/.vim/dein')
   call dein#add('Shougo/dein.vim')
   call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
-  call dein#add('Shougo/neoyank.vim')
-  call dein#add('Shougo/deoplete.nvim')
 
-  " utils
-  call dein#add('tpope/vim-surround')
+  " Utility plugins
+  call dein#add('Shougo/deoplete.nvim')
+  call dein#add('Shougo/neoyank.vim')
   call dein#add('Shougo/unite.vim')
+  call dein#add('itchyny/lightline.vim')
   call dein#add('scrooloose/nerdtree',
     \{'on_cmd': 'NERDTreeToggle'})
+  call dein#add('tpope/vim-surround')
 
   " Support for language packs
   call dein#add('sheerun/vim-polyglot')
@@ -25,7 +26,6 @@ call dein#begin('~/.vim/dein')
   call dein#add('tpope/vim-fugitive')
   call dein#add('airblade/vim-gitgutter')
 
-  call dein#add('itchyny/lightline.vim')
 
   " Elixir stuff
   call dein#add('slashmili/alchemist.vim')
