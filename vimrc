@@ -221,11 +221,6 @@ let g:bufferline_echo = 0
 " NERDTree toggle on leader -> t
 nmap <silent> <leader>n :NERDTreeToggle<CR>
 
-" Unite
-nnoremap <leader>o :<C-u>Unite -no-split -buffer-name=outline -start-insert outline<cr>
-
-nnoremap <space>s :Unite -quick-match buffer<cr>
-
 " fzf
 let g:fzf_layout = { 'down': '~40%' }
 let g:fzf_nvim_statusline = 0 " disable statusline overwriting
