@@ -190,6 +190,9 @@ nnoremap <C-l> <C-w>l
 " let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
 let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': ['go', 'javascript'] }
 
+" Messy .es6 filename should be javascript
+autocmd BufNewFile,BufRead *.es6 set syntax=javascript
+
 nnoremap <C-w>E :SyntasticCheck<CR> :SyntasticToggleMode<CR>
 let g:syntastic_javascript_checkers = ['eslint']
 
