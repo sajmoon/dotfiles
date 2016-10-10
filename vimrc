@@ -224,6 +224,7 @@ nmap <silent> <leader>n :NERDTreeToggle<CR>
 " fzf
 let g:fzf_layout = { 'down': '~40%' }
 let g:fzf_nvim_statusline = 0 " disable statusline overwriting
+let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 nnoremap <silent> <C-p> :Files<CR>
 nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader>/ :execute 'Ag ' . input('Ag/')<CR>
