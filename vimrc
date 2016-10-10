@@ -13,7 +13,8 @@ call dein#begin('~/.vim/dein')
   " Utility plugins
   call dein#add('Shougo/deoplete.nvim')
   call dein#add('Shougo/neoyank.vim')
-  call dein#add('Shougo/unite.vim')
+  call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 })
+  call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
   call dein#add('itchyny/lightline.vim')
   call dein#add('scrooloose/nerdtree',
     \{'on_cmd': 'NERDTreeToggle'})
@@ -25,7 +26,6 @@ call dein#begin('~/.vim/dein')
   " Git stuffs
   call dein#add('tpope/vim-fugitive')
   call dein#add('airblade/vim-gitgutter')
-
 
   " Elixir stuff
   call dein#add('slashmili/alchemist.vim')
@@ -64,9 +64,11 @@ set mouse=a
 set lazyredraw " only redraw when vim has too
 
 " Teach vim different fileextensions
-
 au BufRead,BufNewFile *.md set filetype=markdown
 au BufRead,BufNewFile *.go set filetype=go
+
+" Messy .es6 filename should be javascript
+autocmd BufNewFile,BufRead *.es6 set syntax=javascript
 
 " if you forgot to use sudo for some files,
 " use :w!!
@@ -158,12 +160,6 @@ endfunction
 inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
 inoremap <S-Tab> <c-n>
 
-" Exclude Javascript files in :Rtags via rails.vim due to warnings when parsing
-" let g:Tlist_Ctags_Cmd="ctags --exclude='*.js'"
-
-" Switch between the last two files
-nnoremap <leader><leader> <c-^>
-
 " Treat <li> and <p> tags like the block tags they are
 let g:html_indent_tags = 'li\|p'
 
@@ -189,9 +185,6 @@ nnoremap <C-l> <C-w>l
 " let g:syntastic_check_on_open = 1
 " let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
 let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': ['go', 'javascript'] }
-
-" Messy .es6 filename should be javascript
-autocmd BufNewFile,BufRead *.es6 set syntax=javascript
 
 nnoremap <C-w>E :SyntasticCheck<CR> :SyntasticToggleMode<CR>
 let g:syntastic_javascript_checkers = ['eslint']
@@ -229,27 +222,16 @@ let g:bufferline_echo = 0
 nmap <silent> <leader>n :NERDTreeToggle<CR>
 
 " Unite
-let g:unite_source_history_yank_enable = 1
-nnoremap <leader>t :<C-u>Unite -buffer-name=files   -start-insert file_rec/async:!<cr>
-nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
-nnoremap <leader>r :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
 nnoremap <leader>o :<C-u>Unite -no-split -buffer-name=outline -start-insert outline<cr>
-nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
-nnoremap <leader>e :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>"
 
-nnoremap <C-p> :Unite -start-insert -auto-preview file_rec/async<CR>
-nnoremap <leader>/ :Unite grep:.<cr>
 nnoremap <space>s :Unite -quick-match buffer<cr>
 
-" Custom mappings for the unite buffer
-autocmd FileType unite call s:unite_settings()
-function! s:unite_settings()
-  " Play nice with supertab
-  let b:SuperTabDisabled=1
-  " Enable navigation with control-j and control-k in insert mode
-  imap <buffer> <C-j>   <Plug>(unite_select_next_line)
-  imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
-endfunction
+" fzf
+let g:fzf_layout = { 'down': '~40%' }
+let g:fzf_nvim_statusline = 0 " disable statusline overwriting
+nnoremap <silent> <C-p> :Files<CR>
+nnoremap <silent> <leader>b :Buffers<CR>
+nnoremap <silent> <leader>/ :execute 'Ag ' . input('Ag/')<CR>
 
 " Enable deoplete
 let g:deoplete#enable_at_startup = 1
