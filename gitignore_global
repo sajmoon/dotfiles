@@ -14,7 +14,4 @@ coverage/
 .idea/
 .git/
 
-/tablet-retail-system/bundles/
-tablet-retail-system/lifray/
-tablet-retail-system/liferay/
-npm-debug.log
+npm-debug.log*
