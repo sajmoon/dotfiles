@@ -24,3 +24,6 @@ function fish_prompt
   set_color normal
   echo -n '> '
 end
+
+# Set brew path
+set -g fish_user_paths "/usr/local/sbin" $fish_user_paths
