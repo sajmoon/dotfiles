@@ -9,6 +9,7 @@ set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim
 call dein#begin('~/.vim/dein')
   call dein#add('Shougo/dein.vim')
   call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
+  call dein#add('neomake/neomake')
 
   " Utility plugins
   call dein#add('Shougo/deoplete.nvim')
@@ -19,16 +20,28 @@ call dein#begin('~/.vim/dein')
   call dein#add('scrooloose/nerdtree',
     \{'on_cmd': 'NERDTreeToggle'})
   call dein#add('tpope/vim-surround')
+  call dein#add('ervandew/supertab') " Perform autocomplete on tab in insert mode
 
   " Support for language packs
   call dein#add('sheerun/vim-polyglot')
+
+  " Elixir stuff
+  call dein#add('slashmili/alchemist.vim')
+
+  " Snippets
+  call dein#add('SirVer/ultisnips')
+  call dein#add('honza/vim-snippets')
+
+  " Javascript
+  call dein#add('carlitux/deoplete-ternjs', { 'build': { 'mac': 'npm install -g tern', 'unix': 'npm install -g tern' }})
+  call dein#add('othree/jspc.vim') " js params complete
 
   " Git stuffs
   call dein#add('tpope/vim-fugitive')
   call dein#add('airblade/vim-gitgutter')
 
-  " Elixir stuff
-  call dein#add('slashmili/alchemist.vim')
+  " Create directories
+  call dein#add('dockyard/vim-easydir')
 call dein#end()
 
 filetype plugin indent on
@@ -55,9 +68,10 @@ set noswapfile    " http://robots.thoughtbot.com/post/18739402579/global-gitigno
 set history=50
 set ruler         " show the cursor position all the time
 set showcmd       " display incomplete commands
-set incsearch     " do incremental searching
+set incsearch     " do incremental searching before hitting enter
 set laststatus=2  " Always display the status line
 set autowrite     " Automatically :write before running commands
+set scrolloff=1   " always show one line above and below
 set encoding=utf-8
 set pastetoggle=<F2>
 set mouse=a
@@ -145,21 +159,6 @@ set number
 " autocmd InsertEnter * :call SetNormalLineNumbers()
 " autocmd InsertLeave * :call SetRelativeLineNumbers()
 
-" Tab completion
-" will insert tab at beginning of line,
-" will use completion if not at beginning
-set wildmode=list:longest,list:full
-function! InsertTabWrapper()
-  let col = col('.') - 1
-  if !col || getline('.')[col - 1] !~ '\k'
-      return "\<tab>"
-  else
-      return "\<c-p>"
-  endif
-endfunction
-inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
-inoremap <S-Tab> <c-n>
-
 " Treat <li> and <p> tags like the block tags they are
 let g:html_indent_tags = 'li\|p'
 
@@ -173,25 +172,31 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
-" configure syntastic syntax checking to check on open as well as save
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
-
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
-let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': ['go', 'javascript'] }
-
-nnoremap <C-w>E :SyntasticCheck<CR> :SyntasticToggleMode<CR>
-let g:syntastic_javascript_checkers = ['eslint']
-
 " Set spellfile to location that is guaranteed to exist, can be symlinked to
 " Dropbox or kept in Git
 set spellfile=$HOME/.vim-spell-en.utf-8.add
+
+" linting
+nnoremap <c-l> :Neomake<cr><cr>
+let g:neomake_verbose=3
+let g:neomake_open_list = 2
+let g:neomake_javascript_enabled_makers = ['eslint']
+
+let s:eslint_path = system('PATH=$(npm bin):$PATH && which eslint')
+let b:neomake_javascript_eslint_exe = substitute(s:eslint_path, '^\n*\s*\(.\{-}\)\n*\s*$', '\1', '')
+
+" completion
+set completeopt=longest,menuone,preview
+let g:deoplete#sources = {}
+let g:deoplete#sources['javascript.jsx'] = ['file', 'ultisnips', 'ternjs']
+let g:tern#command = ['tern']
+
+" close the preview window when you're not using it
+let g:SuperTabClosePreviewOnPopupClose = 1
+
+autocmd FileType javascript let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+let g:UltiSnipsExpandTrigger="<C-j>"
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
 " Always use vertical diffs
 set diffopt+=vertical
@@ -229,7 +234,7 @@ nnoremap <silent> <C-p> :Files<CR>
 nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader>/ :execute 'Ag ' . input('Ag/')<CR>
 
-" Enable deoplete
+" Enable deoplete at start up
 let g:deoplete#enable_at_startup = 1
 
 " Local config
