@@ -1,6 +1,7 @@
 if &compatible
   set nocompatible
 endif
+set runtimepath+=~/.vim
 
 let s:dein_root = expand('~/.vim/dein')
 let s:dein_path = expand(s:dein_root . '/repos/github.com/Shougo/dein.vim')
@@ -30,7 +31,6 @@ call dein#begin('~/.vim/dein')
 
   " Snippets
   call dein#add('SirVer/ultisnips')
-  call dein#add('honza/vim-snippets')
 
   " Javascript
   call dein#add('carlitux/deoplete-ternjs', { 'build': { 'mac': 'npm install -g tern', 'unix': 'npm install -g tern' }})
@@ -176,12 +176,17 @@ nnoremap <C-l> <C-w>l
 " Dropbox or kept in Git
 set spellfile=$HOME/.vim-spell-en.utf-8.add
 
+" Snippets
+let g:UltiSnipsSnippetsDir="~/.vim/snips"
+let g:UltiSnipsSnippetDirectories=["snips"]
+
 " linting
 nnoremap <c-l> :Neomake<cr><cr>
 let g:neomake_verbose=3
 let g:neomake_open_list = 2
 let g:neomake_javascript_enabled_makers = ['eslint']
 
+" Make sure we use a local eslint so it works with plugins etc.
 let s:eslint_path = system('PATH=$(npm bin):$PATH && which eslint')
 let b:neomake_javascript_eslint_exe = substitute(s:eslint_path, '^\n*\s*\(.\{-}\)\n*\s*$', '\1', '')
 

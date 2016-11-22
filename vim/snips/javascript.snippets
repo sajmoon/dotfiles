@@ -1,0 +1,22 @@
+snippet cl "console.log(...)"
+console.log('$1')
+endsnippet
+
+snippet r "return"
+return ${0:result}
+endsnippet
+
+snippet c=> "Const Function" bA
+const ${1:name} = (${2:args}) => {
+	return $3
+}
+endsnippet
+
+snippet class "Class"
+class ${1:Name} {
+	constructor(${2:arg}) {
+		$3
+	}
+	$4
+}
+endsnippet
