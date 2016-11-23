@@ -20,3 +20,34 @@ class ${1:Name} {
 	$4
 }
 endsnippet
+
+snippet sfc "Stateless functional component"
+function $1($2) {
+	return (
+	)
+}
+
+export default $1
+endsnippet
+
+snippet fun "A function" b
+function ${1:Name}($2) {
+	$0
+}
+endsnippet
+
+snippet desc "Mocha describe" b
+describe('${1:Description}', () => {
+	$0
+})
+endsnippet
+
+snippet it "Mocha it block" b
+it('${1:What}', () => {
+	$0
+})
+endsnippet
+
+snippet expect "chai expect" b
+expect(${1:object}).to.$2
+endsnippet
