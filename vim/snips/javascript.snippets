@@ -2,6 +2,10 @@ snippet cl "console.log(...)"
 console.log('$1')
 endsnippet
 
+snippet cld "console.log('object', object)"
+console.log('${1:object}', $1)
+endsnippet
+
 snippet r "return"
 return ${0:result}
 endsnippet
@@ -21,11 +25,31 @@ class ${1:Name} {
 }
 endsnippet
 
-snippet sfc "Stateless functional component"
-function $1($2) {
-	return (
-	)
+snippet rrcc "React Redux Class Component" b
+import React, { PropTypes } from 'react'
+import { connect } from 'react-redux'
+
+class ${1:ComponentName} extends React.Component {
+	render() {
+		return (${2:null})
+	}
 }
+
+const mapStateToProps = {}
+
+export default connect(mapStateToProps)($1)
+endsnippet
+
+snippet rfc "React Stateless functional component"
+import React, { PropTypes } from 'react'
+
+const propTypes = {}
+
+function ${1:funName}(${2:props}) {
+	return ${0:null}
+}
+
+$1.propType = propTypes
 
 export default $1
 endsnippet
