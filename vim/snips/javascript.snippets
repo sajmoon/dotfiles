@@ -75,3 +75,20 @@ endsnippet
 snippet expect "chai expect" b
 expect(${1:object}).to.$2
 endsnippet
+
+snippet spec "imports for a javascript component spec" b
+import React from 'react'
+import { expect } from 'chai'
+import { shallow } from 'enzyme'
+
+import $1 from './$1'
+
+describe('<${1:ComponentName} />', () => {
+	$0
+})
+endsnippet
+
+snippet shallow "shallow render a component" b
+const wrapper = shallow(<${1:Component} />)
+expect(wrapper.$2).to.$3
+endsnippet
