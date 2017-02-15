@@ -27,3 +27,4 @@ end
 
 # Set brew path
 set -g fish_user_paths "/usr/local/sbin" $fish_user_paths
+source ~/.asdf/asdf.fish
