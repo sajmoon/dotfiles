@@ -15,11 +15,11 @@ call dein#begin('~/.vim/dein')
   " Utility plugins
   call dein#add('Shougo/deoplete.nvim')
   call dein#add('Shougo/neoyank.vim')
+  call dein#add('sbdchd/neoformat')
   call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 })
   call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
   call dein#add('itchyny/lightline.vim')
-  call dein#add('scrooloose/nerdtree',
-    \{'on_cmd': 'NERDTreeToggle'})
+  call dein#add('scrooloose/nerdtree', {'on_cmd': 'NERDTreeToggle'})
   call dein#add('tpope/vim-surround')
   call dein#add('ervandew/supertab') " Perform autocomplete on tab in insert mode
 
@@ -34,7 +34,7 @@ call dein#begin('~/.vim/dein')
 
   " Javascript
   call dein#add('carlitux/deoplete-ternjs', { 'build': { 'mac': 'npm install -g tern', 'unix': 'npm install -g tern' }})
-  call dein#add('othree/jspc.vim') " js params complete
+  " call dein#add('othree/jspc.vim') " js params complete
 
   " Git stuffs
   call dein#add('tpope/vim-fugitive')
@@ -59,8 +59,6 @@ set termguicolors
 " Leader
 let mapleader = " "
 
-:set t_ut=
-
 set backspace=2   " Backspace deletes like most programs in insert mode
 set nobackup
 set nowritebackup
@@ -79,7 +77,6 @@ set lazyredraw " only redraw when vim has too
 
 " Teach vim different fileextensions
 au BufRead,BufNewFile *.md set filetype=markdown
-au BufRead,BufNewFile *.go set filetype=go
 
 " Messy .es6 filename should be javascript
 autocmd BufNewFile,BufRead *.es6 set syntax=javascript
@@ -104,13 +101,6 @@ augroup vimrcEx
     \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
     \   exe "normal g`\"" |
     \ endif
-
-  " Cucumber navigation commands
-  autocmd User Rails Rnavcommand step features/step_definitions -glob=**/* -suffix=_steps.rb
-  autocmd User Rails Rnavcommand config config -glob=**/* -suffix=.rb -default=routes
-
-  " Set syntax highlighting for specific file types
-  autocmd BufRead,BufNewFile Appraisals set filetype=ruby
 
   " Automatically wrap at 72 characters and spell check git commit messages
   autocmd FileType gitcommit setlocal textwidth=72
@@ -180,28 +170,39 @@ set spellfile=$HOME/.vim-spell-en.utf-8.add
 let g:UltiSnipsSnippetsDir="~/.vim/snips"
 let g:UltiSnipsSnippetDirectories=["snips"]
 
-" linting
-nnoremap <c-l> :Neomake<cr><cr>
-let g:neomake_verbose=3
-let g:neomake_open_list = 2
-let g:neomake_javascript_enabled_makers = ['eslint']
+" completion (Deoplete)
+" Enable deoplete at start up
+let g:deoplete#enable_at_startup = 1
 
-" Make sure we use a local eslint so it works with plugins etc.
-let s:eslint_path = system('PATH=$(npm bin):$PATH && which eslint')
-let b:neomake_javascript_eslint_exe = substitute(s:eslint_path, '^\n*\s*\(.\{-}\)\n*\s*$', '\1', '')
-
-" completion
+" configuration
 set completeopt=longest,menuone,preview
 let g:deoplete#sources = {}
 let g:deoplete#sources['javascript.jsx'] = ['file', 'ultisnips', 'ternjs']
+let g:deoplete#sources['javascript.js'] = ['file', 'ultisnips', 'ternjs']
 let g:tern#command = ['tern']
+let g:tern#arguments = ["--persistent"]
+
+augroup omnifuncs
+  autocmd!
+  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+augroup end
+
+" tern
+let g:tern#filetypes = [
+      \ 'jsx',
+      \ 'javascript.jsx',
+      \ 'vue',
+      \ '...'
+      \ ]
+autocmd FileType javascript nnoremap <silent> <buffer> gb :TernDef<CR>
+" Move to term definition
 
 " close the preview window when you're not using it
-let g:SuperTabClosePreviewOnPopupClose = 1
+" let g:SuperTabClosePreviewOnPopupClose = 1
 
-autocmd FileType javascript let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
-let g:UltiSnipsExpandTrigger="<C-j>"
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" autocmd FileType javascript let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+" let g:UltiSnipsExpandTrigger="<C-j>"
+" inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
 " Always use vertical diffs
 set diffopt+=vertical
@@ -232,15 +233,12 @@ let g:bufferline_echo = 0
 nmap <silent> <leader>n :NERDTreeToggle<CR>
 
 " fzf
-let g:fzf_layout = { 'down': '~40%' }
+let g:fzf_layout = { 'down': '~50%' }
 let g:fzf_nvim_statusline = 0 " disable statusline overwriting
 let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 nnoremap <silent> <C-p> :Files<CR>
 nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader>/ :execute 'Ag ' . input('Ag/')<CR>
-
-" Enable deoplete at start up
-let g:deoplete#enable_at_startup = 1
 
 " Local config
 if filereadable($HOME . "/.vimrc.local")
