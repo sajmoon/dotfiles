@@ -23,6 +23,9 @@ call dein#begin('~/.vim/dein')
   call dein#add('tpope/vim-surround')
   call dein#add('ervandew/supertab') " Perform autocomplete on tab in insert mode
 
+  call dein#add('xolox/vim-misc')
+  call dein#add('xolox/vim-easytags')
+
   " Support for language packs
   call dein#add('sheerun/vim-polyglot')
 
@@ -34,7 +37,6 @@ call dein#begin('~/.vim/dein')
 
   " Javascript
   call dein#add('carlitux/deoplete-ternjs', { 'build': { 'mac': 'npm install -g tern', 'unix': 'npm install -g tern' }})
-  " call dein#add('othree/jspc.vim') " js params complete
 
   " Git stuffs
   call dein#add('tpope/vim-fugitive')
@@ -59,6 +61,8 @@ set termguicolors
 " Leader
 let mapleader = " "
 
+set path=**
+set wildmenu
 set backspace=2   " Backspace deletes like most programs in insert mode
 set nobackup
 set nowritebackup
@@ -74,6 +78,9 @@ set encoding=utf-8
 set pastetoggle=<F2>
 set mouse=a
 set lazyredraw " only redraw when vim has too
+
+command! MakeTags !ctags -Re --exclude=public/assets --exclude=node_modules --exclude=vendor/assets/bower --exclude=*.js .
+command! MakeTagsJs !find ./web/. -type f -iregex ".*\.js$" -exec jsctags {} -f \; | sed '/^$/d' | sort > tags
 
 " Teach vim different fileextensions
 au BufRead,BufNewFile *.md set filetype=markdown
@@ -190,19 +197,21 @@ augroup end
 " tern
 let g:tern#filetypes = [
       \ 'jsx',
-      \ 'javascript.jsx',
-      \ 'vue',
-      \ '...'
+      \ 'javascript.jsx'
       \ ]
 autocmd FileType javascript nnoremap <silent> <buffer> gb :TernDef<CR>
-" Move to term definition
 
-" close the preview window when you're not using it
-" let g:SuperTabClosePreviewOnPopupClose = 1
+" Configre neoMake
+" Run Neomake on save
+autocmd! BufWritePost,BufEnter * Neomake
 
-" autocmd FileType javascript let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
-" let g:UltiSnipsExpandTrigger="<C-j>"
-" inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+let g:neomake_javascript_enabled_makers = ['eslint_d']
+
+" NeoFormat
+let g:neoformat_run_all_formatters = 1
+
+" Javascript
+let g:neoformat_enabled_javascript = ['eslint']
 
 " Always use vertical diffs
 set diffopt+=vertical
