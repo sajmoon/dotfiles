@@ -24,7 +24,6 @@ call dein#begin('~/.vim/dein')
   call dein#add('ervandew/supertab') " Perform autocomplete on tab in insert mode
 
   call dein#add('xolox/vim-misc')
-  call dein#add('xolox/vim-easytags')
 
   " Support for language packs
   call dein#add('sheerun/vim-polyglot')
@@ -56,7 +55,6 @@ endif
 set shell=bash
 set hidden
 set showtabline=0
-set termguicolors
 
 " Leader
 let mapleader = " "
@@ -201,11 +199,15 @@ let g:tern#filetypes = [
       \ ]
 autocmd FileType javascript nnoremap <silent> <buffer> gb :TernDef<CR>
 
-" Configre neoMake
+" Configure tags
+
+" Configre Neomake
+
 " Run Neomake on save
 autocmd! BufWritePost,BufEnter * Neomake
 
 let g:neomake_javascript_enabled_makers = ['eslint_d']
+let g:neomake_elixir_enabled_makers = ['credo']
 
 " NeoFormat
 let g:neoformat_run_all_formatters = 1
@@ -242,7 +244,7 @@ let g:bufferline_echo = 0
 nmap <silent> <leader>n :NERDTreeToggle<CR>
 
 " fzf
-let g:fzf_layout = { 'down': '~50%' }
+let g:fzf_layout = { 'down': '~30%' }
 let g:fzf_nvim_statusline = 0 " disable statusline overwriting
 let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 nnoremap <silent> <C-p> :Files<CR>
