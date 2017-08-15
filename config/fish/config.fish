@@ -3,6 +3,7 @@ rbenv rehash >/dev/null ^&1
 
 # Aliases
 alias vi "nvim"
+alias vim "nvim"
 alias mex "iex -S mix"
 
 set normal (set_color normal)
