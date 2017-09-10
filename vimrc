@@ -11,10 +11,10 @@ call dein#begin('~/.vim/dein')
   call dein#add('Shougo/dein.vim')
   call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
   call dein#add('neomake/neomake')
+  call dein#add('flazz/vim-colorschemes')
 
   " Utility plugins
   call dein#add('Shougo/deoplete.nvim')
-  call dein#add('Shougo/neoyank.vim')
   call dein#add('sbdchd/neoformat')
   call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 })
   call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
@@ -55,6 +55,11 @@ endif
 set shell=bash
 set hidden
 set showtabline=0
+
+" Theme vim
+set background=light
+colorscheme solarized
+
 
 " Leader
 let mapleader = " "
