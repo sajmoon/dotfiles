@@ -4,8 +4,8 @@
 
 # Searching
 
-* searches forward for the word under the cursor. (exackt match)
-# searches backwars for the word under the cursor.
+- \* searches forward for the word under the cursor. (exackt match)`
+- \# searches backwars for the word under the cursor.
 
 g* and g# would match word in alongwordhere
 
