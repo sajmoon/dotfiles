@@ -29,6 +29,7 @@ call dein#begin('~/.vim/dein')
   call dein#add('sheerun/vim-polyglot')
 
   " Elixir stuff
+  call dein#add('elixir-lang/vim-elixir')
   call dein#add('slashmili/alchemist.vim')
 
   " Snippets
@@ -82,8 +83,7 @@ set pastetoggle=<F2>
 set mouse=a
 set lazyredraw " only redraw when vim has too
 
-command! MakeTags !ctags -Re --exclude=public/assets --exclude=node_modules --exclude=vendor/assets/bower --exclude=*.js .
-command! MakeTagsJs !find ./web/. -type f -iregex ".*\.js$" -exec jsctags {} -f \; | sed '/^$/d' | sort > tags
+set ignorecase
 
 " Teach vim different fileextensions
 au BufRead,BufNewFile *.md set filetype=markdown
@@ -205,6 +205,13 @@ let g:tern#filetypes = [
 autocmd FileType javascript nnoremap <silent> <buffer> gb :TernDef<CR>
 
 " Configure tags
+
+" If exubreant ctags does not work, install universal-ctags. It is maintained.
+" https://github.com/universal-ctags/ctags
+command! MakeTags !ctags -Re --exclude=public/assets --exclude=node_modules --exclude=vendor/assets/bower --exclude=*.js .
+command! MakeTagsJs !find ./web/. -type f -iregex ".*\.js$" -exec jsctags {} -f \; | sed '/^$/d' | sort > tags
+
+
 
 " Configre Neomake
 
