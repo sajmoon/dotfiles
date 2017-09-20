@@ -36,7 +36,8 @@ call dein#begin('~/.vim/dein')
   call dein#add('SirVer/ultisnips')
 
   " Javascript
-  call dein#add('carlitux/deoplete-ternjs', { 'build': { 'mac': 'npm install -g tern', 'unix': 'npm install -g tern' }})
+  call dein#add('ternjs/tern_for_vim')
+  call dein#add('carlitux/deoplete-ternjs')
 
   " Git stuffs
   call dein#add('tpope/vim-fugitive')
@@ -191,6 +192,7 @@ let g:deoplete#sources['javascript.jsx'] = ['file', 'ultisnips', 'ternjs']
 let g:deoplete#sources['javascript.js'] = ['file', 'ultisnips', 'ternjs']
 let g:tern#command = ['tern']
 let g:tern#arguments = ["--persistent"]
+let g:deoplete#sources#ternjs#types = 1
 
 augroup omnifuncs
   autocmd!
@@ -198,10 +200,7 @@ augroup omnifuncs
 augroup end
 
 " tern
-let g:tern#filetypes = [
-      \ 'jsx',
-      \ 'javascript.jsx'
-      \ ]
+let g:tern#filetypes = ['jsx', 'javascript.jsx', 'js']
 autocmd FileType javascript nnoremap <silent> <buffer> gb :TernDef<CR>
 
 " Configure tags
