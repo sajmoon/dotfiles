@@ -59,9 +59,8 @@ set hidden
 set showtabline=0
 
 " Theme vim
-set background=light
-colorscheme solarized
-
+set background=dark
+colorscheme molokai
 
 " Leader
 let mapleader = " "
@@ -209,8 +208,6 @@ autocmd FileType javascript nnoremap <silent> <buffer> gb :TernDef<CR>
 " https://github.com/universal-ctags/ctags
 command! MakeTags !ctags -Re --exclude=public/assets --exclude=node_modules --exclude=vendor/assets/bower --exclude=*.js .
 command! MakeTagsJs !find ./web/. -type f -iregex ".*\.js$" -exec jsctags {} -f \; | sed '/^$/d' | sort > tags
-
-
 
 " Configre Neomake
 
