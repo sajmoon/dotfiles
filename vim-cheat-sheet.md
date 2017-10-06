@@ -44,4 +44,15 @@ ctrl-o, jumps forward.
 ctrl-] jump to method defined under cursor.
 (ofc, this adds an entry to the jump list)
 
+# GitGutter
 
+<leader>hs hunk stage
+<leader>hu hunk unto
+<leader>hp hunk preview
+
+]c next chunk
+[c next chunk
+
+# Distraction free writing with goya
+
+:Goya

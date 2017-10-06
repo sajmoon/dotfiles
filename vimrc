@@ -25,6 +25,9 @@ call dein#begin('~/.vim/dein')
 
   call dein#add('xolox/vim-misc')
 
+  call dein#add('junegunn/limelight.vim')
+  call dein#add('junegunn/goyo.vim')
+
   " Support for language packs
   call dein#add('sheerun/vim-polyglot')
 
@@ -62,8 +65,7 @@ set showtabline=0
 set background=dark
 colorscheme molokai
 
-" Leader
-let mapleader = " "
+" Leader - Use \
 
 set path=**
 set wildmenu
@@ -77,7 +79,7 @@ set showcmd       " display incomplete commands
 set incsearch     " do incremental searching before hitting enter
 set laststatus=2  " Always display the status line
 set autowrite     " Automatically :write before running commands
-set scrolloff=1   " always show one line above and below
+set scrolloff=3   " always show one line above and below
 set encoding=utf-8
 set pastetoggle=<F2>
 set mouse=a
@@ -87,9 +89,6 @@ set ignorecase
 
 " Teach vim different fileextensions
 au BufRead,BufNewFile *.md set filetype=markdown
-
-" Messy .es6 filename should be javascript
-autocmd BufNewFile,BufRead *.es6 set syntax=javascript
 
 " if you forgot to use sudo for some files,
 " use :w!!
@@ -151,13 +150,15 @@ endfunc
 
 nnoremap <c-n> :call NumberToggle()<cr>
 
-" Defaults
+" Show linenumbers by default
 set number
 
 " toggle relative numbers when
 " switch mode
 " autocmd InsertEnter * :call SetNormalLineNumbers()
 " autocmd InsertLeave * :call SetRelativeLineNumbers()
+
+" Language specific config
 
 " Treat <li> and <p> tags like the block tags they are
 let g:html_indent_tags = 'li\|p'
@@ -248,7 +249,7 @@ let g:lightline = {
 
 let g:bufferline_echo = 0
 
-" NERDTree toggle on leader -> t
+" NERDTree
 nmap <silent> <leader>n :NERDTreeToggle<CR>
 
 " fzf
@@ -258,6 +259,15 @@ let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 nnoremap <silent> <C-p> :Files<CR>
 nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader>/ :execute 'Ag ' . input('Ag/')<CR>
+
+" Goyo and Limelight
+" Distaction free writing
+autocmd! User GoyoEnter Limelight
+autocmd! User GoyoLeave Limelight!
+
+" Git and git commands Gutter 
+nmap ]c <Plug>GitGutterNextHunk
+nmap [c <Plug>GitGutterPrevHunk<Paste>
 
 " Local config
 if filereadable($HOME . "/.vimrc.local")
