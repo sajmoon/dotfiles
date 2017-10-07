@@ -62,8 +62,10 @@ set hidden
 set showtabline=0
 
 " Theme vim
+" Some gooed colorschems: molokai, solarized seoul256
+colorscheme seoul256
+
 set background=dark
-colorscheme molokai
 
 " Leader - Use \
 
