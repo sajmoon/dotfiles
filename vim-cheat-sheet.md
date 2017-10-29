@@ -56,3 +56,20 @@ ctrl-] jump to method defined under cursor.
 # Distraction free writing with goya
 
 :Goya
+
+# Working with splits
+
+Max out the height of the current split
+`ctrl + w _`
+
+Max out the width of the current split
+`ctrl + w |`
+
+Swap top/bottom or left/right split
+Ctrl+W R
+
+Break out current window into a new tabview
+Ctrl+W T
+
+Close every window in the current tabview but the current one
+Ctrl+W o
