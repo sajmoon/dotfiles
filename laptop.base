@@ -15,7 +15,6 @@ brew_cask_expand_alias() {
 brew_cask_is_installed() {
   local NAME=$(brew_cask_expand_alias "$1")
   brew cask list -1 | grep -Fqx "$NAME"
-
 }
 
 brew_cask_install() {
@@ -39,7 +38,6 @@ brew 'docker'
 brew 'docker-machine'
 brew 'docker-compose'
 
-brew 'htop'
 brew 'wget'
 brew 'python'
 brew 'entr'
@@ -47,4 +45,3 @@ brew 'tree'
 EOF
 
 brew_cask_install 'iterm2'
-brew_cask_install 'google-chrome'
