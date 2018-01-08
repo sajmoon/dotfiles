@@ -24,9 +24,6 @@ alias setjdk16='export JAVA_HOME=$(/usr/libexec/java_home -v 1.6)'
 alias setjdk17='export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)'
 alias setjdk18='export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)'
 
-# activate z
-. /usr/local/etc/profile.d/z.sh
-
 # History search
 bindkey '^R' history-incremental-pattern-search-backward
 bindkey '^P' up-history
@@ -35,9 +32,8 @@ bindkey '^N' down-history
 # Local config
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
-
 export PATH="$HOME/.bin:$PATH"
-eval "$(rbenv init - --no-rehash)"
+# eval "$(rbenv init - --no-rehash)"
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 

@@ -1,6 +1,3 @@
-set PATH $HOME/.rbenv/shims $PATH
-rbenv rehash >/dev/null ^&1
-
 # Aliases
 alias vi "nvim"
 alias vim "nvim"
