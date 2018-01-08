@@ -33,7 +33,6 @@ fi
 
 brew bundle --file=- <<EOF
 brew 'go'
-brew 'ngrok'
 brew 'watch'
 
 brew 'docker'
