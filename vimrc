@@ -1,13 +1,10 @@
 if &compatible
   set nocompatible
 endif
-set runtimepath+=~/.vim
+set runtimepath+=~/.local/shared/dein/repos/github.com/Shougo/dein.vim
 
-let s:dein_root = expand('~/.vim/dein')
-let s:dein_path = expand(s:dein_root . '/repos/github.com/Shougo/dein.vim')
-set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim
-
-call dein#begin('~/.vim/dein')
+if dein#load_state('~/.local/share/dein')
+  call dein#begin('~/.local/share/dein')
   call dein#add('Shougo/dein.vim')
   call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
   call dein#add('neomake/neomake')
@@ -31,6 +28,9 @@ call dein#begin('~/.vim/dein')
   " Support for language packs
   call dein#add('sheerun/vim-polyglot')
 
+  " Swift
+  call dein#add('keith/swift.vim')
+
   " Elixir stuff
   call dein#add('elixir-lang/vim-elixir')
   call dein#add('slashmili/alchemist.vim')
@@ -48,7 +48,9 @@ call dein#begin('~/.vim/dein')
 
   " Create directories
   call dein#add('dockyard/vim-easydir')
-call dein#end()
+  call dein#end()
+  call dein#save_state()
+endif
 
 filetype plugin indent on
 syntax enable
@@ -60,6 +62,8 @@ endif
 set shell=bash
 set hidden
 set showtabline=0
+
+set termguicolors
 
 " Theme vim
 " Some gooed colorschems: molokai, solarized seoul256
