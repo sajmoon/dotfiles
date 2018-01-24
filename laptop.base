@@ -25,18 +25,9 @@ brew_cask_install() {
   fi
 }
 
-if [ -r "$HOME/.rcrc" ]; then
-  fancy_echo "Updating dotfiles ..."
-  rcup
-fi
-
 brew bundle --file=- <<EOF
 brew 'go'
 brew 'watch'
-
-brew 'docker'
-brew 'docker-machine'
-brew 'docker-compose'
 
 brew 'wget'
 brew 'python'
@@ -45,3 +36,4 @@ brew 'tree'
 EOF
 
 brew_cask_install 'iterm2'
+brew_cask_install 'amethyst'
