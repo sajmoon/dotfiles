@@ -40,7 +40,9 @@ if dein#load_state('~/.local/share/dein')
 
   " Javascript
   call dein#add('ternjs/tern_for_vim')
-  call dein#add('carlitux/deoplete-ternjs')
+  call dein#add('carlitux/deoplete-ternjs', { 'build': 'npm install -g tern' })
+  call dein#add('othree/jspc.vim')
+  call dein#add('MaxMEllon/vim-jsx-pretty')
 
   " Git stuffs
   call dein#add('tpope/vim-fugitive')
@@ -191,14 +193,23 @@ let g:UltiSnipsSnippetDirectories=["snips"]
 " Enable deoplete at start up
 let g:deoplete#enable_at_startup = 1
 
+let g:deoplete#omni#functions = {}
+let g:deoplete#omni#functions.javascript = [
+  \ 'tern#Complete',
+  \ 'jspc#omni'
+\]
+
 " configuration
 set completeopt=longest,menuone,preview
 let g:deoplete#sources = {}
 let g:deoplete#sources['javascript.jsx'] = ['file', 'ultisnips', 'ternjs']
 let g:deoplete#sources['javascript.js'] = ['file', 'ultisnips', 'ternjs']
+let g:deoplete#sources#ternjs#types = 1
+
 let g:tern#command = ['tern']
 let g:tern#arguments = ["--persistent"]
-let g:deoplete#sources#ternjs#types = 1
+
+let g:jsx_ext_required = 0
 
 augroup omnifuncs
   autocmd!
@@ -228,7 +239,13 @@ let g:neomake_elixir_enabled_makers = ['credo']
 let g:neoformat_run_all_formatters = 1
 
 " Javascript
-let g:neoformat_enabled_javascript = ['eslint']
+let g:neoformat_enabled_javascript = ['eslint', 'prettier']
+
+" autoformat on save
+augroup fmt
+  autocmd!
+  autocmd BufWritePre * undojoin | Neoformat
+augroup END
 
 " Always use vertical diffs
 set diffopt+=vertical
