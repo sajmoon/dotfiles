@@ -1,18 +1,17 @@
 #!/bin/sh
-
-fancy_echo "##################################"
-fancy_echo "Not setting fish to default shell."
-fancy_echo "To setup fishshell: chsh -s /usr/local/bin/fish"
-fancy_echo "##################################"
+fancy_echo "Shell: Use fish"
+chsh -s /usr/local/bin/fish
 
 fancy_echo "RCUP: Configure dotfiles"
 rcup -v -d ~/dotfiles
 
 fancy_echo "Setup NeoVim symlinks"
 rm -rf ~/.config/nvim/
-ln -s ~./.vimrc ~/.config/nvim/init.vim
-ln -s ~./.vim/ftplugin ~/.config/nvim/ftplugin
-ln -s ~./.vim/ftdetect ~/.config/nvim/ftdetect
+mkdir -p ~/.config/nvim
+ln -s ~/.vimrc ~/.config/nvim/init.vim
+ln -s ~/.vim/ftplugin ~/.config/nvim/ftplugin
+ln -s ~/.vim/ftdetect ~/.config/nvim/ftdetect
+ln -s ~/.vim/snips ~/.config/nvim/snips
 
 brew_cask_expand_alias() {
   brew cask info "$1" 2>/dev/null | head -1 | awk '{gsub(/:/, ""); print $1}'
