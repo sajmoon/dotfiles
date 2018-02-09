@@ -38,6 +38,9 @@ if dein#load_state('~/.local/share/dein')
   " Snippets
   call dein#add('SirVer/ultisnips')
 
+  " Ruby
+  call dein#add('fishbullet/deoplete-ruby')
+
   " Javascript
   call dein#add('ternjs/tern_for_vim')
   call dein#add('carlitux/deoplete-ternjs', { 'build': 'npm install -g tern' })
