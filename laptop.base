@@ -38,6 +38,7 @@ brew 'wget'
 brew 'python'
 brew 'entr'
 brew 'tree'
+brew 'tldr'
 EOF
 
 brew_cask_install 'iterm2'
