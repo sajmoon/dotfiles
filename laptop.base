@@ -42,3 +42,4 @@ EOF
 
 brew_cask_install 'iterm2'
 brew_cask_install 'amethyst'
+brew_cask_install 'google-chrome'
