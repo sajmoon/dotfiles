@@ -1,7 +1,7 @@
 if &compatible
   set nocompatible
 endif
-set runtimepath+=~/.local/shared/dein/repos/github.com/Shougo/dein.vim
+set runtimepath+=~/.local/share/dein/repos/github.com/Shougo/dein.vim
 
 if dein#load_state('~/.local/share/dein')
   call dein#begin('~/.local/share/dein')
