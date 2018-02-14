@@ -38,6 +38,9 @@ if dein#load_state('~/.local/share/dein')
   " Snippets
   call dein#add('SirVer/ultisnips')
 
+  " Testrunner
+  call dein#add('janko-m/vim-test')
+
   " Ruby
   call dein#add('fishbullet/deoplete-ruby')
 
@@ -285,6 +288,18 @@ let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 nnoremap <silent> <C-p> :Files<CR>
 nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader>/ :execute 'Ag ' . input('Ag/')<CR>
+
+" vim-test
+" t Ctrl+n
+nmap <silent> t<C-n> :TestNearest<CR>
+" t Ctrl+f
+nmap <silent> t<C-f> :TestFile<CR>
+" t Ctrl+s
+nmap <silent> t<C-s> :TestSuite<CR>
+" t Ctrl+l
+nmap <silent> t<C-l> :TestLast<CR>
+" t Ctrl+g
+nmap <silent> t<C-g> :TestVisit<CR>
 
 " Goyo and Limelight
 " Distaction free writing
