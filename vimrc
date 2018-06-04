@@ -234,6 +234,10 @@ command! MakeTags !ctags -Re --exclude=public/assets --exclude=node_modules --ex
 command! MakeTagsJs !find ./web/. -type f -iregex ".*\.js$" -exec jsctags {} -f \; | sed '/^$/d' | sort > tags
 
 " Configre Neomake
+" Open issue list directly.
+" let g:neomake_open_list = 2
+" can alos be open with :lwindow or :open
+" :lprev / :lnext to navigate between issues
 
 " Run Neomake on save
 autocmd! BufWritePost,BufEnter * Neomake
