@@ -318,3 +318,7 @@ nmap [c <Plug>GitGutterPrevHunk<Paste>
 if filereadable($HOME . "/.vimrc.local")
   source ~/.vimrc.local
 endif
+
+" Enable per project .vimrc file
+set exrc
+set secure
