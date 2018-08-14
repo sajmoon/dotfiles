@@ -18,6 +18,7 @@ if dein#load_state('~/.local/share/dein')
   call dein#add('itchyny/lightline.vim')
   call dein#add('scrooloose/nerdtree', {'on_cmd': 'NERDTreeToggle'})
   call dein#add('tpope/vim-surround')
+  call dein#add('tpope/vim-dispatch')
   call dein#add('ervandew/supertab') " Perform autocomplete on tab in insert mode
 
   call dein#add('xolox/vim-misc')
@@ -250,6 +251,7 @@ let g:neoformat_run_all_formatters = 1
 
 " Javascript
 let g:neoformat_enabled_javascript = ['eslint', 'prettier']
+let g:neoformat_enabled_ruby = ['rubocop']
 
 " autoformat on save
 augroup fmt
@@ -295,7 +297,7 @@ nnoremap <silent> <leader>/ :execute 'Ag ' . input('Ag/')<CR>
 
 " vim-test
 " t Ctrl+n
-nmap <silent> t<C-n> :TestNearest<CR>
+nmap <silent> t<C-n> :TestNearest -strategy=neovim<CR>
 " t Ctrl+f
 nmap <silent> t<C-f> :TestFile<CR>
 " t Ctrl+s
