@@ -7,56 +7,45 @@ if dein#load_state('~/.local/share/dein')
   call dein#begin('~/.local/share/dein')
   call dein#add('Shougo/dein.vim')
   call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
-  call dein#add('neomake/neomake')
-  call dein#add('flazz/vim-colorschemes')
 
   " Utility plugins
   call dein#add('Shougo/deoplete.nvim')
-  call dein#add('sbdchd/neoformat')
+  call dein#add('Shougo/echodoc')
+
   call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 })
   call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
-  call dein#add('itchyny/lightline.vim')
   call dein#add('scrooloose/nerdtree', {'on_cmd': 'NERDTreeToggle'})
   call dein#add('tpope/vim-surround')
   call dein#add('tpope/vim-dispatch')
-  call dein#add('ervandew/supertab') " Perform autocomplete on tab in insert mode
-
-  call dein#add('xolox/vim-misc')
+  " call dein#add('ervandew/supertab') " Perform autocomplete on tab in insert mode
+  call dein#add('dockyard/vim-easydir') " Create directories
 
   call dein#add('junegunn/limelight.vim')
   call dein#add('junegunn/goyo.vim')
-
-  " Support for language packs
-  call dein#add('sheerun/vim-polyglot')
-
-  " Swift
-  call dein#add('keith/swift.vim')
-
-  " Elixir stuff
-  call dein#add('elixir-lang/vim-elixir')
-  call dein#add('slashmili/alchemist.vim')
-
-  " Snippets
-  call dein#add('SirVer/ultisnips')
-
-  " Testrunner
-  call dein#add('janko-m/vim-test')
-
-  " Ruby
-  call dein#add('fishbullet/deoplete-ruby')
-
-  " Javascript
-  call dein#add('ternjs/tern_for_vim')
-  call dein#add('carlitux/deoplete-ternjs', { 'build': 'npm install -g tern' })
-  call dein#add('othree/jspc.vim')
-  call dein#add('MaxMEllon/vim-jsx-pretty')
 
   " Git stuffs
   call dein#add('tpope/vim-fugitive')
   call dein#add('airblade/vim-gitgutter')
 
-  " Create directories
-  call dein#add('dockyard/vim-easydir')
+  " Look'n'feel
+  call dein#add('flazz/vim-colorschemes')
+  call dein#add('itchyny/lightline.vim')
+
+  " Snippets
+  call dein#add('SirVer/ultisnips')
+	call dein#add('honza/vim-snippets') " A Snippets library
+
+  " Testrunner
+  call dein#add('janko-m/vim-test')
+
+  " Support for languages
+  call dein#add('sheerun/vim-polyglot')
+
+  call dein#add('autozimu/LanguageClient-neovim', {
+    \ 'rev': 'next',
+    \ 'build': './install.sh',
+    \ })
+
   call dein#end()
   call dein#save_state()
 endif
@@ -64,13 +53,14 @@ endif
 filetype plugin indent on
 syntax enable
 
-if dein#check_install()
-  call dein#install()
-endif
+" if dein#check_install()
+"   call dein#install()
+" endif
 
 set shell=bash
 set hidden
 set showtabline=0
+set noshowmode
 
 set termguicolors
 
@@ -175,18 +165,9 @@ set number
 
 " Language specific config
 
-" Treat <li> and <p> tags like the block tags they are
-let g:html_indent_tags = 'li\|p'
-
 " Open new split panes to right and bottom, which feels more natural
 set splitbelow
 set splitright
-
-" Quicker window movement
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-h> <C-w>h
-nnoremap <C-l> <C-w>l
 
 " Set spellfile to location that is guaranteed to exist, can be symlinked to
 " Dropbox or kept in Git
@@ -194,70 +175,44 @@ set spellfile=$HOME/.vim-spell-en.utf-8.add
 
 " Snippets
 let g:UltiSnipsSnippetsDir="~/.vim/snips"
-let g:UltiSnipsSnippetDirectories=["snips"]
 
-" completion (Deoplete)
+" Language server
+    "\ 'javascript': ['javascript-typescript-langserver'],
+let g:LanguageClient_serverCommands = {
+      \ 'javascript': ['/Users/simon/.asdf/shims/javascript-typescript-stdio'],
+      \ 'javascript.jsx': ['/Users/simon/.asdf/shims/javascript-typescript-stdio']
+\ }
+
+let g:LanguageClient_autoStart = 1 " Autostart language server
+let g:LanguageClient_autoStop = 0 " Keep running after closing vim
+
+" Code completion (Deoplete)
+" :help deoplete-options for configuration options
+"
 " Enable deoplete at start up
 let g:deoplete#enable_at_startup = 1
 
-let g:deoplete#omni#functions = {}
-let g:deoplete#omni#functions.javascript = [
-  \ 'tern#Complete',
-  \ 'jspc#omni'
-\]
+call deoplete#custom#option('sources', {
+      \ '_': ['buffer'],
+      \ 'javascript': ['LanguageClient', 'ultisnips'],
+      \ 'ruby': ['ultisnips'],
+\})
+
+" Disable the candidates in Comment/String syntaxes.
+let g:deoplete#sources = {}
+let g:deoplete#sources._ = ['buffer', 'ultisnips']
+let g:deoplete#sources.javascript = ['LanguageClient', 'ultisnips']
 
 " configuration
-set completeopt=longest,menuone,preview
-let g:deoplete#sources = {}
-let g:deoplete#sources['javascript.jsx'] = ['file', 'ultisnips', 'ternjs']
-let g:deoplete#sources['javascript.js'] = ['file', 'ultisnips', 'ternjs']
-let g:deoplete#sources#ternjs#types = 1
-
-let g:tern#command = ['tern']
-let g:tern#arguments = ["--persistent"]
+" set completeopt=longest,menuone,preview
 
 let g:jsx_ext_required = 0
 
-augroup omnifuncs
-  autocmd!
-  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-augroup end
-
-" tern
-let g:tern#filetypes = ['jsx', 'javascript.jsx', 'js']
-autocmd FileType javascript nnoremap <silent> <buffer> gb :TernDef<CR>
-
-" Configure tags
-
-" If exubreant ctags does not work, install universal-ctags. It is maintained.
-" https://github.com/universal-ctags/ctags
-command! MakeTags !ctags -Re --exclude=public/assets --exclude=node_modules --exclude=vendor/assets/bower --exclude=*.js .
-command! MakeTagsJs !find ./web/. -type f -iregex ".*\.js$" -exec jsctags {} -f \; | sed '/^$/d' | sort > tags
-
-" Configre Neomake
-" Open issue list directly.
-" let g:neomake_open_list = 2
-" can alos be open with :lwindow or :open
-" :lprev / :lnext to navigate between issues
-
-" Run Neomake on save
-autocmd! BufWritePost,BufEnter * Neomake
-
-let g:neomake_javascript_enabled_makers = ['eslint_d']
-let g:neomake_elixir_enabled_makers = ['credo']
-
-" NeoFormat
-let g:neoformat_run_all_formatters = 1
-
-" Javascript
-let g:neoformat_enabled_javascript = ['eslint', 'prettier']
-let g:neoformat_enabled_ruby = ['rubocop']
-
-" autoformat on save
-augroup fmt
-  autocmd!
-  autocmd BufWritePre * undojoin | Neoformat
-augroup END
+nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+" Or map each action separately
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 
 " Always use vertical diffs
 set diffopt+=vertical
