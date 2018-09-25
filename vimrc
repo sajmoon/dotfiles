@@ -40,6 +40,7 @@ if dein#load_state('~/.local/share/dein')
 
   " Support for languages
   call dein#add('sheerun/vim-polyglot')
+  call dein#add('fishbullet/deoplete-ruby')
 
   call dein#add('autozimu/LanguageClient-neovim', {
     \ 'rev': 'next',
@@ -61,6 +62,7 @@ set shell=bash
 set hidden
 set showtabline=0
 set noshowmode
+language en_US
 
 set termguicolors
 
@@ -88,8 +90,7 @@ set scrolloff=3   " always show one line above and below
 set encoding=utf-8
 set pastetoggle=<F2>
 set mouse=a
-set lazyredraw " only redraw when vim has too
-
+set lazyredraw    " only redraw when vim has too
 set ignorecase
 
 " Teach vim different fileextensions
@@ -170,49 +171,51 @@ set splitbelow
 set splitright
 
 " Set spellfile to location that is guaranteed to exist, can be symlinked to
-" Dropbox or kept in Git
 set spellfile=$HOME/.vim-spell-en.utf-8.add
 
 " Snippets
 let g:UltiSnipsSnippetsDir="~/.vim/snips"
+let g:UltiSnipsExpandTrigger="<c-j>"
+"let g:UltiSnipsJumpForwardTrigger="<c-b>"
+"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
 
 " Language server
-    "\ 'javascript': ['javascript-typescript-langserver'],
 let g:LanguageClient_serverCommands = {
-      \ 'javascript': ['/Users/simon/.asdf/shims/javascript-typescript-stdio'],
-      \ 'javascript.jsx': ['/Users/simon/.asdf/shims/javascript-typescript-stdio']
+      \ 'elixir': ['elixir-ls'],
+      \ 'javascript': ['javascript-typescript-stdio'],
+      \ 'javascript.jsx': ['tcp://localhost:2089'],
+      \ 'ruby': ['solargraph', 'stdio'],
 \ }
 
-let g:LanguageClient_autoStart = 1 " Autostart language server
-let g:LanguageClient_autoStop = 0 " Keep running after closing vim
-
-" Code completion (Deoplete)
-" :help deoplete-options for configuration options
-"
-" Enable deoplete at start up
-let g:deoplete#enable_at_startup = 1
-
-call deoplete#custom#option('sources', {
-      \ '_': ['buffer'],
-      \ 'javascript': ['LanguageClient', 'ultisnips'],
-      \ 'ruby': ['ultisnips'],
-\})
-
-" Disable the candidates in Comment/String syntaxes.
-let g:deoplete#sources = {}
-let g:deoplete#sources._ = ['buffer', 'ultisnips']
-let g:deoplete#sources.javascript = ['LanguageClient', 'ultisnips']
-
-" configuration
-" set completeopt=longest,menuone,preview
-
-let g:jsx_ext_required = 0
+let g:LanguageClient_autoStart = 1
+let g:LanguageClient_autoStop = 0
 
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 " Or map each action separately
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+
+" Code completion (Deoplete)
+" :help deoplete-options for configuration options
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
+
+let g:deoplete#sources = {}
+let g:deoplete#sources._ = ['buffer', 'ultisnips']
+let g:deoplete#sources.javascript = ['buffer', 'LanguageClient', 'ultisnips']
+let g:deoplete#sources.elixir = ['LanguageClient', 'ultisnips']
+let g:deoplete#sources.ruby = ['buffer', 'LanguageClient', 'ultisnips']
+
+call deoplete#custom#source('buffer', 'mark', '[buffer]')
+call deoplete#custom#source('ultisnips', 'mark', '[snip]')
+
+call deoplete#custom#source('buffer', 'rank', 100)
+call deoplete#custom#source('ultisnips', 'rank', 200)
+
+" configuration
+set completeopt=longest,menu,preview
 
 " Always use vertical diffs
 set diffopt+=vertical
