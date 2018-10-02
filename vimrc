@@ -5,19 +5,18 @@ set runtimepath+=~/.local/share/dein/repos/github.com/Shougo/dein.vim
 
 if dein#load_state('~/.local/share/dein')
   call dein#begin('~/.local/share/dein')
-  call dein#add('Shougo/dein.vim')
-  call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
+  call dein#add('~/.cache/dein')
 
   " Utility plugins
   call dein#add('Shougo/deoplete.nvim')
   call dein#add('Shougo/echodoc')
-
   call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 })
   call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
   call dein#add('scrooloose/nerdtree', {'on_cmd': 'NERDTreeToggle'})
   call dein#add('tpope/vim-surround')
   call dein#add('tpope/vim-dispatch')
-  " call dein#add('ervandew/supertab') " Perform autocomplete on tab in insert mode
+  call dein#add('w0rp/ale')
+  "call dein#add('ervandew/supertab') " Perform autocomplete on tab in insert mode
   call dein#add('dockyard/vim-easydir') " Create directories
 
   call dein#add('junegunn/limelight.vim')
@@ -41,6 +40,7 @@ if dein#load_state('~/.local/share/dein')
   " Support for languages
   call dein#add('sheerun/vim-polyglot')
   call dein#add('fishbullet/deoplete-ruby')
+  call dein#add('slashmili/alchemist.vim')
 
   call dein#add('autozimu/LanguageClient-neovim', {
     \ 'rev': 'next',
@@ -54,51 +54,41 @@ endif
 filetype plugin indent on
 syntax enable
 
-" if dein#check_install()
-"   call dein#install()
-" endif
-
-set shell=bash
-set hidden
-set showtabline=0
-set noshowmode
 language en_US
 
+"set autowrite     " Automatically :write before running commands
+set backspace=2   " Backspace deletes like most programs in insert mode
+set cursorline
+set encoding=utf-8
+set expandtab
+set hidden
+set history=50
+set ignorecase
+set incsearch     " do incremental searching before hitting enter
+set laststatus=2  " Always display the status line
+set lazyredraw    " only redraw when vim has too
+set mouse=a
+set nobackup
+set noswapfile    " http://robots.thoughtbot.com/post/18739402579/global-gitignore#comment-458413287
+set nowritebackup
+set pastetoggle=<F2>
+set path=**
+set ruler         " show the cursor position all the time
+set scrolloff=3   " always show some lines above and below
+set shell=bash
+set shiftround
+set shiftwidth=2
+set showcmd       " display incomplete commands
+set tabstop=2
 set termguicolors
 
 " Theme vim
 " Some gooed colorschems: molokai, solarized seoul256
 colorscheme seoul256
-
 set background=dark
-
-" Leader - Use \
-
-set path=**
-set wildmenu
-set backspace=2   " Backspace deletes like most programs in insert mode
-set nobackup
-set nowritebackup
-set noswapfile    " http://robots.thoughtbot.com/post/18739402579/global-gitignore#comment-458413287
-set history=50
-set ruler         " show the cursor position all the time
-set showcmd       " display incomplete commands
-set incsearch     " do incremental searching before hitting enter
-set laststatus=2  " Always display the status line
-set autowrite     " Automatically :write before running commands
-set scrolloff=3   " always show one line above and below
-set encoding=utf-8
-set pastetoggle=<F2>
-set mouse=a
-set lazyredraw    " only redraw when vim has too
-set ignorecase
 
 " Teach vim different fileextensions
 au BufRead,BufNewFile *.md set filetype=markdown
-
-" if you forgot to use sudo for some files,
-" use :w!!
-cmap w!! w !sudo tee % >/dev/null
 
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
@@ -125,15 +115,6 @@ augroup vimrcEx
   autocmd FileType css,scss,sass setlocal iskeyword+=-
 augroup END
 
-" Softtabs, 2 spaces
-set tabstop=2
-set shiftwidth=2
-set shiftround
-set expandtab
-
-" highlight current line
-set cursorline
-
 " Line Numbers
 function! SetNormalLineNumbers()
     set norelativenumber
@@ -159,13 +140,6 @@ nnoremap <c-n> :call NumberToggle()<cr>
 " Show linenumbers by default
 set number
 
-" toggle relative numbers when
-" switch mode
-" autocmd InsertEnter * :call SetNormalLineNumbers()
-" autocmd InsertLeave * :call SetRelativeLineNumbers()
-
-" Language specific config
-
 " Open new split panes to right and bottom, which feels more natural
 set splitbelow
 set splitright
@@ -176,15 +150,12 @@ set spellfile=$HOME/.vim-spell-en.utf-8.add
 " Snippets
 let g:UltiSnipsSnippetsDir="~/.vim/snips"
 let g:UltiSnipsExpandTrigger="<c-j>"
-"let g:UltiSnipsJumpForwardTrigger="<c-b>"
-"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
 
 " Language server
 let g:LanguageClient_serverCommands = {
       \ 'elixir': ['elixir-ls'],
       \ 'javascript': ['javascript-typescript-stdio'],
-      \ 'javascript.jsx': ['tcp://localhost:2089'],
+      \ 'javascript.jsx': ['javascript-typescript-stdio'],
       \ 'ruby': ['solargraph', 'stdio'],
 \ }
 
@@ -197,50 +168,44 @@ nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 
-" Code completion (Deoplete)
+" Linting/fixiing
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'javascript': ['prettier', 'eslint'],
+\   'elixir': ['mix_format'],
+\}
+
+let g:ale_fix_on_save = 1
+
+" Completion (Deoplete)
 " :help deoplete-options for configuration options
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
 
-let g:deoplete#sources = {}
-let g:deoplete#sources._ = ['buffer', 'ultisnips']
-let g:deoplete#sources.javascript = ['buffer', 'LanguageClient', 'ultisnips']
-let g:deoplete#sources.elixir = ['LanguageClient', 'ultisnips']
-let g:deoplete#sources.ruby = ['buffer', 'LanguageClient', 'ultisnips']
-
-call deoplete#custom#source('buffer', 'mark', '[buffer]')
-call deoplete#custom#source('ultisnips', 'mark', '[snip]')
-
-call deoplete#custom#source('buffer', 'rank', 100)
-call deoplete#custom#source('ultisnips', 'rank', 200)
+call deoplete#custom#option({
+\ 'auto_complete_delay': 1000,
+\ 'smart_case': v:true,
+\ })
 
 " configuration
 set completeopt=longest,menu,preview
 
-" Always use vertical diffs
-set diffopt+=vertical
-
 " lightline - status bar
-set encoding=utf-8
 let g:lightline = {
   \ 'colorscheme': 'wombat',
   \ 'active': {
   \   'left': [ [ 'mode', 'paste' ],
-  \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
+  \             [ 'gitbranch', 'filename', 'modified' ] ]
   \ },
   \ 'component': {
-  \   'readonly': '%{&filetype=="help"?"":&readonly?"⭤":""}',
   \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
-  \   'fugitive': '%{exists("*fugitive#statusline()")?fugitive#statusline():""}'
   \ },
   \ 'component_visible_condition': {
-  \   'readonly': '(&filetype!="help"&& &readonly)',
   \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
-  \   'fugitive': '(exists("*fugitive#statusline()") && ""!=fugitive#statusline())'
+  \ },
+  \'component_function': {
+  \   'gitbranch': 'fugitive#head'
   \ },
 \ }
-
-let g:bufferline_echo = 0
 
 " NERDTree
 nmap <silent> <leader>n :NERDTreeToggle<CR>
@@ -254,15 +219,10 @@ nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader>/ :execute 'Ag ' . input('Ag/')<CR>
 
 " vim-test
-" t Ctrl+n
 nmap <silent> t<C-n> :TestNearest -strategy=neovim<CR>
-" t Ctrl+f
 nmap <silent> t<C-f> :TestFile<CR>
-" t Ctrl+s
 nmap <silent> t<C-s> :TestSuite<CR>
-" t Ctrl+l
 nmap <silent> t<C-l> :TestLast<CR>
-" t Ctrl+g
 nmap <silent> t<C-g> :TestVisit<CR>
 
 " Goyo and Limelight
