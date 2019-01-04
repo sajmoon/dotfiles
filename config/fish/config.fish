@@ -1,30 +1,23 @@
-# Aliases
-alias vi "nvim"
-alias vim "nvim"
-alias mex "iex -S mix"
+# Install fisher
+# https://github.com/jorgebucaran/fisher
 
-set normal (set_color normal)
-set magenta (set_color magenta)
-set yellow (set_color yellow)
-set green (set_color green)
-set red (set_color red)
-set gray (set_color -o black)
-
-# Prompt
-function fish_prompt
-  set last_status $status
-
-  set_color $fish_color_cwd
-  printf '%s' (prompt_pwd)
-  set_color normal
-
-  printf '%s ' (__fish_git_prompt)
-
-  set_color normal
-  echo -n '> '
+if not functions -q fisher
+    set -q XDG_CONFIG_HOME; or set XDG_CONFIG_HOME ~/.config
+    curl https://git.io/fisher --create-dirs -sLo $XDG_CONFIG_HOME/fish/functions/fisher.fish
+    fish -c fisher
 end
 
-# Set brew path
-set -g fish_user_paths "/usr/local/sbin" $fish_user_paths
-set -g fish_user_paths "~/.bin" $fish_user_paths
-source ~/.asdf/asdf.fish
+# Delegate configuration to other files
+source ~/.config.fish
+source ~/.aliases.fish
+source ~/.variables.fish
+
+# set -gx ANDROID_HOME "/Users/simon/Library/Android/sdk"
+# set -gx ANDROID_SDK_ROOT "/Users/simon/Library/Android/sdk"
+
+# set PATH "$ANDROID_HOME/emulator" $PATH
+# set PATH "$ANDROID_HOME/tools" $PATH
+# set PATH "$ANDROID_HOME/tools/bin" $PATH
+# set PATH "$ANDROID_HOME/platform-tools" $PATH
+
+# set -x PATH $HOME/.fastlane/bin $PATH
