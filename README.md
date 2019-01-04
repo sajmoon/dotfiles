@@ -1,11 +1,3 @@
 # Dotfiles
 
-`./install.sh`
-
-## Will install
-- RCM
-- homebrew
-- + some packages from brew.
-- configure vim and vim plugins
-
-
+Run `./install.sh` to install all basic needed applications and link configuration files.
