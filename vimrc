@@ -16,8 +16,8 @@ if dein#load_state('~/.local/share/dein')
   call dein#add('tpope/vim-surround')
   call dein#add('tpope/vim-dispatch')
   call dein#add('w0rp/ale')
-  "call dein#add('ervandew/supertab') " Perform autocomplete on tab in insert mode
   call dein#add('dockyard/vim-easydir') " Create directories
+  call dein#add('blueyed/vim-diminactive')
 
   call dein#add('junegunn/limelight.vim')
   call dein#add('junegunn/goyo.vim')
