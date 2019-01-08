@@ -166,9 +166,9 @@ let g:LanguageClient_autoStop = 0
 
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 " Or map each action separately
-nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+nmap <silent> <leader>ld :call LanguageClient#textDocument_definition()<CR>
+nmap <silent> <leader>lh :call LanguageClient#textDocument_hover()<CR>
+nmap <silent> <leader>lr :call LanguageClient#textDocument_rename()<CR>
 
 " Linting/fixiing
 let g:ale_fixers = {
