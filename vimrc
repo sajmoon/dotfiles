@@ -185,7 +185,24 @@ let g:deoplete#enable_at_startup = 1
 " call deoplete#custom#option('auto_complete', v:false)
 
 call deoplete#custom#option('smart_case', v:true)
-call deoplete#custom#source('ultisnips', 'mark', '[SNIP]')
+
+" Disable the candidates in Comment/String syntaxes.
+call deoplete#custom#source('_',
+            \ 'disabled_syntaxes', ['Comment', 'String'])
+call deoplete#custom#option('sources', {
+    \ 'ruby': ['LanguageClient'],
+\})
+
+call deoplete#custom#source('vim', 'mark', '<vim>')
+call deoplete#custom#source('LanguageServer', 'mark', '<lang>')
+call deoplete#custom#source('buffer', 'mark', '<buf>')
+call deoplete#custom#source('tag', 'mark', '<tag>')
+call deoplete#custom#source('around', 'mark', '<around>')
+call deoplete#custom#source('buffer', 'mark', '<buf>')
+call deoplete#custom#source('tmux-complete', 'mark', '<tmux>')
+call deoplete#custom#source('syntax', 'mark', '<syntax>')
+call deoplete#custom#source('member', 'mark', '<member>')
+call deoplete#custom#source('ultisnips', 'mark', '<snip>')
 call deoplete#custom#source('ultisnips', 'rank', 1000)
 call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
 
