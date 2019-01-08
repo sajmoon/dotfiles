@@ -150,6 +150,8 @@ set spellfile=$HOME/.vim-spell-en.utf-8.add
 " Snippets
 let g:UltiSnipsSnippetsDir="~/.vim/snips"
 let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 " Language server
 let g:LanguageClient_serverCommands = {
@@ -180,11 +182,12 @@ let g:ale_fix_on_save = 1
 " Completion (Deoplete)
 " :help deoplete-options for configuration options
 let g:deoplete#enable_at_startup = 1
+" call deoplete#custom#option('auto_complete', v:false)
 
-call deoplete#custom#option({
-\ 'auto_complete_delay': 1000,
-\ 'smart_case': v:true,
-\ })
+call deoplete#custom#option('smart_case', v:true)
+call deoplete#custom#source('ultisnips', 'mark', '[SNIP]')
+call deoplete#custom#source('ultisnips', 'rank', 1000)
+call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
 
 " configuration
 set completeopt=longest,menu,preview
@@ -230,7 +233,7 @@ nmap <silent> t<C-g> :TestVisit<CR>
 autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
 
-" Git and git commands Gutter 
+" Git and git commands Gutter
 nmap ]c <Plug>GitGutterNextHunk
 nmap [c <Plug>GitGutterPrevHunk<Paste>
 
