@@ -12,9 +12,9 @@ if dein#load_state('~/.local/share/dein')
   call dein#add('Shougo/echodoc')
   call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 })
   call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
-  call dein#add('scrooloose/nerdtree', {'on_cmd': 'NERDTreeToggle'})
   call dein#add('tpope/vim-surround')
   call dein#add('tpope/vim-dispatch')
+  call dein#add('tpope/vim-vinegar')
   call dein#add('w0rp/ale')
   call dein#add('dockyard/vim-easydir') " Create directories
   call dein#add('blueyed/vim-diminactive')
@@ -226,9 +226,6 @@ let g:lightline = {
   \   'gitbranch': 'fugitive#head'
   \ },
 \ }
-
-" NERDTree
-nmap <silent> <leader>n :NERDTreeToggle<CR>
 
 " fzf
 let g:fzf_layout = { 'down': '~30%' }
