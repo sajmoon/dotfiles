@@ -12,12 +12,4 @@ source ~/.config.fish
 source ~/.aliases.fish
 source ~/.variables.fish
 
-# set -gx ANDROID_HOME "/Users/simon/Library/Android/sdk"
-# set -gx ANDROID_SDK_ROOT "/Users/simon/Library/Android/sdk"
-
-# set PATH "$ANDROID_HOME/emulator" $PATH
-# set PATH "$ANDROID_HOME/tools" $PATH
-# set PATH "$ANDROID_HOME/tools/bin" $PATH
-# set PATH "$ANDROID_HOME/platform-tools" $PATH
-
 # set -x PATH $HOME/.fastlane/bin $PATH
