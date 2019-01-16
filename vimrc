@@ -15,6 +15,7 @@ if dein#load_state('~/.local/share/dein')
   call dein#add('tpope/vim-surround')
   call dein#add('tpope/vim-dispatch')
   call dein#add('tpope/vim-vinegar')
+  call dein#add('tpope/repeat.vim')
   call dein#add('w0rp/ale')
   call dein#add('dockyard/vim-easydir') " Create directories
   call dein#add('blueyed/vim-diminactive')
