@@ -17,6 +17,7 @@ if dein#load_state('~/.local/share/dein')
   call dein#add('tpope/vim-vinegar')
   call dein#add('tpope/repeat.vim')
   call dein#add('w0rp/ale')
+  call dein#add('neomake/neomake')
   call dein#add('dockyard/vim-easydir') " Create directories
   call dein#add('blueyed/vim-diminactive')
 
@@ -84,8 +85,8 @@ set tabstop=2
 set termguicolors
 
 " Theme vim
-" Some gooed colorschems: molokai, solarized seoul256
-colorscheme seoul256
+" Some gooed colorschems: molokai, solarized seoul256, neodark
+colorscheme neodark
 set background=dark
 
 " Teach vim different fileextensions
@@ -157,9 +158,8 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " Language server
 let g:LanguageClient_serverCommands = {
       \ 'elixir': ['elixir-ls'],
-      \ 'javascript': ['javascript-typescript-stdio'],
       \ 'javascript.jsx': ['javascript-typescript-stdio'],
-      \ 'ruby': ['solargraph', 'stdio'],
+      \ 'ruby': ['stdio'],
 \ }
 
 let g:LanguageClient_autoStart = 1
@@ -177,9 +177,10 @@ let g:ale_fixers = {
 \   'javascript': ['prettier', 'eslint'],
 \   'typescript': ['prettier'],
 \   'elixir': ['mix_format'],
+\   'ruby': ['rubocop']
 \}
 
-let g:ale_fix_on_save = 1
+let g:ale_fix_on_save = 0
 
 " Completion (Deoplete)
 " :help deoplete-options for configuration options
@@ -230,7 +231,7 @@ let g:lightline = {
 \ }
 
 " fzf
-let g:fzf_layout = { 'down': '~30%' }
+let g:fzf_layout = { 'down': '~50%' }
 let g:fzf_nvim_statusline = 0 " disable statusline overwriting
 let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 nnoremap <silent> <C-p> :Files<CR>
