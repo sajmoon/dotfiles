@@ -1,26 +1,31 @@
 if &compatible
   set nocompatible
 endif
-set runtimepath+=~/.local/share/dein/repos/github.com/Shougo/dein.vim
+set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
 
-if dein#load_state('~/.local/share/dein')
-  call dein#begin('~/.local/share/dein')
-  call dein#add('~/.cache/dein')
+if dein#load_state('~/.cache/dein')
+  call dein#begin('~/.cache/dein')
+  call dein#add('~/.cache/dein/repos/github.com/Shougo/dein.vim')
 
-  " Utility plugins
-  call dein#add('Shougo/deoplete.nvim')
-  call dein#add('Shougo/echodoc')
+  " Fuzzy find files and buffers
   call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 })
   call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
+
   call dein#add('tpope/vim-surround')
-  call dein#add('tpope/vim-dispatch')
   call dein#add('tpope/vim-vinegar')
-  call dein#add('tpope/repeat.vim')
   call dein#add('w0rp/ale')
   call dein#add('neomake/neomake')
   call dein#add('dockyard/vim-easydir') " Create directories
   call dein#add('blueyed/vim-diminactive')
 
+  " Utility plugins
+  call dein#add('Shougo/deoplete.nvim')
+  call dein#add('Shougo/echodoc')
+
+  " Auto close parentheses and quotes
+  call dein#add('cohama/lexima.vim')
+
+  " Focused editing
   call dein#add('junegunn/limelight.vim')
   call dein#add('junegunn/goyo.vim')
 
@@ -41,7 +46,6 @@ if dein#load_state('~/.local/share/dein')
 
   " Support for languages
   call dein#add('sheerun/vim-polyglot')
-  call dein#add('fishbullet/deoplete-ruby')
   call dein#add('slashmili/alchemist.vim')
 
   call dein#add('autozimu/LanguageClient-neovim', {
