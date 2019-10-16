@@ -152,6 +152,7 @@ set splitright
 
 " Set spellfile to location that is guaranteed to exist, can be symlinked to
 set spellfile=$HOME/.vim-spell-en.utf-8.add
+exec 'silent mkspell! ' . &spellfile . '.spl ' . &spellfile
 
 " Snippets
 let g:UltiSnipsSnippetsDir="~/.vim/snips"
