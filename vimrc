@@ -13,6 +13,7 @@ if dein#load_state('~/.cache/dein')
 
   call dein#add('tpope/vim-surround')
   call dein#add('tpope/vim-vinegar')
+  call dein#add('tpope/vim-eunuch')
   call dein#add('w0rp/ale')
   call dein#add('neomake/neomake')
   call dein#add('dockyard/vim-easydir') " Create directories
@@ -24,6 +25,7 @@ if dein#load_state('~/.cache/dein')
 
   " Auto close parentheses and quotes
   call dein#add('cohama/lexima.vim')
+  call dein#add('tpope/vim-commentary')
 
   " Focused editing
   call dein#add('junegunn/limelight.vim')
@@ -141,7 +143,7 @@ function! NumberToggle()
   endif
 endfunc
 
-nnoremap <c-n> :call NumberToggle()<cr>
+" nnoremap <c-n> :call NumberToggle()<cr>
 
 " Show linenumbers by default
 set number
@@ -150,9 +152,15 @@ set number
 set splitbelow
 set splitright
 
+" Better display for messages
+set cmdheight=2
+
 " Set spellfile to location that is guaranteed to exist, can be symlinked to
 set spellfile=$HOME/.vim-spell-en.utf-8.add
 exec 'silent mkspell! ' . &spellfile . '.spl ' . &spellfile
+
+let g:echodoc#enable_at_startup = 1
+let g:echodoc#type = 'echo'
 
 " Snippets
 let g:UltiSnipsSnippetsDir="~/.vim/snips"
@@ -161,20 +169,31 @@ let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 " Language server
+" \ 'javascript': ['javascript-typescript-stdio'],
 let g:LanguageClient_serverCommands = {
       \ 'elixir': ['elixir-ls'],
-      \ 'javascript.jsx': ['javascript-typescript-stdio'],
+      \ 'javascript': ['javascript-typescript-stdio'],
+      \ 'typescript': ['javascript-typescript-stdio'],
       \ 'ruby': ['stdio'],
 \ }
 
-let g:LanguageClient_autoStart = 1
-let g:LanguageClient_autoStop = 0
+let g:LanguageClient_rootMarkers = {
+    \ 'javascript': ['jsconfig.json'],
+    \ 'typescript': ['tsconfig.json'],
+    \ }
 
-nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+let g:LanguageClient_autoStart = 1
+let g:LanguageClient_autoStop = 1
+
 " Or map each action separately
-nmap <silent> <leader>ld :call LanguageClient#textDocument_definition()<CR>
-nmap <silent> <leader>lh :call LanguageClient#textDocument_hover()<CR>
-nmap <silent> <leader>lr :call LanguageClient#textDocument_rename()<CR>
+nnoremap <leader>ld :call LanguageClient#textDocument_definition()<CR>
+nnoremap <leader>lm :call LanguageClient_contextMenu()<CR>
+nnoremap <leader>lr :call LanguageClient#textDocument_rename()<CR>
+nnoremap <leader>lt :call LanguageClient#textDocument_typeDefinition()<CR>
+nnoremap <leader>lx :call LanguageClient#textDocument_references()<CR>
+nnoremap <leader>lc :call LanguageClient#textDocument_completion()<CR>
+nnoremap <leader>lh :call LanguageClient#textDocument_hover()<CR>
+nnoremap <leader>ls :call LanguageClient_textDocument_documentSymbol()<CR>
 
 " Linting/fixiing
 let g:ale_fixers = {
@@ -189,33 +208,37 @@ let g:ale_fix_on_save = 0
 
 " Completion (Deoplete)
 " :help deoplete-options for configuration options
+"let b:deoplete_disable_auto_complete=1
+"let g:deoplete_disable_auto_complete=1
+
 let g:deoplete#enable_at_startup = 1
 " call deoplete#custom#option('auto_complete', v:false)
-
+"
 call deoplete#custom#option('smart_case', v:true)
 
 " Disable the candidates in Comment/String syntaxes.
-call deoplete#custom#source('_',
-            \ 'disabled_syntaxes', ['Comment', 'String'])
+call deoplete#custom#source('_', 'disabled_syntaxes', ['Comment', 'String'])
 call deoplete#custom#option('sources', {
     \ 'ruby': ['LanguageClient'],
+    \ 'javascript': ['LanguageClient'],
+    \ 'typescript': ['LanguageClient'],
 \})
 
 call deoplete#custom#source('vim', 'mark', '<vim>')
-call deoplete#custom#source('LanguageServer', 'mark', '<lang>')
-call deoplete#custom#source('buffer', 'mark', '<buf>')
+call deoplete#custom#source('LanguageClient', 'mark', '<lang>')
+call deoplete#custom#source('buffer', 'mark', '<buffer>')
 call deoplete#custom#source('tag', 'mark', '<tag>')
-call deoplete#custom#source('around', 'mark', '<around>')
+call deoplete#custom#source('around', 'mark', '<a>')
 call deoplete#custom#source('buffer', 'mark', '<buf>')
 call deoplete#custom#source('tmux-complete', 'mark', '<tmux>')
 call deoplete#custom#source('syntax', 'mark', '<syntax>')
 call deoplete#custom#source('member', 'mark', '<member>')
-call deoplete#custom#source('ultisnips', 'mark', '<snip>')
+call deoplete#custom#source('ultisnips', 'mark', '<usnip>')
 call deoplete#custom#source('ultisnips', 'rank', 1000)
 call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
 
 " configuration
-set completeopt=longest,menu,preview
+set completeopt=longest,menuone,preview
 
 " lightline - status bar
 let g:lightline = {
