@@ -4,6 +4,10 @@ from javascript_snippets import (
 )
 endglobal
 
+snippet us "use strict"
+'use strict'`!p snip.rv = semi(snip)`
+endsnippet
+
 snippet cl "console.log(...)"
 console.log('$1')
 endsnippet
@@ -31,50 +35,21 @@ class ${1:Name} {
 }
 endsnippet
 
-snippet rrcc "React Redux Class Component" b
-import React, { PropTypes } from 'react'
-import { connect } from 'react-redux'
-
-class ${1:ComponentName} extends React.Component {
-	render() {
-		return (${2:null})
-	}
-}
-
-const mapStateToProps = {}
-
-export default connect(mapStateToProps)($1)
-endsnippet
-
 snippet iife "Immediately-Invoked Function Expression (iife)"
 (function`!p snip.rv = space_before_function_paren(snip)`(${1:window}) {
 	${VISUAL}$0
 }(${2:$1}))`!p snip.rv = semi(snip)`
 endsnippet
 
-snippet rfc "React Stateless functional component"
-import React from 'react'
-import PropTypes from 'prop-types'
-
-const propTypes = {}
-
-function ${1:funName}(${2:props}) {
-	return ${0:null}
-}
-
-$1.propTypes = propTypes
-
-export default $1
-endsnippet
-
 snippet fun "A function" b
-function ${1:Name}($2) {
+function ${1:name}($2) {
 	$0
 }
 endsnippet
 
-snippet desc "Mocha describe" b
-describe('${1:Description}', () => {
+## Test snippets
+snippet desc "Mocha describe block" b
+describe('${1:description}', () => {
 	$0
 })
 endsnippet
@@ -85,23 +60,37 @@ it('${1:What}', () => {
 })
 endsnippet
 
-snippet expect "chai expect" b
-expect(${1:object}).to.$2
+snippet Feature "Feature block" b
+Feature('${1:description}', () => {
+	$0
+})
 endsnippet
-
-snippet spec "imports for a javascript component spec" b
-import React from 'react'
-import { expect } from 'chai'
-import { shallow } from 'enzyme'
-
-import $1 from './$1'
-
-describe('<${1:ComponentName} />', () => {
+snippet Scenario "Scenario"
+Scenario('${1:description}', () => {
+	$0
+})
+endsnippet
+snippet Given "Given block"
+Given('${1:description}', () => {
+	$0
+})
+endsnippet
+snippet And "And block"
+And('${1:description}', () => {
+	$0
+})
+endsnippet
+snippet When "When block"
+When('${1:description}', () => {
+	$0
+})
+endsnippet
+snippet Then "Then block"
+Then('${1:description}', () => {
 	$0
 })
 endsnippet
 
-snippet shallow "shallow render a component" b
-const wrapper = shallow(<${1:Component} />)
-expect(wrapper.$2).to.$3
+snippet expect "chai expect" b
+expect(${1:object}).to.$2
 endsnippet
