@@ -41,7 +41,7 @@ if dein#load_state('~/.cache/dein')
 
   " Snippets
   call dein#add('SirVer/ultisnips')
-	call dein#add('honza/vim-snippets') " A Snippets library
+ 	" call dein#add('honza/vim-snippets') " A Snippets library
 
   " Testrunner
   call dein#add('janko-m/vim-test')
@@ -163,7 +163,7 @@ let g:echodoc#enable_at_startup = 1
 let g:echodoc#type = 'echo'
 
 " Snippets
-let g:UltiSnipsSnippetsDir="~/.vim/snips"
+let g:UltiSnipsSnippetDirectories=["snips"]
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
@@ -208,25 +208,13 @@ let g:ale_fix_on_save = 0
 
 " Completion (Deoplete)
 " :help deoplete-options for configuration options
-"let b:deoplete_disable_auto_complete=1
-"let g:deoplete_disable_auto_complete=1
-
 let g:deoplete#enable_at_startup = 1
-" call deoplete#custom#option('auto_complete', v:false)
-"
 call deoplete#custom#option('smart_case', v:true)
-
 " Disable the candidates in Comment/String syntaxes.
 call deoplete#custom#source('_', 'disabled_syntaxes', ['Comment', 'String'])
-call deoplete#custom#option('sources', {
-    \ 'ruby': ['LanguageClient'],
-    \ 'javascript': ['LanguageClient'],
-    \ 'typescript': ['LanguageClient'],
-\})
 
 call deoplete#custom#source('vim', 'mark', '<vim>')
 call deoplete#custom#source('LanguageClient', 'mark', '<lang>')
-call deoplete#custom#source('buffer', 'mark', '<buffer>')
 call deoplete#custom#source('tag', 'mark', '<tag>')
 call deoplete#custom#source('around', 'mark', '<a>')
 call deoplete#custom#source('buffer', 'mark', '<buf>')
@@ -234,8 +222,12 @@ call deoplete#custom#source('tmux-complete', 'mark', '<tmux>')
 call deoplete#custom#source('syntax', 'mark', '<syntax>')
 call deoplete#custom#source('member', 'mark', '<member>')
 call deoplete#custom#source('ultisnips', 'mark', '<usnip>')
-call deoplete#custom#source('ultisnips', 'rank', 1000)
 call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
+
+call deoplete#custom#source('LanguageClient', 'rank', 9000)
+call deoplete#custom#source('ultisnips', 'rank', 5000)
+call deoplete#custom#source('around', 'rank', 2000)
+call deoplete#custom#source('buffer', 'rank', 1000)
 
 " configuration
 set completeopt=longest,menuone,preview
