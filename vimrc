@@ -23,8 +23,6 @@ if dein#load_state('~/.cache/dein')
   call dein#add('Shougo/deoplete.nvim')
   call dein#add('Shougo/echodoc')
 
-  " Auto close parentheses and quotes
-  call dein#add('cohama/lexima.vim')
   call dein#add('tpope/vim-commentary')
 
   " Focused editing
