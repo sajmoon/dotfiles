@@ -19,9 +19,6 @@ if dein#load_state('~/.cache/dein')
   call dein#add('blueyed/vim-diminactive')
 
   " Utility plugins
-  call dein#add('Shougo/deoplete.nvim')
-  call dein#add('Shougo/echodoc')
-
   call dein#add('tpope/vim-commentary')
 
   " Focused editing
@@ -38,8 +35,8 @@ if dein#load_state('~/.cache/dein')
   call dein#add('itchyny/lightline.vim')
 
   " Snippets
-  call dein#add('SirVer/ultisnips')
- 	" call dein#add('honza/vim-snippets') " A Snippets library
+  " call dein#add('SirVer/ultisnips')
+  call dein#add('honza/vim-snippets')
 
   " Testrunner
   call dein#add('janko-m/vim-test')
@@ -48,10 +45,7 @@ if dein#load_state('~/.cache/dein')
   call dein#add('sheerun/vim-polyglot')
   call dein#add('slashmili/alchemist.vim')
 
-  call dein#add('autozimu/LanguageClient-neovim', {
-    \ 'rev': 'next',
-    \ 'build': './install.sh',
-    \ })
+  call dein#add('neoclide/coc.nvim', {'merged':0, 'rev': 'release'})
 
   call dein#end()
   call dein#save_state()
@@ -87,6 +81,8 @@ set shiftwidth=2
 set showcmd       " display incomplete commands
 set tabstop=2
 set termguicolors
+set updatetime=300
+
 
 " Theme vim
 " Some gooed colorschems: molokai, solarized seoul256, neodark
@@ -156,41 +152,8 @@ set cmdheight=2
 set spellfile=$HOME/.vim-spell-en.utf-8.add
 exec 'silent mkspell! ' . &spellfile . '.spl ' . &spellfile
 
-let g:echodoc#enable_at_startup = 1
-let g:echodoc#type = 'echo'
-
-" Snippets
-let g:UltiSnipsSnippetDirectories=["snips"]
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-" Language server
-" \ 'javascript': ['javascript-typescript-stdio'],
-let g:LanguageClient_serverCommands = {
-      \ 'elixir': ['elixir-ls'],
-      \ 'javascript': ['javascript-typescript-stdio'],
-      \ 'typescript': ['tcp://127.0.0.1:2089'],
-      \ 'typescriptreact': ['javascript-typescript-stdio'],
-      \ 'ruby': ['stdio'],
-\ }
-let g:LanguageClient_loggingLevel = 'DEBUG'
-let g:LanguageClient_loggingFile = expand('~/.vim/LanguageClient.log')
-
-let g:LanguageClient_autoStart = 1
-let g:LanguageClient_autoStop = 1
-
 " Set leader to space
 let mapleader = " "
-" Or map each action separately
-nnoremap <leader>ld :call LanguageClient#textDocument_definition()<CR>
-nnoremap <leader>lm :call LanguageClient_contextMenu()<CR>
-nnoremap <leader>lr :call LanguageClient#textDocument_rename()<CR>
-nnoremap <leader>lt :call LanguageClient#textDocument_typeDefinition()<CR>
-nnoremap <leader>lx :call LanguageClient#textDocument_references()<CR>
-nnoremap <leader>lc :call LanguageClient#textDocument_completion()<CR>
-nnoremap <leader>lh :call LanguageClient#textDocument_hover()<CR>
-nnoremap <leader>ls :call LanguageClient_textDocument_documentSymbol()<CR>
 
 " Linting/fixiing
 let g:ale_fixers = {
@@ -203,29 +166,84 @@ let g:ale_fixers = {
 \}
 
 let g:ale_fix_on_save = 1
+let g:ale_completion_autoimport = 1
+let g:ale_disable_lsp = 1
 
-" Completion (Deoplete)
-" :help deoplete-options for configuration options
-let g:deoplete#enable_at_startup = 1
-call deoplete#custom#option('smart_case', v:true)
-" Disable the candidates in Comment/String syntaxes.
-call deoplete#custom#source('_', 'disabled_syntaxes', ['Comment', 'String'])
+" Coc completions
+nmap <silent> gd <Plug>(coc-definition)
+" nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
-call deoplete#custom#source('vim', 'mark', '<vim>')
-call deoplete#custom#source('LanguageClient', 'mark', '<lang>')
-call deoplete#custom#source('tag', 'mark', '<tag>')
-call deoplete#custom#source('around', 'mark', '<a>')
-call deoplete#custom#source('buffer', 'mark', '<buf>')
-call deoplete#custom#source('tmux-complete', 'mark', '<tmux>')
-call deoplete#custom#source('syntax', 'mark', '<syntax>')
-call deoplete#custom#source('member', 'mark', '<member>')
-call deoplete#custom#source('ultisnips', 'mark', '<usnip>')
-call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
+nnoremap <silent> K :call <SID>show_documentation()<CR>
 
-call deoplete#custom#source('LanguageClient', 'rank', 9000)
-call deoplete#custom#source('ultisnips', 'rank', 5000)
-call deoplete#custom#source('around', 'rank', 2000)
-call deoplete#custom#source('buffer', 'rank', 1000)
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor.
+" autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap keys for applying codeAction to the current buffer.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Map function and class text objects
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
+" Use CTRL-S for selections ranges.
+" Requires 'textDocument/selectionRange' support of LS, ex: coc-tsserver
+nmap <silent> <C-s> <Plug>(coc-range-select)
+xmap <silent> <C-s> <Plug>(coc-range-select)
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Mappings for CoCList
+
+" Show commands.
+nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document.
+nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols.
+nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+" Resume latest coc list.
+nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+" Use <C-l> for trigger snippet expand.
+imap <C-l> <Plug>(coc-snippets-expand)
+
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
+
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
+
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
 
 " configuration
 set completeopt=longest,menuone,preview
@@ -235,7 +253,7 @@ let g:lightline = {
   \ 'colorscheme': 'wombat',
   \ 'active': {
   \   'left': [ [ 'mode', 'paste' ],
-  \             [ 'gitbranch', 'filename', 'modified' ] ]
+  \             [ 'cocstatus', 'currentfunction', 'gitbranch', 'filename', 'modified' ] ]
   \ },
   \ 'component': {
   \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
@@ -244,7 +262,9 @@ let g:lightline = {
   \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
   \ },
   \'component_function': {
-  \   'gitbranch': 'fugitive#head'
+  \   'gitbranch': 'fugitive#head',
+  \   'cocstatus': 'coc#status',
+  \   'currentfunction': 'CocCurrentFunction',
   \ },
 \ }
 
