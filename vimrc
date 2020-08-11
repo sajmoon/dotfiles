@@ -34,6 +34,7 @@ if dein#load_state('~/.cache/dein')
   " Git stuffs
   call dein#add('tpope/vim-fugitive')
   call dein#add('airblade/vim-gitgutter')
+  call dein#add('jreybert/vimagit')
 
   " Look'n'feel
   call dein#add('flazz/vim-colorschemes')
