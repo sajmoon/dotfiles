@@ -35,7 +35,6 @@ if dein#load_state('~/.cache/dein')
   call dein#add('itchyny/lightline.vim')
 
   " Snippets
-  " call dein#add('SirVer/ultisnips')
   call dein#add('honza/vim-snippets')
 
   " Testrunner
