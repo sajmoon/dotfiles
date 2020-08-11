@@ -141,7 +141,6 @@ function! NumberToggle()
     call SetRelativeLineNumbers()
   endif
 endfunc
-
 " nnoremap <c-n> :call NumberToggle()<cr>
 
 " Show linenumbers by default
@@ -271,8 +270,8 @@ autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
 
 " Git and git commands Gutter
-nmap ]c <Plug>GitGutterNextHunk
-nmap [c <Plug>GitGutterPrevHunk<Paste>
+nmap ]c <Plug>(GitGutterNextHunk)
+nmap [c <Plug>(GitGutterPrevHunk)
 
 " Local config
 if filereadable($HOME . "/.vimrc.local")
