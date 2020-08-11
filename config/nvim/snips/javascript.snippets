@@ -5,25 +5,25 @@ from javascript_snippets import (
 endglobal
 
 snippet us "use strict"
-'use strict'`!p snip.rv = semi(snip)`
+"use strict"`!p snip.rv = semi(snip)`
 endsnippet
 
 snippet cl "console.log(...)"
-console.log('$1')
+console.log("$1");
 endsnippet
 
 snippet cld "console.log('object', object)"
-console.log('${1:object}', $1)
+console.log("-- DEBUG ${1:object}", JSON.stringify($1, null, 2));
 endsnippet
 
 snippet r "return"
-return ${0:result}
+return ${0:result};
 endsnippet
 
 snippet c=> "Const Function" bA
 const ${1:name} = (${2:args}) => {
 	return $3
-}
+};
 endsnippet
 
 snippet class "Class"
@@ -44,51 +44,51 @@ endsnippet
 snippet fun "A function" b
 function ${1:name}($2) {
 	$0
-}
+};
 endsnippet
 
 ## Test snippets
 snippet desc "Mocha describe block" b
-describe('${1:description}', () => {
+describe("${1:description}", () => {
 	$0
-})
+});
 endsnippet
 
 snippet it "Mocha it block" b
-it('${1:What}', () => {
+it("${1:What}", () => {
 	$0
-})
+});
 endsnippet
 
 snippet Feature "Feature block" b
-Feature('${1:description}', () => {
+Feature("${1:description}", () => {
 	$0
-})
+});
 endsnippet
 snippet Scenario "Scenario"
-Scenario('${1:description}', () => {
+Scenario("${1:description}", () => {
 	$0
-})
+});
 endsnippet
 snippet Given "Given block"
-Given('${1:description}', () => {
+Given("${1:description}", () => {
 	$0
-})
+});
 endsnippet
 snippet And "And block"
-And('${1:description}', () => {
+And("${1:description}", () => {
 	$0
-})
+});
 endsnippet
 snippet When "When block"
-When('${1:description}', () => {
+When("${1:description}", () => {
 	$0
-})
+});
 endsnippet
 snippet Then "Then block"
-Then('${1:description}', () => {
+Then("${1:description}", () => {
 	$0
-})
+});
 endsnippet
 
 snippet expect "chai expect" b
