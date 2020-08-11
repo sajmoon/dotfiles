@@ -15,7 +15,6 @@ if dein#load_state('~/.cache/dein')
   call dein#add('tpope/vim-vinegar')
   call dein#add('tpope/vim-eunuch')
   call dein#add('w0rp/ale')
-  call dein#add('neomake/neomake')
   call dein#add('dockyard/vim-easydir') " Create directories
   call dein#add('blueyed/vim-diminactive')
 
@@ -171,18 +170,18 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:LanguageClient_serverCommands = {
       \ 'elixir': ['elixir-ls'],
       \ 'javascript': ['javascript-typescript-stdio'],
-      \ 'typescript': ['javascript-typescript-stdio'],
+      \ 'typescript': ['tcp://127.0.0.1:2089'],
+      \ 'typescriptreact': ['javascript-typescript-stdio'],
       \ 'ruby': ['stdio'],
 \ }
-
-let g:LanguageClient_rootMarkers = {
-    \ 'javascript': ['jsconfig.json'],
-    \ 'typescript': ['tsconfig.json'],
-    \ }
+let g:LanguageClient_loggingLevel = 'DEBUG'
+let g:LanguageClient_loggingFile = expand('~/.vim/LanguageClient.log')
 
 let g:LanguageClient_autoStart = 1
 let g:LanguageClient_autoStop = 1
 
+" Set leader to space
+let mapleader = " "
 " Or map each action separately
 nnoremap <leader>ld :call LanguageClient#textDocument_definition()<CR>
 nnoremap <leader>lm :call LanguageClient_contextMenu()<CR>
@@ -203,7 +202,7 @@ let g:ale_fixers = {
 \   'ruby': ['rubocop']
 \}
 
-let g:ale_fix_on_save = 0
+let g:ale_fix_on_save = 1
 
 " Completion (Deoplete)
 " :help deoplete-options for configuration options
@@ -251,10 +250,13 @@ let g:lightline = {
 
 " fzf
 let g:fzf_layout = { 'down': '~50%' }
+let g:fzf_tags_command = 'ctags -R'
 let g:fzf_nvim_statusline = 0 " disable statusline overwriting
+let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all'
 let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 nnoremap <silent> <C-p> :Files<CR>
 nnoremap <silent> <leader>b :Buffers<CR>
+nnoremap <silent> <leader>h :History<CR>
 nnoremap <silent> <leader>/ :execute 'Ag ' . input('Ag/')<CR>
 
 " vim-test
