@@ -42,7 +42,6 @@ if dein#load_state('~/.cache/dein')
 
   " Support for languages
   call dein#add('sheerun/vim-polyglot')
-  call dein#add('slashmili/alchemist.vim')
 
   call dein#add('neoclide/coc.nvim', {'merged':0, 'rev': 'release'})
 
@@ -242,7 +241,7 @@ let g:coc_snippet_next = '<c-j>'
 let g:coc_snippet_prev = '<c-k>'
 
 " Use <C-j> for both expand and jump (make expand higher priority.)
-imap <C-j> <Plug>(coc-snippets-expand-jump)
+" imap <C-j> <Plug>(coc-snippets-expand-jump)
 
 " configuration
 set completeopt=longest,menuone,preview
