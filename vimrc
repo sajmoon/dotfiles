@@ -52,9 +52,7 @@ endif
 filetype plugin indent on
 syntax enable
 
-language en_US
-
-"set autowrite     " Automatically :write before running commands
+set autowrite     " Automatically :write before running commands
 set backspace=2   " Backspace deletes like most programs in insert mode
 set cursorline
 set encoding=utf-8
