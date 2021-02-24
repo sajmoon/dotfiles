@@ -11,6 +11,7 @@ end
 source ~/.config.fish
 source ~/.aliases.fish
 source ~/.variables.fish
-source ~/.asdf/asdf.fish
+source /usr/local/opt/asdf/asdf.fish
 
 # set -x PATH $HOME/.fastlane/bin $PATH
+
