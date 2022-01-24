@@ -42,8 +42,11 @@ if dein#load_state('~/.cache/dein')
 
   " Support for languages
   call dein#add('sheerun/vim-polyglot')
+  call dein#add('github/copilot.vim')
 
-  call dein#add('neoclide/coc.nvim', {'merged':0, 'rev': 'release'})
+  call dein#add('neoclide/coc.nvim', {'branch': 'release'})
+
+  call dein#add('itchyny/vim-cursorword')
 
   call dein#end()
   call dein#save_state()
@@ -166,6 +169,8 @@ let g:ale_completion_autoimport = 1
 let g:ale_disable_lsp = 1
 
 " Coc completions
+let g:coc_global_extensions=[ 'coc-omnisharp' ]
+
 nmap <silent> gd <Plug>(coc-definition)
 " nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
