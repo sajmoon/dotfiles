@@ -7,9 +7,13 @@ if dein#load_state('~/.cache/dein')
   call dein#begin('~/.cache/dein')
   call dein#add('~/.cache/dein/repos/github.com/Shougo/dein.vim')
 
+  " lua helper library
+  call dein#add('nvim-lua/plenary.nvim')
+
   " Fuzzy find files and buffers
-  call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 })
-  call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
+  call dein#add('nvim-telescope/telescope.nvim')
+  call dein#add('nvim-telescope/telescope-fzf-native.nvim', {"build": "make"})
+  call dein#add('nvim-treesitter/nvim-treesitter')
 
   call dein#add('tpope/vim-surround')
   call dein#add('tpope/vim-vinegar')
@@ -269,23 +273,10 @@ let g:lightline = {
   \ },
 \ }
 
-" fzf
-let g:fzf_layout = { 'down': '~50%' }
-let g:fzf_tags_command = 'ctags -R'
-let g:fzf_nvim_statusline = 0 " disable statusline overwriting
-let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all'
-let $FZF_DEFAULT_COMMAND = 'ag -g ""'
-nnoremap <silent> <C-p> :Files<CR>
-nnoremap <silent> <leader>b :Buffers<CR>
-nnoremap <silent> <leader>h :History<CR>
-nnoremap <silent> <leader>/ :execute 'Ag ' . input('Ag/')<CR>
-
-" vim-test
-nmap <silent> <leader>tn :TestNearest<CR>
-nmap <silent> <leader>tf :TestFile<CR>
-nmap <silent> <leader>ts :TestSuite<CR>
-nmap <silent> <leader>tl :TestLast<CR>
-nmap <silent> <leader>tg :TestVisit<CR>
+lua << EOF
+  require("fuzzyfinder")
+  require("testrunner")
+EOF
 
 " Goyo and Limelight
 " Distaction free writing
@@ -299,6 +290,10 @@ nmap [c <Plug>(GitGutterPrevHunk)
 " Local config
 if filereadable($HOME . "/.vimrc.local")
   source ~/.vimrc.local
+endif
+
+if has('vim_starting') && dein#check_install()
+  call dein#install()
 endif
 
 " Enable per project .vimrc file
