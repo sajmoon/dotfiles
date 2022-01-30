@@ -4,8 +4,6 @@ if not present then
    return
 end
 
-local has_snippets, luasnip = pcall(require, "luasnip")
-
 vim.opt.completeopt = "menu,menuone,noselect"
 
 cmp.setup({

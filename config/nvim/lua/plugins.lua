@@ -21,9 +21,7 @@ return require('packer').startup(function()
     }
   }
 
-  use {'SirVer/ultisnips',
-    requires = {{'honza/vim-snippets', rtp = '.'}}
-  }
+  use { 'SirVer/ultisnips' }
 
   -- Look'n'feel
   use { 'feline-nvim/feline.nvim' }
