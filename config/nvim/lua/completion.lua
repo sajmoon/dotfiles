@@ -33,4 +33,12 @@ cmp.setup({
   },
 })
 
+cmp.setup.cmdline(':', {
+  sources = cmp.config.sources({
+    { name = 'path' }
+  }, {
+    { name = 'cmdline' }
+  })
+})
+
 -- require("luasnip.loaders.from_snipmate").load({ path = { "~/.config/nvim/snips" } })
