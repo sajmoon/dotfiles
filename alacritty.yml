@@ -1,0 +1,13 @@
+# ~/.alacritty.yml
+
+shell:
+  program: /usr/local/bin/fish
+  args:
+    - -l
+    - -C
+    - "tmux attach || tmux"
+env:
+  TERM: alacritty
+
+font:
+  size: 13
