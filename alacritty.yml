@@ -6,8 +6,7 @@ shell:
     - -l
     - -C
     - "tmux attach || tmux"
-env:
-  TERM: alacritty
 
+alt_send_esc: false
 font:
-  size: 13
+  size: 12
