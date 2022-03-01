@@ -16,7 +16,7 @@ return require('packer').startup(function()
     "hrsh7th/nvim-cmp",
     requires = {
       'neovim/nvim-lspconfig', 'williamboman/nvim-lsp-installer', "hrsh7th/cmp-buffer", "hrsh7th/cmp-nvim-lsp",
-      'quangnguyen30192/cmp-nvim-ultisnips',
+      'quangnguyen30192/cmp-nvim-ultisnips', 'onsails/lspkind-nvim',
       'hrsh7th/cmp-path', 'f3fora/cmp-spell', 'hrsh7th/cmp-emoji'
     }
   }
@@ -39,6 +39,8 @@ return require('packer').startup(function()
   use { 'dockyard/vim-easydir' }
 
   use { 'janko-m/vim-test' }
+
+  use('mrjones2014/legendary.nvim')
 end)
 
 -- "   " Testrunner

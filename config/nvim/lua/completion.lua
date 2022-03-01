@@ -4,6 +4,7 @@ if not present then
    return
 end
 
+local lspkind = require('lspkind')
 vim.opt.completeopt = "menu,menuone,noselect"
 
 cmp.setup({
@@ -12,14 +13,18 @@ cmp.setup({
   },
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
-    { name = 'ultisnips' }, -- For ultisnips users.
-    { name = "buffer" },
+    { name = 'ultisnips' },
     { name = "treesitter" },
     { name = "emoji" },
     { name = "path" },
   }, {
     { name = 'buffer' },
   }),
+  experimental = {
+    native_menu = true
+  },
+  formatting = {
+  },
   mapping = {
     ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
     ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
