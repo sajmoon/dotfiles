@@ -42,9 +42,6 @@ set splitright
 " Better display for messages
 set cmdheight=2
 
-" Teach vim different fileextensions
-au BufRead,BufNewFile *.md set filetype=markdown
-
 augroup vimrcEx
   autocmd!
 
