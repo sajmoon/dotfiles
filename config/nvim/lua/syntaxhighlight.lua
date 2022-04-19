@@ -1,4 +1,4 @@
-require'nvim-treesitter.configs'.setup {
+require('nvim-treesitter.configs').setup {
   -- One of "all", "maintained" (parsers with maintainers), or a list of languages
   ensure_installed = "maintained",
 
@@ -30,4 +30,9 @@ require'nvim-treesitter.configs'.setup {
       node_decremental = "grm",
     },
   },
+}
+
+require('spellsitter').setup {
+  -- Whether enabled, can be a list of filetypes, e.g. {'python', 'lua'}
+  enable = true,
 }

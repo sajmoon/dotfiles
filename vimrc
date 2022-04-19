@@ -32,6 +32,7 @@ set shiftwidth=2
 set showcmd       " display incomplete commands
 set tabstop=2
 set updatetime=300
+set spell
 
 " Teach vim different fileextensions
 au BufRead,BufNewFile *.md set filetype=markdown
