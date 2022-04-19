@@ -6,6 +6,11 @@ wk.register({
   f = {
     name = "file", -- optional group name
     f = { "<cmd>Telescope find_files<cr>", "Find File" },
-    -- r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
+  },
+  c = {
+    name = "code actions",
+  },
+  t = {
+    name = "test runners",
   },
 }, { prefix = "<leader>" })
