@@ -26,13 +26,21 @@ set pastetoggle=<F2>
 set path=**
 set ruler         " show the cursor position all the time
 set scrolloff=3   " always show some lines above and below
-set shell=bash
+set shell=fish
 set shiftround
 set shiftwidth=2
 set showcmd       " display incomplete commands
 set tabstop=2
 set updatetime=300
 set spell
+set number
+
+" Open new split panes to right and bottom, which feels more natural
+set splitbelow
+set splitright
+
+" Better display for messages
+set cmdheight=2
 
 " Teach vim different fileextensions
 au BufRead,BufNewFile *.md set filetype=markdown
@@ -56,36 +64,6 @@ augroup vimrcEx
   autocmd FileType css,scss,sass setlocal iskeyword+=-
 augroup END
 
-" Line Numbers
-function! SetNormalLineNumbers()
-    set norelativenumber
-    set number
-    highlight LineNr ctermfg=black
-endfunction
-
-function! SetRelativeLineNumbers()
-    set relativenumber
-    highlight LineNr ctermfg=black
-endfunction
-
-function! NumberToggle()
-  if(&relativenumber == 1)
-    call SetNormalLineNumbers()
-  else
-    call SetRelativeLineNumbers()
-  endif
-endfunc
-" nnoremap <c-n> :call NumberToggle()<cr>
-
-" Show linenumbers by default
-set number
-
-" Open new split panes to right and bottom, which feels more natural
-set splitbelow
-set splitright
-
-" Better display for messages
-set cmdheight=2
 
 " Set spellfile to location that is guaranteed to exist, can be symlinked to
 set spellfile=$HOME/.vim-spell-en.utf-8.add
