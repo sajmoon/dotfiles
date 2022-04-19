@@ -6,7 +6,7 @@ require('nvim-treesitter.configs').setup {
   sync_install = false,
 
   -- List of parsers to ignore installing
-  -- ignore_install = { },
+  ignore_install = { "phpdoc" },
 
   highlight = {
     -- `false` will disable the whole extension
@@ -19,7 +19,7 @@ require('nvim-treesitter.configs').setup {
     -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
     -- Using this option may slow down your editor, and you may see some duplicate highlights.
     -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
+    additional_vim_regex_highlighting = true,
   },
   incremental_selection = {
     enable = true,
