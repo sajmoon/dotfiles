@@ -11,6 +11,7 @@ return require('packer').startup(function()
     'nvim-telescope/telescope.nvim',
     requires = { {'nvim-lua/plenary.nvim'} }
   }
+  use {'nvim-telescope/telescope-ui-select.nvim' }
 
   use { 'nvim-telescope/telescope-fzf-native.nvim', run =  "make" }
 
@@ -43,9 +44,8 @@ return require('packer').startup(function()
   -- Testrunner
   use { 'janko-m/vim-test' }
 
-  use {
-    "folke/which-key.nvim"
-  }
+  use { "folke/which-key.nvim" }
+
 end)
 
 -- "   " Support for languages
