@@ -20,8 +20,8 @@ cmp.setup({
   }, {
     { name = 'buffer' },
   }),
-  experimental = {
-    native_menu = true
+  view = {
+    entries = "native",
   },
   formatting = {
   },
