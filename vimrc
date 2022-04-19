@@ -100,9 +100,10 @@ lua << EOF
   require("lsp")
   require("snippets")
   require("completion")
+  require("keymapinfo")
 
-  require('lookandfeel');
-  require('syntaxhighlight')
+  require("lookandfeel")
+  require("syntaxhighlight")
 EOF
 
 " Git and git commands Gutter
@@ -113,7 +114,3 @@ nmap [c <Plug>(GitGutterPrevHunk)
 if filereadable($HOME . "/.vimrc.local")
   source ~/.vimrc.local
 endif
-
-" Enable per project .vimrc file
-set exrc
-set secure

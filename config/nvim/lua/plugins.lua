@@ -40,13 +40,13 @@ return require('packer').startup(function()
   use { 'jreybert/vimagit' }
   use { 'dockyard/vim-easydir' }
 
+  -- Testrunner
   use { 'janko-m/vim-test' }
 
-  use('mrjones2014/legendary.nvim')
+  use {
+    "folke/which-key.nvim"
+  }
 end)
-
--- "   " Testrunner
--- "   call dein#add('janko-m/vim-test')
 
 -- "   " Support for languages
 -- "   call dein#add('sheerun/vim-polyglot')
