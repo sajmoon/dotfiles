@@ -37,4 +37,12 @@ wk.register({
     },
     m = { "<cmd>Magit<CR>", "Magit - Commit stuff" },
   },
+    p = {
+    name = "Packer",
+    c = { "<cmd>PackerCompile<CR>", "Compile" },
+    i = { "<cmd>PackerInstall<CR>", "Install" },
+    s = { "<cmd>PackerSync<CR>", "Sync" },
+    S = { "<cmd>PackerStatus<CR>", "Status" },
+    u = { "<cmd>PackerUpdate<CR>", "Update" },
+  },
 }, { prefix = "<leader>" })
