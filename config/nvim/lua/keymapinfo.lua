@@ -4,14 +4,35 @@
 local wk = require("which-key")
 wk.register({
   f = {
-    name = "file", -- optional group name
-    f = { "<cmd>Telescope find_files<cr>", "Find File" },
+    name = "Find", -- optional group name
+    f = {
+      [[<cmd>lua require('telescope.builtin').find_files()<CR>]],
+      "Find files",
+    },
+    F = {
+      "<cmd>lua require('telescope.builtin').find_files({no_ignore=true})<CR>",
+      "Find files but no ignore",
+    },
+    b = { "<cmd>Telescope buffers<cr>", "List buffers" },
+    g = { "<cmd>Telescope live_grep theme=ivy<CR>", "Find Text" },
+    h = { "<cmd>Telescope help_tags<CR>", "Help" },
+    l = { "<cmd>Telescope resume<CR>", "Last Search" },
+    M = { "<cmd>Telescope man_pages<CR>", "Man Pages" },
+    r = { "<cmd>Telescope oldfiles<CR>", "Recent File" },
+    R = { "<cmd>Telescope registers<CR>", "Registers" },
+    k = { "<cmd>Telescope keymaps<CR>", "Keymaps" },
+    C = { "<cmd>Telescope commands<CR>", "Commands" },
   },
   c = {
-    name = "code actions",
+    name = "Code actions",
   },
   t = {
-    name = "test runners",
+    name = "Test runners",
+    n = { ":TestNearest<CR>", "Run nearest test" }, 
+    f = { ":TestFile<CR>", "Run test file" },
+    s = { ":TestSuite<CR>", "Run test suite" },
+    l = { ":TestLast<CR>", "Run last test" },
+    g = { ":TestVisit<CR>", "Goto test" },
   },
   g = {
     name = "Git",

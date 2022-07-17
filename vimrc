@@ -71,7 +71,6 @@ let mapleader = " "
 
 lua << EOF
   require("fuzzyfinder")
-  require("testrunner")
   require("lsp")
   require("snippets")
   require("completion")
