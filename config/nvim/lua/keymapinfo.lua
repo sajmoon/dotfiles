@@ -23,9 +23,48 @@ wk.register({
     k = { "<cmd>Telescope keymaps<CR>", "Keymaps" },
     C = { "<cmd>Telescope commands<CR>", "Commands" },
   },
+
   c = {
     name = "Code actions",
+    a = { "<cmd>lua vim.lsp.buf.code_action()<CR>", "Code Action" },
+    r = { '<cmd>lua vim.lsp.buf.rename()<CR>', "Rename" },
+    f = { "<cmd>lua vim.lsp.buf.formatting()<CR>", "Format" },
+    l = { "<cmd>lua vim.lsp.codelens.run()<CR>", "CodeLens Action" },
+    q = { "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>", "Quickfix" },
+    d = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "Goto declaration" },
+    D = { "<cmd>lua vim.lsp.buf.definition()<CR>", "Goto definition" },
+    i = { "<cmd>lua vim.lsp.buf.implemntation()<CR>", "Goto implementaion" },
+    r = { "<cmd>lua vim.lsp.buf.references()<CR>", "Goto references" },
+    t = { "<cmd>lua vim.lsp.buf.type_definition()<CR>", "Show type definition" },
+
+
+    j = {
+      "<cmd>lua vim.diagnostic.goto_next()<CR>",
+      "Next Diagnostic",
+    },
+    k = {
+      "<cmd>lua vim.diagnostic.goto_prev()<CR>",
+      "Prev Diagnostic",
+    },
+
+    i = { "<cmd>LspInfo<CR>", "Info" },
+    I = { "<cmd>LspInstallInfo<CR>", "Installer Info" },
+
+    x = {
+      "<cmd>Telescope lsp_document_diagnostics<CR>",
+      "Document Diagnostics",
+    },
+    w = {
+      "<cmd>Telescope lsp_workspace_diagnostics<CR>",
+      "Workspace Diagnostics",
+    },
+    s = { "<cmd>Telescope lsp_document_symbols<CR>", "Document Symbols" },
+    S = {
+      "<cmd>Telescope lsp_dynamic_workspace_symbols<CR>",
+      "Workspace Symbols",
+    },
   },
+
   t = {
     name = "Test runners",
     n = { ":TestNearest<CR>", "Run nearest test" }, 

@@ -15,6 +15,11 @@ return require('packer').startup(function()
 
   use { 'nvim-telescope/telescope-fzf-native.nvim', run =  "make" }
 
+  -- lsp
+  --   use("neovim/nvim-lspconfig") -- enable LSP
+  use("williamboman/nvim-lsp-installer") -- simple to use language server installer
+  use("jose-elias-alvarez/null-ls.nvim") -- for formatters and linters
+
   use {
     "hrsh7th/nvim-cmp",
     requires = {
