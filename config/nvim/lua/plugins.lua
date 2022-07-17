@@ -38,8 +38,9 @@ return require('packer').startup(function()
   use { 'dockyard/vim-easydir' }
 
   -- Gitstuffs
-  use { 'airblade/vim-gitgutter' }
+  use { 'lewis6991/gitsigns.nvim', }
   use { 'jreybert/vimagit' }
+  use { "tpope/vim-fugitive" }
 
   -- Testrunner
   use { 'janko-m/vim-test' }

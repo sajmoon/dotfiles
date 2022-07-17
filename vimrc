@@ -76,14 +76,11 @@ lua << EOF
   require("snippets")
   require("completion")
   require("keymapinfo")
+  require("git")
 
   require("lookandfeel")
   require("syntaxhighlight")
 EOF
-
-" Git and git commands Gutter
-nmap ]c <Plug>(GitGutterNextHunk)
-nmap [c <Plug>(GitGutterPrevHunk)
 
 " Local config
 if filereadable($HOME . "/.vimrc.local")
