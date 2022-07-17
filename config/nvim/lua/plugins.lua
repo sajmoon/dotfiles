@@ -35,11 +35,11 @@ return require('packer').startup(function()
   use { 'tpope/vim-vinegar' }
   use { 'tpope/vim-surround' }
   use { 'tpope/vim-eunuch' }
+  use { 'dockyard/vim-easydir' }
 
   -- Gitstuffs
   use { 'airblade/vim-gitgutter' }
   use { 'jreybert/vimagit' }
-  use { 'dockyard/vim-easydir' }
 
   -- Testrunner
   use { 'janko-m/vim-test' }
