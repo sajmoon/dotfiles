@@ -79,6 +79,7 @@ wk.register({
     j = { "<cmd>lua require 'gitsigns'.next_hunk()<CR>", "Next Hunk" },
     k = { "<cmd>lua require 'gitsigns'.prev_hunk()<CR>", "Prev Hunk" },
     l = { "<cmd>G blame<CR>", "Git Blame Information" },
+    P = { "<cmd>G push<CR>", "Git Push" },
     L = { "<cmd>Gclog<CR>", "Git Log Information" },
     p = { "<cmd>lua require 'gitsigns'.preview_hunk()<CR>", "Preview Hunk" },
     r = { "<cmd>lua require 'gitsigns'.reset_hunk()<CR>", "Reset Hunk" },
