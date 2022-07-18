@@ -58,9 +58,3 @@ return require('packer').startup(function()
   use { "folke/which-key.nvim" }
 
 end)
-
--- "   " Support for languages
--- "   call dein#add('sheerun/vim-polyglot')
--- "   " call dein#add('github/copilot.vim')
-
-
