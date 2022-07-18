@@ -7,16 +7,16 @@ return require('packer').startup(function()
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use { 'lewis6991/spellsitter.nvim' }
 
+  -- Telescope
   use {
     'nvim-telescope/telescope.nvim',
     requires = { {'nvim-lua/plenary.nvim'} }
   }
-  use {'nvim-telescope/telescope-ui-select.nvim' }
-
+  use { 'nvim-telescope/telescope-ui-select.nvim' }
   use { 'nvim-telescope/telescope-fzf-native.nvim', run =  "make" }
 
-  -- lsp
-  --   use("neovim/nvim-lspconfig") -- enable LSP
+  -- LSP
+  use("neovim/nvim-lspconfig") -- enable LSP
   use("williamboman/nvim-lsp-installer") -- simple to use language server installer
   use("jose-elias-alvarez/null-ls.nvim") -- for formatters and linters
 
@@ -29,6 +29,10 @@ return require('packer').startup(function()
     }
   }
 
+  -- Navigate with hop
+  use { 'phaazon/hop.nvim', branch = 'v2' }
+
+  -- Snippets
   use { 'SirVer/ultisnips' }
 
   -- Look'n'feel

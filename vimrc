@@ -79,6 +79,7 @@ lua << EOF
 
   require("lookandfeel")
   require("syntaxhighlight")
+  require("navigation")
 EOF
 
 " Local config
