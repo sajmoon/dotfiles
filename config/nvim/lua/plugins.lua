@@ -31,6 +31,7 @@ return require('packer').startup(function()
 
   -- Navigate with hop
   use { 'phaazon/hop.nvim', branch = 'v2' }
+  use { 'itchyny/vim-cursorword' }
 
   -- Snippets
   use { 'SirVer/ultisnips' }
@@ -62,5 +63,4 @@ end)
 -- "   call dein#add('sheerun/vim-polyglot')
 -- "   " call dein#add('github/copilot.vim')
 
--- "   call dein#add('itchyny/vim-cursorword')
 
