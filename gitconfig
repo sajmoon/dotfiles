@@ -19,6 +19,7 @@
 
 [alias]
   delete-merged-branches-master = "!git co master && git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
+  delete-merged-branches-main = "!git co main && git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
   s = status -s
   a = add
   master = checkout master
