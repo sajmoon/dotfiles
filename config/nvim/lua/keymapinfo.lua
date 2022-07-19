@@ -28,7 +28,7 @@ wk.register({
     name = "Code actions",
     a = { "<cmd>lua vim.lsp.buf.code_action()<CR>", "Code Action" },
     r = { '<cmd>lua vim.lsp.buf.rename()<CR>', "Rename" },
-    f = { "<cmd>lua vim.lsp.buf.formatting()<CR>", "Format" },
+    f = { "<cmd>lua vim.lsp.buf.format({ async = true })<CR>", "Format" },
     l = { "<cmd>lua vim.lsp.codelens.run()<CR>", "CodeLens Action" },
     q = { "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>", "Quickfix" },
     d = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "Goto declaration" },

@@ -71,7 +71,7 @@ let mapleader = " "
 
 lua << EOF
   require("fuzzyfinder")
-  require("lsp")
+  require("config.lsp.init").setup()
   require("snippets")
   require("completion")
   require("keymapinfo")
