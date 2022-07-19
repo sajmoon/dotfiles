@@ -70,7 +70,7 @@ exec 'silent mkspell! ' . &spellfile . '.spl ' . &spellfile
 let mapleader = " "
 
 lua << EOF
-  require("fuzzyfinder")
+  require("fuzzyfinder").setup()
   require("config.lsp.init").setup()
   require("snippets")
   require("completion")

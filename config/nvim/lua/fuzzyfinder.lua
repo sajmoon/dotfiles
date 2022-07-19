@@ -1,11 +1,29 @@
-local map = require("utils").map
+local status_ok, telescope = pcall(require, "telescope")
+if not status_ok then
+  return
+end
 
-require('telescope').load_extension('fzf')
-require("telescope").load_extension("ui-select")
+local M = {}
 
-map("n", "<leader>ff", "<cmd>lua require('telescope.builtin').find_files()<cr>")
-map("n", "<C-p>", ":Telescope find_files <CR>")
-map("n", "<leader>fg", ":Telescope live_grep <CR>")
-map("n", "<leader>fb", ":Telescope buffers <CR>")
-map("n", "<leader>fh", ":Telescope help_tags <CR>")
-map("n", "<leader>fr", ":Telescope resume <CR>")
+
+function M.setup()
+  telescope.setup {
+    extensions = {
+      fzf = {
+        fuzzy = true,                    -- false will only do exact matching
+        override_generic_sorter = true,  -- override the generic sorter
+        override_file_sorter = true,     -- override the file sorter
+        case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+                                         -- the default case_mode is "smart_case"
+      }
+    }
+  }
+
+  telescope.load_extension('fzf')
+  telescope.load_extension("ui-select")
+
+  local map = require("utils").map
+  map("n", "<C-p>", ":Telescope find_files <CR>")
+end
+
+return M

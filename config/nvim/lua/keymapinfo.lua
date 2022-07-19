@@ -22,6 +22,7 @@ wk.register({
     R = { "<cmd>Telescope registers<CR>", "Registers" },
     k = { "<cmd>Telescope keymaps<CR>", "Keymaps" },
     C = { "<cmd>Telescope commands<CR>", "Commands" },
+    c = { "<cmd>Telescope resume<CR>", "Resume" },
   },
 
   c = {
