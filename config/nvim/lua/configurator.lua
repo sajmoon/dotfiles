@@ -1,4 +1,5 @@
 require("core.options")
+
 require("plugins")
 
 require("fuzzyfinder").setup()
