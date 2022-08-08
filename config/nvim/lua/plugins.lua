@@ -39,6 +39,7 @@ return require('packer').startup(function()
   -- Look'n'feel
   use { 'feline-nvim/feline.nvim' }
   use { 'flazz/vim-colorschemes' }
+  use { 'norcalli/nvim-colorizer.lua' }
 
   -- Utils
   use { 'tpope/vim-commentary' }
