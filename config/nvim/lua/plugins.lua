@@ -37,6 +37,7 @@ return require('packer').startup(function()
   use { 'SirVer/ultisnips' }
 
   -- Look'n'feel
+  use { 'folke/tokyonight.nvim' }
   use { 'feline-nvim/feline.nvim' }
   use { 'flazz/vim-colorschemes' }
   use { 'norcalli/nvim-colorizer.lua' }

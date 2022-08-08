@@ -1,5 +1,4 @@
-vim.cmd("colorscheme neodark")
-vim.o.background = "dark"
+vim.cmd("colorscheme tokyonight")
 vim.o.termguicolors = true
 
 require('feline').setup()
