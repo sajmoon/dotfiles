@@ -16,16 +16,19 @@ return require('packer').startup(function()
   use { 'nvim-telescope/telescope-fzf-native.nvim', run =  "make" }
 
   -- LSP
-  use("neovim/nvim-lspconfig") -- enable LSP
-  use("williamboman/nvim-lsp-installer") -- simple to use language server installer
+  use {
+    "williamboman/mason.nvim",
+    "williamboman/mason-lspconfig.nvim",
+    "neovim/nvim-lspconfig",
+  }
+
   use("jose-elias-alvarez/null-ls.nvim") -- for formatters and linters
 
   use {
     "hrsh7th/nvim-cmp",
     requires = {
-      'neovim/nvim-lspconfig', 'williamboman/nvim-lsp-installer', "hrsh7th/cmp-buffer", "hrsh7th/cmp-nvim-lsp",
-      'quangnguyen30192/cmp-nvim-ultisnips', 'onsails/lspkind-nvim',
-      'hrsh7th/cmp-path', 'f3fora/cmp-spell', 'hrsh7th/cmp-emoji'
+      'neovim/nvim-lspconfig', "hrsh7th/cmp-buffer", "hrsh7th/cmp-nvim-lsp",
+      'onsails/lspkind-nvim', 'hrsh7th/cmp-path', 'f3fora/cmp-spell', 'hrsh7th/cmp-emoji'
     }
   }
 
@@ -34,7 +37,7 @@ return require('packer').startup(function()
   use { 'itchyny/vim-cursorword' }
 
   -- Snippets
-  use { 'SirVer/ultisnips' }
+  -- use { 'SirVer/ultisnips' }
 
   -- Look'n'feel
   use { 'folke/tokyonight.nvim' }
@@ -48,6 +51,19 @@ return require('packer').startup(function()
   use { 'tpope/vim-surround' }
   use { 'tpope/vim-eunuch' }
   use { 'dockyard/vim-easydir' }
+
+  -- copilot
+  use { 'zbirenbaum/copilot.lua' }
+  use { 'zbirenbaum/copilot-cmp' }
+
+  -- Code
+  use {
+    "ThePrimeagen/refactoring.nvim",
+    requires = {
+      {"nvim-lua/plenary.nvim"},
+      {"nvim-treesitter/nvim-treesitter"}
+    }
+  }
 
   -- Gitstuffs
   use { 'lewis6991/gitsigns.nvim', }

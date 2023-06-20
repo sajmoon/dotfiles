@@ -1,5 +1,11 @@
 local present, cmp = pcall(require, "cmp")
 
+require('copilot').setup({
+  suggestion = { enabled = false },
+  panel = { enabled = false },
+})
+require('copilot_cmp').setup()
+
 if not present then
    return
 end
@@ -17,6 +23,7 @@ cmp.setup({
     { name = "treesitter" },
     { name = "emoji" },
     { name = "path" },
+    { name = "copilot" },
   }, {
     { name = 'buffer' },
   }),
@@ -34,7 +41,10 @@ cmp.setup({
       i = cmp.mapping.abort(),
       c = cmp.mapping.close(),
     }),
-    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    ['<CR>'] = cmp.mapping.confirm({ 
+      select = true,
+      -- behavior = cmp.ConfirmBehavior.Replace,
+    }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
   },
 })
 

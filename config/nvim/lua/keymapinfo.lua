@@ -7,6 +7,14 @@ keymap.set('i', '<C-E>', '<END>')
 -- Delete the character to the right of the cursor
 keymap.set('i', '<C-D>', '<DEL>')
 
+-- Code refactors needed in visual mode
+vim.api.nvim_set_keymap(
+    "v",
+    "<leader>rr",
+    ":lua require('refactoring').select_refactor()<CR>",
+    { noremap = true, silent = true, expr = false }
+)
+
 -- Define your keymaps as a list of tables like so
 -- description is required for them to appear when you search
 
