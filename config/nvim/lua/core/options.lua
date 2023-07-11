@@ -39,3 +39,8 @@ opt.history = 100           -- Remember N lines in history
 opt.lazyredraw = true       -- Faster scrolling
 opt.synmaxcol = 240         -- Max column for syntax highlight
 opt.updatetime = 300        -- ms to wait for trigger an event
+
+-------------------------------------------------------------
+---- Other
+-------------------------------------------------------------
+vim.opt.list = true         -- Show some invisible characters
