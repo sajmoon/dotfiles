@@ -7,15 +7,26 @@ function M.setup(opts)
     return
   end
   
-  local present, lspconfig = pcall(require, "mason-lspconfig")
+  local present, mason_lspconfig = pcall(require, "mason-lspconfig")
   if not present then
     return
   end
 
-  local handlers = {
+  local present, lspconfig = pcall(require, "lspconfig")
+  if not present then
+    return
+  end
+
+  vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
+
+  require("mason").setup()
+  require("mason-lspconfig").setup()
+
+  require("mason-lspconfig").setup_handlers {
     function (server_name)
-      require("lspconfig")[server_name].setup {}
+      lspconfig[server_name].setup {}
     end,
+    -- you can override the default handler by providing custom handlers per server
     ["lua_ls"] = function ()
       lspconfig.lua.setup {
         settings = {
@@ -26,11 +37,9 @@ function M.setup(opts)
           }
         }
       }
-    end,
+      -- // do something with the nvim-jdtls plugin instead
+    end
   }
-
-  require("mason").setup()
-  require("mason-lspconfig").setup()
 end
 
 return M

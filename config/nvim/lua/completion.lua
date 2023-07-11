@@ -1,11 +1,24 @@
-local present, cmp = pcall(require, "cmp")
-
 require('copilot').setup({
-  suggestion = { enabled = false },
-  panel = { enabled = false },
+  suggestion = {
+    enabled = true,
+    auto_trigger = false,
+    keymap = {
+      accept = "<M-m>",
+      -- accept_word = true,
+    --   accept_line = false,
+      next = "<M-j>",
+      prev = "<M-k>",
+    },
+  },
+  panel = {
+    enabled = true,
+    auto_refresh = true
+
+  }
 })
 require('copilot_cmp').setup()
 
+local present, cmp = pcall(require, "cmp")
 if not present then
    return
 end

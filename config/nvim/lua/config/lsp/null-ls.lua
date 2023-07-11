@@ -6,17 +6,20 @@ local b = nls.builtins
 
 local sources = {
   -- formatting
-  b.formatting.prettier,
+  -- b.formatting.prettier,
   b.formatting.shfmt,
   b.formatting.fixjson,
+  b.formatting.eslint,
 
   -- diagnostics
   b.diagnostics.write_good,
   b.diagnostics.tsc,
+  b.diagnostics.eslint,
 
   -- code actions
   b.code_actions.gitsigns,
   b.code_actions.gitrebase,
+  b.code_actions.refactoring,
 
   -- hover
   b.hover.dictionary,

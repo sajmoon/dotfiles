@@ -20,6 +20,7 @@ return require('packer').startup(function()
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
+    run = ":MasonUpdate" -- :MasonUpdate updates registry contents
   }
 
   use("jose-elias-alvarez/null-ls.nvim") -- for formatters and linters
