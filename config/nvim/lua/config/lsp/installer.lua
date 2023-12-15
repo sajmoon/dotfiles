@@ -22,6 +22,10 @@ function M.setup(opts)
   require("mason").setup()
   require("mason-lspconfig").setup()
 
+  require("mason-lspconfig").setup {
+    ensure_installed = { "lua_ls" },
+  }
+
   require("mason-lspconfig").setup_handlers {
     function (server_name)
       lspconfig[server_name].setup {}

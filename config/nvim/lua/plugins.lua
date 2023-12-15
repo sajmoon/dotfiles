@@ -37,6 +37,13 @@ return require('packer').startup(function()
   use { 'phaazon/hop.nvim', branch = 'v2' }
   use { 'itchyny/vim-cursorword' }
 
+  -- Debugger
+  use {
+    "williamboman/mason.nvim",
+    "mfussenegger/nvim-dap",
+    "jay-babu/mason-nvim-dap.nvim",
+}
+
   -- Snippets
   -- use { 'SirVer/ultisnips' }
 
