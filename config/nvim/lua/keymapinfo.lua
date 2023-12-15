@@ -48,7 +48,7 @@ wk.register({
     r = { '<cmd>lua vim.lsp.buf.rename()<CR>', "Rename" },
     f = { "<cmd>lua vim.lsp.buf.format({ async = true })<CR>", "Format" },
     l = { "<cmd>lua vim.lsp.codelens.run()<CR>", "CodeLens Action" },
-    q = { "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>", "Quickfix - set_loclist" },
+    q = { "<cmd>lua vim.diagnostic.setloclist()<CR>", "Quickfix - setloclist" },
     d = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "Goto declaration" },
     D = { "<cmd>lua vim.lsp.buf.definition()<CR>", "Goto definition" },
     i = { "<cmd>lua vim.lsp.buf.implemntation()<CR>", "Goto implementaion" },
