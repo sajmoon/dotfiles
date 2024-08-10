@@ -4,7 +4,7 @@
 *.swm
 *.swo
 *.swn
-coverage/
+/coverage/
 
 *.ipr
 *.iws
@@ -20,3 +20,5 @@ npm-debug.log*
 .tern-project
 tags
 .nvimrc
+
+tsconfig.tsbuildinfo

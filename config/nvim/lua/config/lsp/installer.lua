@@ -2,47 +2,50 @@ local M = {}
 
 function M.setup(opts)
 
-  local present, mason = pcall(require, "mason")
-  if not present then
-    return
-  end
-  
-  local present, mason_lspconfig = pcall(require, "mason-lspconfig")
-  if not present then
+  local hasMason, mason = pcall(require, "mason")
+  if not hasMason then
     return
   end
 
-  local present, lspconfig = pcall(require, "lspconfig")
-  if not present then
+  local hasMasonConfig, mason_lspconfig = pcall(require, "mason-lspconfig")
+  if not hasMasonConfig then
+    return
+  end
+
+  local hasLspConfig, lspconfig = pcall(require, "lspconfig")
+  if not hasLspConfig then
     return
   end
 
   vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
 
-  require("mason").setup()
-  require("mason-lspconfig").setup()
-
-  require("mason-lspconfig").setup {
+  mason.setup()
+  mason_lspconfig.setup {
     ensure_installed = { "lua_ls" },
   }
 
   require("mason-lspconfig").setup_handlers {
     function (server_name)
       lspconfig[server_name].setup {}
-    end,
-    -- you can override the default handler by providing custom handlers per server
-    ["lua_ls"] = function ()
-      lspconfig.lua.setup {
-        settings = {
-          Lua = {
-            diagnostics = { 
-              globals = { 'vim', 'use' }
-            }
-          }
-        }
-      }
-      -- // do something with the nvim-jdtls plugin instead
     end
+    -- you can override the default handler by providing custom handlers per server
+    -- ["tsserver"] = function ()
+    --   lspconfig.tsserver.setup {
+    --     root_dir = nvim_lsp.util.root_pattern('.git');
+    --   }
+    -- end
+    -- ["lua_ls"] = function ()
+    --   lspconfig.lua.setup {
+    --     settings = {
+    --       Lua = {
+    --         diagnostics = { 
+    --           globals = { 'vim', 'use' }
+    --         }
+    --       }
+    --     }
+    --   }
+      -- // do something with the nvim-jdtls plugin instead
+    -- end
   }
 end
 

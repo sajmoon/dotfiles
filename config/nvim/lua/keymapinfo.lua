@@ -49,9 +49,9 @@ wk.register({
     f = { "<cmd>lua vim.lsp.buf.format({ async = true })<CR>", "Format" },
     l = { "<cmd>lua vim.lsp.codelens.run()<CR>", "CodeLens Action" },
     q = { "<cmd>lua vim.diagnostic.setloclist()<CR>", "Quickfix - setloclist" },
-    d = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "Goto declaration" },
+    d = { "<cmd>Telescope lsp_definitions<CR>", "Goto definition" },
     D = { "<cmd>lua vim.lsp.buf.definition()<CR>", "Goto definition" },
-    i = { "<cmd>lua vim.lsp.buf.implemntation()<CR>", "Goto implementaion" },
+    i = { "<cmd>lua vim.lsp.buf.implementation()<CR>", "Goto implementaion" },
     r = { "<cmd>lua vim.lsp.buf.references()<CR>", "Goto references" },
     t = { "<cmd>lua vim.lsp.buf.type_definition()<CR>", "Show type definition" },
 
@@ -84,7 +84,7 @@ wk.register({
 
   t = {
     name = "Test runners",
-    n = { ":TestNearest<CR>", "Run nearest test" }, 
+    n = { ":TestNearest<CR>", "Run nearest test" },
     f = { ":TestFile<CR>", "Run test file" },
     s = { ":TestSuite<CR>", "Run test suite" },
     l = { ":TestLast<CR>", "Run last test" },
