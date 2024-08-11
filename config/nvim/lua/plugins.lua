@@ -22,7 +22,6 @@ require("lazy").setup({
 
   -- Treesitter
   { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
-  { "tree-sitter/tree-sitter-typescript" },
 
   -- Telescope
   {
