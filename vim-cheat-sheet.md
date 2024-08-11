@@ -26,6 +26,10 @@ Tx backwards
 
 ; repeats last f, t, F or T
 
+## Paragraphs
+
+vap/ dap - a paragraph
+
 ## Jump list
 
 Each search adds file, line and column to the jump list.
@@ -52,10 +56,6 @@ ctrl-] jump to method defined under cursor.
 
 ]c next chunk
 [c next chunk
-
-# Distraction free writing with goya
-
-:Goya
 
 # Working with splits
 
