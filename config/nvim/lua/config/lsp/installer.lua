@@ -1,11 +1,6 @@
 local M = {}
 
 function M.setup(opts)
-  local hasMasonConfig, mason_lspconfig = pcall(require, "mason-lspconfig")
-  if not hasMasonConfig then
-    return
-  end
-
   local lsp_zero = require('lsp-zero')
   lsp_zero.on_attach(function(client, bufnr)
     -- see :help lsp-zero-keybindings
@@ -15,6 +10,14 @@ function M.setup(opts)
     vim.keymap.set('n', '<leader>cL', '<cmd>lua vim.lsp.buf.codelens.run()<CR>', {buffer = bufnr, desc = "CodeLens action"})
     vim.keymap.set('n', '<leader>cr', '<cmd>lua vim.lsp.buf.rename()<CR>', {buffer = bufnr, desc = "Rename"})
     vim.keymap.set('n', '<leader>cf', '<cmd>lua vim.lsp.buf.format({async = true })<CR>', {buffer = bufnr, desc = "Format file"})
+
+    vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', { buffer = bufnr })
+    vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', { buffer = bufnr })
+    vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', { buffer = bufnr })
+    -- vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', { buffer = bufnr })
+    vim.keymap.set('n', 'gr', '<cmd>Telescope lsp_references<cr>', {buffer = bufnr})
+    vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', { buffer = bufnr })
+    vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', { buffer = bufnr })
 
     lsp_zero.default_keymaps({buffer = bufnr})
   end)
@@ -29,30 +32,6 @@ function M.setup(opts)
       end,
     },
   })
-
-  -- require("mason-lspconfig").setup_handlers {
-  --   function (server_name)
-  --     lspconfig[server_name].setup {}
-  --   end
-  --   -- you can override the default handler by providing custom handlers per server
-  --   -- ["tsserver"] = function ()
-  --   --   lspconfig.tsserver.setup {
-  --   --     root_dir = nvim_lsp.util.root_pattern('.git');
-  --   --   }
-  --   -- end
-  --   -- ["lua_ls"] = function ()
-  --   --   lspconfig.lua.setup {
-  --   --     settings = {
-  --   --       Lua = {
-  --   --         diagnostics = { 
-  --   --           globals = { 'vim', 'use' }
-  --   --         }
-  --   --       }
-  --   --     }
-  --   --   }
-  --     -- // do something with the nvim-jdtls plugin instead
-  --   -- end
-  -- }
 
 end
 
