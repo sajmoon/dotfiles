@@ -10,7 +10,6 @@ local function createFileUnderCursor()
 end
 
 function M.setup()
-  print("code actions")
   vim.keymap.set("n", "<leader>cj", vim.diagnostic.goto_next, { desc = "Next warning" })
   vim.keymap.set("n", "<leader>ck", vim.diagnostic.goto_prev, { desc = "Previous warning" })
 
