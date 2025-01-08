@@ -18,7 +18,7 @@
 npm-debug.log*
 .tern-port
 .tern-project
-tags
+/tags
 .nvimrc
 
 tsconfig.tsbuildinfo
