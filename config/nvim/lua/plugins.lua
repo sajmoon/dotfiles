@@ -100,6 +100,12 @@ require("lazy").setup({
   -- Navigate with hop
   { 'phaazon/hop.nvim', branch = 'v2' },
   { 'itchyny/vim-cursorword' },
+    {
+    "aaronik/treewalker.nvim",
+    opts = {
+      highlight = true -- default is false
+    }
+  },
 
   -- Utils
   { 'tpope/vim-commentary' },
