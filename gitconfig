@@ -62,7 +62,13 @@
   compactionHeuristic = true
 
 [difftool]
-  tool = vimdiff
+  tool = nvimdiff
+[merge]
+  tool = nvimdiff
+[mergetool]
   prompt = false
+  keepBackup = false
+[mergetool "nvimdiff"]
+  layout = "LOCAL,BASE,REMOTE / MERGED"
 [help]
   autocorrect = 1
