@@ -96,6 +96,12 @@ require("lazy").setup({
       },
     },
   },
+  {
+    "ray-x/lsp_signature.nvim",
+    event = "VeryLazy",
+    opts = {},
+    config = function(_, opts) require("lsp_signature").setup(opts) end
+  },
 
   -- Navigate with hop
   { 'phaazon/hop.nvim', branch = 'v2' },
