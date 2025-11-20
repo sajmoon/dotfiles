@@ -34,11 +34,30 @@ function M.setup()
 
   avante.setup({
     provider = "claude",
-    auto_suggestions_provider = "claude",
+    auto_suggestions_provider = "claude-haiku",
+    hints = { enabled = true },
+    behaviour = {
+      auto_suggestions = true,
+    },
+    mappings = {
+      suggestion = {
+        accept = "<Tab>",
+        next = "<M-]>",
+        prev = "<M-[>",
+        dismiss = "<C-]>",
+      },
+      ask = "<leader>aa",  -- Opens sidebar chat
+    },
     providers = {
       claude = {
         endpoint = "https://api.anthropic.com",
-        model = "claude-3-5-sonnet-20241022",
+        model = "claude-sonnet-4-5-20250929",
+        api_key_name = "NVIM_ANTHROPIC_KEY",
+      },
+      ["claude-haiku"] = {
+        endpoint = "https://api.anthropic.com",
+        model = "claude-haiku-4-5-20251001",
+        api_key_name = "NVIM_ANTHROPIC_KEY",
       },
     },
   })
