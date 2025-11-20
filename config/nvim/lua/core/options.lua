@@ -44,3 +44,16 @@ opt.updatetime = 300        -- ms to wait for trigger an event
 ---- Other
 -------------------------------------------------------------
 vim.opt.list = true         -- Show some invisible characters
+
+-------------------------------------------------------------
+---- Node.js Configuration
+-------------------------------------------------------------
+-- Force nvim to use a specific Node.js version (bypassing asdf local config)
+-- Option 1: Use asdf's global Node.js version
+vim.g.node_host_prog = vim.fn.expand('~/.asdf/shims/node')
+
+-- Option 2: Use a specific Node.js version installed via asdf
+-- vim.g.node_host_prog = vim.fn.expand('~/.asdf/installs/nodejs/22.0.0/bin/node')
+
+-- Option 3: Use system Node.js (if installed via Homebrew or similar)
+-- vim.g.node_host_prog = '/usr/local/bin/node'
