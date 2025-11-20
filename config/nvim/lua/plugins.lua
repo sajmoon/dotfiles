@@ -45,7 +45,9 @@ require("lazy").setup({
     "hrsh7th/nvim-cmp",
     dependencies = {
       'neovim/nvim-lspconfig', "hrsh7th/cmp-buffer", "hrsh7th/cmp-nvim-lsp",
-      'onsails/lspkind-nvim', 'hrsh7th/cmp-path', 'f3fora/cmp-spell', 'hrsh7th/cmp-emoji'
+      'onsails/lspkind-nvim', 'hrsh7th/cmp-path', 'f3fora/cmp-spell', 'hrsh7th/cmp-emoji',
+      'L3MON4D3/LuaSnip',
+      'saadparwaiz1/cmp_luasnip',
     }
   },
 

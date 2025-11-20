@@ -1,96 +1,78 @@
-global !p
-from javascript_snippets import (
-	semi, space_before_function_paren, keyword_spacing
-)
-endglobal
-
 snippet us "use strict"
-"use strict"`!p snip.rv = semi(snip)`
-endsnippet
+	"use strict";
 
 snippet cl "console.log(...)"
-console.log("$1");
-endsnippet
+	console.log("${1}");
 
 snippet cld "console.log('object', object)"
-console.log("-- DEBUG ${1:object}", JSON.stringify($1, null, 2));
-endsnippet
+	console.log("-- DEBUG ${1:object}", JSON.stringify($1, null, 2));
 
 snippet r "return"
-return ${0:result};
-endsnippet
+	return ${0:result};
 
-snippet c=> "Const Function" bA
-const ${1:name} = (${2:args}) => {
-	return $3
-};
-endsnippet
+snippet c=> "Const Function"
+	const ${1:name} = (${2:args}) => {
+		return $3
+	};
 
 snippet class "Class"
-class ${1:Name} {
-	constructor(${2:arg}) {
-		$3
+	class ${1:Name} {
+		constructor(${2:arg}) {
+			$3
+		}
+		$4
 	}
-	$4
-}
-endsnippet
 
 snippet iife "Immediately-Invoked Function Expression (iife)"
-(function`!p snip.rv = space_before_function_paren(snip)`(${1:window}) {
-	${VISUAL}$0
-}(${2:$1}))`!p snip.rv = semi(snip)`
-endsnippet
+	(function (${1:window}) {
+		${VISUAL}$0
+	}(${2:$1}));
 
-snippet fun "A function" b
-function ${1:name}($2) {
-	$0
-};
-endsnippet
+snippet fun "A function"
+	function ${1:name}($2) {
+		$0
+	};
 
 ## Test snippets
-snippet desc "Mocha describe block" b
-describe("${1:description}", () => {
-	$0
-});
-endsnippet
+snippet desc "Mocha describe block"
+	describe("${1:description}", () => {
+		$0
+	});
 
-snippet it "Mocha it block" b
-it("${1:What}", () => {
-	$0
-});
-endsnippet
+snippet it "Mocha it block"
+	it("${1:What}", () => {
+		$0
+	});
 
-snippet Feature "Feature block" b
-Feature("${1:description}", () => {
-	$0
-});
-endsnippet
+snippet Feature "Feature block"
+	Feature("${1:description}", () => {
+		$0
+	});
+
 snippet Scenario "Scenario"
-Scenario("${1:description}", () => {
-	$0
-});
-endsnippet
-snippet Given "Given block"
-Given("${1:description}", () => {
-	$0
-});
-endsnippet
-snippet And "And block"
-And("${1:description}", () => {
-	$0
-});
-endsnippet
-snippet When "When block"
-When("${1:description}", () => {
-	$0
-});
-endsnippet
-snippet Then "Then block"
-Then("${1:description}", () => {
-	$0
-});
-endsnippet
+	Scenario("${1:description}", () => {
+		$0
+	});
 
-snippet expect "chai expect" b
-expect(${1:object}).to.$2
-endsnippet
+snippet Given "Given block"
+	Given("${1:description}", () => {
+		$0
+	});
+
+snippet And "And block"
+	And("${1:description}", () => {
+		$0
+	});
+
+snippet When "When block"
+	When("${1:description}", () => {
+		$0
+	});
+
+snippet Then "Then block"
+	Then("${1:description}", () => {
+		$0
+	});
+
+snippet expect "chai expect"
+	expect(${1:object}).to.$2
