@@ -15,4 +15,4 @@ require("lookandfeel")
 require("syntaxhighlight")
 require("navigation")
 
-require("aibuddy").setup();
+require("aibuddy").setup()
