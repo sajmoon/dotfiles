@@ -25,7 +25,23 @@ function M.setup(opts)
   require('mason').setup({})
 
   require('mason-lspconfig').setup({
-    ensure_installed = {},
+    ensure_installed = {
+      -- Core development
+      "ts_ls",           -- TypeScript/JavaScript
+      "lua_ls",          -- Lua
+      "vimls",           -- VimScript
+
+      -- Shell/IaC
+      "bashls",          -- Bash
+      "terraformls",     -- Terraform
+
+      -- Data formats
+      "jsonls",          -- JSON
+      "yamlls",          -- YAML
+
+      -- Documentation
+      "marksman",        -- Markdown
+    },
     handlers = {
       function(server_name)
         require('lspconfig')[server_name].setup({})
