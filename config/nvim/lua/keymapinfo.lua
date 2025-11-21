@@ -14,3 +14,10 @@ vim.api.nvim_set_keymap(
     ":lua require('refactoring').select_refactor()<CR>",
     { noremap = true, silent = true, expr = false }
 )
+
+-- Copy to system clipboard
+keymap.set({'n', 'v'}, '<leader>y', '"+y', { desc = 'Copy to clipboard' })
+keymap.set('n', '<leader>Y', '"+Y', { desc = 'Copy line to clipboard' })
+
+-- Paste from system clipboard
+keymap.set({'n', 'v'}, '<leader>p', '"+p', { desc = 'Paste from clipboard' })
