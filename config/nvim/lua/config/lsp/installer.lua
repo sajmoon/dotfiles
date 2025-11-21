@@ -5,7 +5,7 @@ function M.setup(opts)
   lsp_zero.on_attach(function(client, bufnr)
     -- Custom leader-based bindings (more discoverable than default gr* mappings)
     vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, {buffer = bufnr, desc = "Code actions"})
-    vim.keymap.set('n', '<leader>cL', vim.lsp.buf.codelens.run, {buffer = bufnr, desc = "CodeLens action"})
+    vim.keymap.set('n', '<leader>cL', vim.lsp.codelens.run, {buffer = bufnr, desc = "CodeLens action"})
     vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, {buffer = bufnr, desc = "Rename"})
     vim.keymap.set('n', '<leader>cf', function() vim.lsp.buf.format({async = true}) end, {buffer = bufnr, desc = "Format file"})
 

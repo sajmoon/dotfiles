@@ -1,5 +1,10 @@
 vim.cmd("colorscheme gruvbox")
 vim.o.termguicolors = true
 
-require('feline').setup()
+require('lualine').setup({
+  options = {
+    theme = 'gruvbox',
+    icons_enabled = true,
+  }
+})
 require('colorizer').setup()

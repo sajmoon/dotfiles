@@ -16,7 +16,7 @@ require("lazy").setup({
   -- Look'n'feel
   -- 'folke/tokyonight.nvim',
   { "ellisonleao/gruvbox.nvim" },
-  'feline-nvim/feline.nvim',
+  { 'nvim-lualine/lualine.nvim' },
   -- 'flazz/vim-colorschemes',
   'norcalli/nvim-colorizer.lua',
 
