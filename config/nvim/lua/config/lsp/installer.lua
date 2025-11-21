@@ -3,22 +3,27 @@ local M = {}
 function M.setup(opts)
   local lsp_zero = require('lsp-zero')
   lsp_zero.on_attach(function(client, bufnr)
-    -- see :help lsp-zero-keybindings
-    -- to learn the available actions
+    -- Custom leader-based bindings (more discoverable than default gr* mappings)
+    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, {buffer = bufnr, desc = "Code actions"})
+    vim.keymap.set('n', '<leader>cL', vim.lsp.buf.codelens.run, {buffer = bufnr, desc = "CodeLens action"})
+    vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, {buffer = bufnr, desc = "Rename"})
+    vim.keymap.set('n', '<leader>cf', function() vim.lsp.buf.format({async = true}) end, {buffer = bufnr, desc = "Format file"})
+
+    -- Override default 'grr' with Telescope for better UX
     vim.keymap.set('n', 'gr', '<cmd>Telescope lsp_references<cr>', {buffer = bufnr, desc = "References"})
-    vim.keymap.set('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', {buffer = bufnr, desc = "Code actions"})
-    vim.keymap.set('n', '<leader>cL', '<cmd>lua vim.lsp.buf.codelens.run()<CR>', {buffer = bufnr, desc = "CodeLens action"})
-    vim.keymap.set('n', '<leader>cr', '<cmd>lua vim.lsp.buf.rename()<CR>', {buffer = bufnr, desc = "Rename"})
-    vim.keymap.set('n', '<leader>cf', '<cmd>lua vim.lsp.buf.format({async = true })<CR>', {buffer = bufnr, desc = "Format file"})
 
-    vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', { buffer = bufnr })
-    vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', { buffer = bufnr })
-    vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', { buffer = bufnr })
-    -- vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', { buffer = bufnr })
-    vim.keymap.set('n', 'gr', '<cmd>Telescope lsp_references<cr>', {buffer = bufnr})
-    vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', { buffer = bufnr })
-    vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', { buffer = bufnr })
+    -- Signature help (if not using lsp_signature.nvim auto-popup)
+    vim.keymap.set('n', 'gs', vim.lsp.buf.signature_help, {buffer = bufnr, desc = "Signature help"})
 
+    -- Type definition (no default binding)
+    vim.keymap.set('n', 'go', vim.lsp.buf.type_definition, {buffer = bufnr, desc = "Type definition"})
+
+    -- Enable inlay hints if supported (nvim 0.10+)
+    if client.server_capabilities.inlayHintProvider then
+      vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+    end
+
+    -- Enable default keybindings: K, gd, gD, gra, grn, grr (overridden above), gri, gO, [d, ]d
     lsp_zero.default_keymaps({buffer = bufnr})
   end)
 
