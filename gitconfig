@@ -1,9 +1,8 @@
-[user]
-  name = Simon Strom
-  email = simon.strom@gmail.com
-
 [color]
   ui = auto
+
+[diff "lockfile"]
+    binary = true
 
 [core]
   whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
@@ -41,6 +40,7 @@
 
 [push]
   default = current
+	autoSetupRemote = true
 
 [url "https://"]
   insteadOf = git://
