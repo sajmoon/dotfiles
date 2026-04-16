@@ -1,0 +1,103 @@
+# =============================================================================
+# Git Worktree Helpers — wt
+# =============================================================================
+#
+# A single `wt` command for managing git worktrees. Worktrees are created
+# inside .worktrees/<name> at the repo root, and .worktrees/ is in
+# gitignore_global so it won't pollute any repo's history.
+#
+# Subcommands:
+#   wt new [name]    Create a worktree + branch and cd into it.
+#                    Omit name to get a timestamped throwaway: tmp-YYYYMMDDHHMMSS
+#   wt ls            List all worktrees for the current repo.
+#   wt rm <name>     Remove worktree and force-delete its branch.
+#                    Force-delete (-D) is intentional — worktree branches are
+#                    typically unmerged by design.
+#
+# Tab completion:
+#   wt <TAB>         → new / ls / rm
+#   wt rm <TAB>      → existing worktree names from .worktrees/
+# =============================================================================
+
+wt() {
+  local cmd="$1"
+
+  if [[ -z "$cmd" ]]; then
+    echo "Usage: wt <new|ls|rm> [name]"
+    return 1
+  fi
+
+  case "$cmd" in
+
+    new)
+      local name="${2:-tmp-$(date +%Y%m%d%H%M%S)}"
+      local root
+      root=$(git rev-parse --show-toplevel 2>/dev/null) || {
+        echo "wt: not inside a git repository"
+        return 1
+      }
+      local dir="$root/.worktrees/$name"
+
+      git worktree add -b "$name" "$dir" || return 1
+      echo "→ $dir"
+      cd "$dir"
+      ;;
+
+    ls)
+      git worktree list
+      ;;
+
+    rm)
+      local name="$2"
+      if [[ -z "$name" ]]; then
+        echo "Usage: wt rm <name>"
+        return 1
+      fi
+
+      local root
+      root=$(git rev-parse --show-toplevel 2>/dev/null) || {
+        echo "wt: not inside a git repository"
+        return 1
+      }
+
+      git worktree remove "$root/.worktrees/$name" && git branch -D "$name"
+      ;;
+
+    *)
+      echo "wt: unknown subcommand '$cmd'"
+      echo "Usage: wt <new|ls|rm> [name]"
+      return 1
+      ;;
+
+  esac
+}
+
+# =============================================================================
+# Completion
+# =============================================================================
+
+_wt() {
+  local state
+  _arguments \
+    '1: :->cmd' \
+    '*: :->args'
+
+  case $state in
+    cmd)
+      _values 'subcommand' \
+        'new[create a new worktree and branch]' \
+        'ls[list all worktrees]' \
+        'rm[remove a worktree and its branch]'
+      ;;
+    args)
+      if [[ $words[2] == rm ]]; then
+        local root
+        root=$(git rev-parse --show-toplevel 2>/dev/null) || return
+        local dir="$root/.worktrees"
+        [[ -d "$dir" ]] && _values 'worktree' "$dir"/*(N:t)
+      fi
+      ;;
+  esac
+}
+
+compdef _wt wt
