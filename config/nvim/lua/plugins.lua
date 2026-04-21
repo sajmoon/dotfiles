@@ -160,18 +160,6 @@ require("lazy").setup({
   { 'janko-m/vim-test' },
 
 
-  -- code refactors
-  {
-    "ThePrimeagen/refactoring.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
-    },
-    config = function()
-      require("refactoring").setup()
-    end,
-  },
-
   {
     "yetone/avante.nvim",
     event = "VeryLazy",
