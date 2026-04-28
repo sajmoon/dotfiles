@@ -10,12 +10,13 @@
 #   wt new [name]    Create a worktree + branch and cd into it.
 #                    Omit name to get a timestamped throwaway: tmp-YYYYMMDDHHMMSS
 #   wt ls            List all worktrees for the current repo.
+#   wt root          cd to the main worktree (the original repo root).
 #   wt rm <name>     Remove worktree and force-delete its branch.
 #                    Force-delete (-D) is intentional — worktree branches are
 #                    typically unmerged by design.
 #
 # Tab completion:
-#   wt <TAB>         → new / ls / rm
+#   wt <TAB>         → new / ls / root / rm
 #   wt rm <TAB>      → existing worktree names from .worktrees/
 # =============================================================================
 
@@ -23,7 +24,7 @@ wt() {
   local cmd="$1"
 
   if [[ -z "$cmd" ]]; then
-    echo "Usage: wt <new|ls|rm> [name]"
+    echo "Usage: wt <new|ls|root|rm> [name]"
     return 1
   fi
 
@@ -47,6 +48,15 @@ wt() {
       git worktree list
       ;;
 
+    root)
+      local main
+      main=$(git worktree list | awk 'NR==1 {print $1}') || {
+        echo "wt: not inside a git repository"
+        return 1
+      }
+      cd "$main"
+      ;;
+
     rm)
       local name="$2"
       if [[ -z "$name" ]]; then
@@ -65,7 +75,7 @@ wt() {
 
     *)
       echo "wt: unknown subcommand '$cmd'"
-      echo "Usage: wt <new|ls|rm> [name]"
+      echo "Usage: wt <new|ls|root|rm> [name]"
       return 1
       ;;
 
@@ -87,6 +97,7 @@ _wt() {
       _values 'subcommand' \
         'new[create a new worktree and branch]' \
         'ls[list all worktrees]' \
+        'root[cd to the main worktree]' \
         'rm[remove a worktree and its branch]'
       ;;
     args)
