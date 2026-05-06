@@ -9,25 +9,43 @@
 # Subcommands:
 #   wt new [name]    Create a worktree + branch and cd into it.
 #                    Omit name to get a timestamped throwaway: tmp-YYYYMMDDHHMMSS
+#   wt go <name>     cd into an existing worktree (you move, work stays).
 #   wt ls            List all worktrees for the current repo.
 #   wt root          cd to the main worktree (the original repo root).
 #   wt rm <name>     Remove worktree and force-delete its branch.
 #                    Force-delete (-D) is intentional — worktree branches are
 #                    typically unmerged by design.
-#   wt handoff       From inside a worktree: remove it and check out its branch
-#                    in the main worktree. Use when you want to continue work
-#                    outside the worktree sandbox.
+#   wt take <name>   From root: remove a named worktree and check out its
+#                    branch here. Refuses if root has uncommitted changes.
+#   wt send [name]   Dual-mode:
+#                    • From root: move current branch to a new worktree, then
+#                      return root to the default branch. Name defaults to the
+#                      branch name. Refuses if root has uncommitted changes.
+#                    • From a worktree: remove it and check out its branch in
+#                      the main worktree (formerly "handoff").
 #
 # Tab completion:
-#   wt <TAB>         → new / ls / root / rm
-#   wt rm <TAB>      → existing worktree names from .worktrees/
+#   wt <TAB>              → subcommands
+#   wt go/rm/take <TAB>   → existing worktree names from .worktrees/
 # =============================================================================
+
+_wt_main() {
+  git worktree list 2>/dev/null | awk 'NR==1 {print $1}'
+}
+
+_wt_root() {
+  git rev-parse --show-toplevel 2>/dev/null
+}
+
+_wt_default_branch() {
+  git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's|refs/remotes/origin/||' || echo main
+}
 
 wt() {
   local cmd="$1"
 
   if [[ -z "$cmd" ]]; then
-    echo "Usage: wt <new|ls|root|rm|handoff> [name]"
+    echo "Usage: wt <new|go|ls|root|rm|take|send> [name]"
     return 1
   fi
 
@@ -36,15 +54,31 @@ wt() {
     new)
       local name="${2:-tmp-$(date +%Y%m%d%H%M%S)}"
       local root
-      root=$(git rev-parse --show-toplevel 2>/dev/null) || {
-        echo "wt: not inside a git repository"
-        return 1
-      }
+      root=$(_wt_root) || { echo "wt: not inside a git repository"; return 1 }
       local dir="$root/.worktrees/$name"
 
       git worktree add -b "$name" "$dir" || return 1
       echo "→ $dir"
       cd "$dir"
+      ;;
+
+    go)
+      local name="$2"
+      if [[ -z "$name" ]]; then
+        echo "Usage: wt go <name>"
+        return 1
+      fi
+
+      local main
+      main=$(_wt_main) || { echo "wt: not inside a git repository"; return 1 }
+      local wt_dir="$main/.worktrees/$name"
+
+      if [[ ! -d "$wt_dir" ]]; then
+        echo "wt: worktree '$name' not found"
+        return 1
+      fi
+
+      cd "$wt_dir"
       ;;
 
     ls)
@@ -53,10 +87,7 @@ wt() {
 
     root)
       local main
-      main=$(git worktree list | awk 'NR==1 {print $1}') || {
-        echo "wt: not inside a git repository"
-        return 1
-      }
+      main=$(_wt_main) || { echo "wt: not inside a git repository"; return 1 }
       cd "$main"
       ;;
 
@@ -67,44 +98,87 @@ wt() {
         return 1
       fi
 
-      local root
-      root=$(git rev-parse --show-toplevel 2>/dev/null) || {
-        echo "wt: not inside a git repository"
-        return 1
-      }
+      local main
+      main=$(_wt_main) || { echo "wt: not inside a git repository"; return 1 }
 
-      git worktree remove "$root/.worktrees/$name" && git branch -D "$name"
+      git worktree remove "$main/.worktrees/$name" && git branch -D "$name"
       ;;
 
-    handoff)
-      local main
-      main=$(git worktree list 2>/dev/null | awk 'NR==1 {print $1}') || {
-        echo "wt: not inside a git repository"
-        return 1
-      }
-
-      local root
-      root=$(git rev-parse --show-toplevel 2>/dev/null)
-      local worktrees_base="$main/.worktrees"
-
-      if [[ "$root" != "$worktrees_base/"* ]]; then
-        echo "wt: not inside a managed worktree (.worktrees/)"
+    take)
+      local name="$2"
+      if [[ -z "$name" ]]; then
+        echo "Usage: wt take <name>"
         return 1
       fi
 
-      local name="${root#$worktrees_base/}"
-      local branch
-      branch=$(git rev-parse --abbrev-ref HEAD)
+      local main
+      main=$(_wt_main) || { echo "wt: not inside a git repository"; return 1 }
+      local root
+      root=$(_wt_root)
 
-      cd "$main" || return 1
-      git worktree remove "$worktrees_base/$name" || return 1
+      if [[ "$root" != "$main" ]]; then
+        echo "wt: must be run from the main worktree"
+        return 1
+      fi
+
+      if [[ -n "$(git status --porcelain)" ]]; then
+        echo "wt: uncommitted changes in root — stash or commit first"
+        return 1
+      fi
+
+      local wt_dir="$main/.worktrees/$name"
+      if [[ ! -d "$wt_dir" ]]; then
+        echo "wt: worktree '$name' not found"
+        return 1
+      fi
+
+      local branch
+      branch=$(git -C "$wt_dir" rev-parse --abbrev-ref HEAD)
+
+      git worktree remove "$wt_dir" || return 1
       git checkout "$branch"
-      echo "→ handed off '$branch' to main worktree"
+      echo "→ took '$branch' into root"
+      ;;
+
+    send)
+      local main
+      main=$(_wt_main) || { echo "wt: not inside a git repository"; return 1 }
+      local root
+      root=$(_wt_root)
+
+      if [[ "$root" == "$main/.worktrees/"* ]]; then
+        # FROM WORKTREE → root
+        local name="${root#$main/.worktrees/}"
+        local branch
+        branch=$(git rev-parse --abbrev-ref HEAD)
+
+        cd "$main" || return 1
+        git worktree remove "$main/.worktrees/$name" || return 1
+        git checkout "$branch"
+        echo "→ sent '$branch' to root"
+      else
+        # FROM ROOT → new worktree
+        if [[ -n "$(git status --porcelain)" ]]; then
+          echo "wt: uncommitted changes — stash or commit first"
+          return 1
+        fi
+
+        local branch
+        branch=$(git rev-parse --abbrev-ref HEAD)
+        local name="${2:-$branch}"
+        local wt_dir="$main/.worktrees/$name"
+        local default_branch
+        default_branch=$(_wt_default_branch)
+
+        git checkout "$default_branch" || return 1
+        git worktree add "$wt_dir" "$branch" || return 1
+        echo "→ sent '$branch' to worktree, root is now on '$default_branch'"
+      fi
       ;;
 
     *)
       echo "wt: unknown subcommand '$cmd'"
-      echo "Usage: wt <new|ls|root|rm|handoff> [name]"
+      echo "Usage: wt <new|go|ls|root|rm|take|send> [name]"
       return 1
       ;;
 
@@ -124,17 +198,19 @@ _wt() {
   case $state in
     cmd)
       _values 'subcommand' \
-        'new[create a new worktree and branch]' \
+        'new[create a new worktree and branch, cd into it]' \
+        'go[cd into an existing worktree]' \
         'ls[list all worktrees]' \
         'root[cd to the main worktree]' \
         'rm[remove a worktree and its branch]' \
-        'handoff[remove current worktree and check out its branch in main]'
+        'take[pull a worktree branch back into root]' \
+        'send[move branch to worktree (from root), or to root (from worktree)]'
       ;;
     args)
-      if [[ $words[2] == rm ]]; then
-        local root
-        root=$(git rev-parse --show-toplevel 2>/dev/null) || return
-        local dir="$root/.worktrees"
+      if [[ $words[2] == go || $words[2] == rm || $words[2] == take ]]; then
+        local main
+        main=$(_wt_main 2>/dev/null) || return
+        local dir="$main/.worktrees"
         [[ -d "$dir" ]] && _values 'worktree' "$dir"/*(N:t)
       fi
       ;;
