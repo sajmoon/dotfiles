@@ -14,6 +14,9 @@
 #   wt rm <name>     Remove worktree and force-delete its branch.
 #                    Force-delete (-D) is intentional — worktree branches are
 #                    typically unmerged by design.
+#   wt handoff       From inside a worktree: remove it and check out its branch
+#                    in the main worktree. Use when you want to continue work
+#                    outside the worktree sandbox.
 #
 # Tab completion:
 #   wt <TAB>         → new / ls / root / rm
@@ -24,7 +27,7 @@ wt() {
   local cmd="$1"
 
   if [[ -z "$cmd" ]]; then
-    echo "Usage: wt <new|ls|root|rm> [name]"
+    echo "Usage: wt <new|ls|root|rm|handoff> [name]"
     return 1
   fi
 
@@ -73,9 +76,35 @@ wt() {
       git worktree remove "$root/.worktrees/$name" && git branch -D "$name"
       ;;
 
+    handoff)
+      local main
+      main=$(git worktree list 2>/dev/null | awk 'NR==1 {print $1}') || {
+        echo "wt: not inside a git repository"
+        return 1
+      }
+
+      local root
+      root=$(git rev-parse --show-toplevel 2>/dev/null)
+      local worktrees_base="$main/.worktrees"
+
+      if [[ "$root" != "$worktrees_base/"* ]]; then
+        echo "wt: not inside a managed worktree (.worktrees/)"
+        return 1
+      fi
+
+      local name="${root#$worktrees_base/}"
+      local branch
+      branch=$(git rev-parse --abbrev-ref HEAD)
+
+      cd "$main" || return 1
+      git worktree remove "$worktrees_base/$name" || return 1
+      git checkout "$branch"
+      echo "→ handed off '$branch' to main worktree"
+      ;;
+
     *)
       echo "wt: unknown subcommand '$cmd'"
-      echo "Usage: wt <new|ls|root|rm> [name]"
+      echo "Usage: wt <new|ls|root|rm|handoff> [name]"
       return 1
       ;;
 
@@ -98,7 +127,8 @@ _wt() {
         'new[create a new worktree and branch]' \
         'ls[list all worktrees]' \
         'root[cd to the main worktree]' \
-        'rm[remove a worktree and its branch]'
+        'rm[remove a worktree and its branch]' \
+        'handoff[remove current worktree and check out its branch in main]'
       ;;
     args)
       if [[ $words[2] == rm ]]; then
