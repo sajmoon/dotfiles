@@ -12,9 +12,13 @@
 #   wt go <name>     cd into an existing worktree (you move, work stays).
 #   wt ls            List all worktrees for the current repo.
 #   wt root          cd to the main worktree (the original repo root).
-#   wt rm <name>     Remove worktree and force-delete its branch.
-#                    Force-delete (-D) is intentional — worktree branches are
-#                    typically unmerged by design.
+#   wt rm [-f] <name|path>
+#                    Remove worktree and force-delete its branch. Accepts a
+#                    .worktrees/ name, an absolute/relative path, or any
+#                    basename that uniquely identifies a worktree in the list.
+#                    Pass -f/--force to remove a worktree with modified or
+#                    untracked files. Branch is always force-deleted (-D) —
+#                    worktree branches are typically unmerged by design.
 #   wt take <name>   From root: remove a named worktree and check out its
 #                    branch here. Refuses if root has uncommitted changes.
 #   wt send [name]   Dual-mode:
@@ -53,9 +57,9 @@ wt() {
 
     new)
       local name="${2:-tmp-$(date +%Y%m%d%H%M%S)}"
-      local root
-      root=$(_wt_root) || { echo "wt: not inside a git repository"; return 1 }
-      local dir="$root/.worktrees/$name"
+      local main
+      main=$(_wt_main) || { echo "wt: not inside a git repository"; return 1 }
+      local dir="$main/.worktrees/$name"
 
       git worktree add -b "$name" "$dir" || return 1
       echo "→ $dir"
@@ -92,16 +96,62 @@ wt() {
       ;;
 
     rm)
-      local name="$2"
-      if [[ -z "$name" ]]; then
-        echo "Usage: wt rm <name>"
+      local force=0
+      shift
+      while [[ "$1" == -* ]]; do
+        case "$1" in
+          -f|--force) force=1; shift ;;
+          *) echo "wt rm: unknown flag '$1'"; return 1 ;;
+        esac
+      done
+      local arg="$1"
+      if [[ -z "$arg" ]]; then
+        echo "Usage: wt rm [-f|--force] <name|path>"
         return 1
       fi
 
       local main
       main=$(_wt_main) || { echo "wt: not inside a git repository"; return 1 }
 
-      git worktree remove "$main/.worktrees/$name" && git branch -D "$name"
+      # Resolve arg → worktree path: try as path, then .worktrees/$arg, then basename match
+      local target=""
+      if [[ -d "$arg" ]]; then
+        target=$(cd "$arg" && git rev-parse --show-toplevel 2>/dev/null)
+      elif [[ -d "$main/.worktrees/$arg" ]]; then
+        target="$main/.worktrees/$arg"
+      else
+        local matches=()
+        local line p
+        while IFS= read -r line; do
+          p="${line%% *}"
+          [[ "${p:t}" == "$arg" ]] && matches+=("$p")
+        done < <(git worktree list)
+        if [[ ${#matches[@]} -eq 0 ]]; then
+          echo "wt: worktree '$arg' not found"
+          return 1
+        elif [[ ${#matches[@]} -gt 1 ]]; then
+          echo "wt: '$arg' is ambiguous, matches:"
+          printf '  %s\n' "${matches[@]}"
+          return 1
+        fi
+        target="${matches[1]}"
+      fi
+
+      if [[ "$target" == "$main" ]]; then
+        echo "wt: refusing to remove root worktree"
+        return 1
+      fi
+
+      local branch
+      branch=$(git -C "$target" rev-parse --abbrev-ref HEAD 2>/dev/null)
+
+      local -a remove_args=(remove)
+      (( force )) && remove_args+=(--force)
+      remove_args+=("$target")
+      git worktree "${remove_args[@]}" || return 1
+      if [[ -n "$branch" && "$branch" != "HEAD" ]]; then
+        git branch -D "$branch" 2>/dev/null
+      fi
       ;;
 
     take)
