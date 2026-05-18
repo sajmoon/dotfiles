@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# Jump to the next tmux window flagged with @claude_state (notify/stop).
+# Cycles in window-index order; wraps at the end.
+
+set -eu
+
+cur=$(tmux display-message -p '#{window_index}')
+
+# All windows with a non-empty @claude_state, sorted by index
+indices=$(tmux list-windows -F '#{window_index} #{@claude_state}' \
+  | awk '$2 != "" {print $1}' \
+  | sort -n)
+
+[ -z "$indices" ] && { tmux display-message "no claude notifications"; exit 0; }
+
+# First index strictly greater than current; else wrap to lowest
+target=$(printf '%s\n' "$indices" | awk -v c="$cur" '$1 > c {print; exit}')
+[ -z "$target" ] && target=$(printf '%s\n' "$indices" | head -n1)
+
+tmux select-window -t ":$target"
