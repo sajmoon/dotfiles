@@ -19,6 +19,10 @@
 #                    Pass -f/--force to remove a worktree with modified or
 #                    untracked files. Branch is always force-deleted (-D) —
 #                    worktree branches are typically unmerged by design.
+#   wt done [-f]     From inside a worktree: cd to root, then remove the
+#                    current worktree and force-delete its branch (same as
+#                    `wt rm` on the worktree you're standing in). Use when
+#                    you're finished with a worktree and want it gone.
 #   wt take <name>   From root: remove a named worktree and check out its
 #                    branch here. Refuses if root has uncommitted changes.
 #   wt send [name]   Dual-mode:
@@ -49,7 +53,7 @@ wt() {
   local cmd="$1"
 
   if [[ -z "$cmd" ]]; then
-    echo "Usage: wt <new|go|ls|root|rm|take|send> [name]"
+    echo "Usage: wt <new|go|ls|root|rm|done|take|send> [name]"
     return 1
   fi
 
@@ -154,6 +158,45 @@ wt() {
       fi
       ;;
 
+    done)
+      local force=0
+      shift
+      while [[ "$1" == -* ]]; do
+        case "$1" in
+          -f|--force) force=1; shift ;;
+          *) echo "wt done: unknown flag '$1'"; return 1 ;;
+        esac
+      done
+
+      local main
+      main=$(_wt_main) || { echo "wt: not inside a git repository"; return 1 }
+      local root
+      root=$(_wt_root)
+
+      if [[ "$root" != "$main/.worktrees/"* ]]; then
+        echo "wt: not inside a worktree (use 'wt rm <name>' from root)"
+        return 1
+      fi
+
+      local target="$root"
+      local branch
+      branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+
+      cd "$main" || return 1
+
+      local -a remove_args=(remove)
+      (( force )) && remove_args+=(--force)
+      remove_args+=("$target")
+      if ! git worktree "${remove_args[@]}"; then
+        cd "$target"
+        return 1
+      fi
+      if [[ -n "$branch" && "$branch" != "HEAD" ]]; then
+        git branch -D "$branch" 2>/dev/null
+      fi
+      echo "→ done with '${target:t}', back at root"
+      ;;
+
     take)
       local name="$2"
       if [[ -z "$name" ]]; then
@@ -253,6 +296,7 @@ _wt() {
         'ls[list all worktrees]' \
         'root[cd to the main worktree]' \
         'rm[remove a worktree and its branch]' \
+        'done[remove the current worktree and its branch, return to root]' \
         'take[pull a worktree branch back into root]' \
         'send[move branch to worktree (from root), or to root (from worktree)]'
       ;;
