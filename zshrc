@@ -45,3 +45,11 @@ command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
 #   macOS:  brew install starship
 #   Linux:  curl -sS https://starship.rs/install.sh | sh -s -- -b ~/.local/bin
 command -v starship >/dev/null && eval "$(starship init zsh)"
+
+# ── Machine-local config & env ─────────────────────────────────────
+# Both untracked, per-machine, kept OUT of the repo. Sourced last so
+# they can override anything above.
+#   ~/.zshenv.local — environment variables / secrets (API keys, tokens)
+#   ~/.zshrc.local  — tool PATHs that only exist on some devices (bun, etc.)
+[ -f "$HOME/.zshenv.local" ] && source "$HOME/.zshenv.local"
+[ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
