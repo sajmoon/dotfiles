@@ -33,6 +33,15 @@ source $ZSH/oh-my-zsh.sh
 # PATH: user-local bins (zoxide, language toolchains, etc.)
 export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 
+# Editor: always Neovim. Alias vi/vim so muscle memory never opens the
+# stock vi/vim, and point EDITOR/VISUAL at it for git, fc, etc.
+if command -v nvim >/dev/null 2>&1; then
+  alias vi=nvim
+  alias vim=nvim
+  export EDITOR=nvim
+  export VISUAL=nvim
+fi
+
 # Git worktree helpers — `wt` (from dotfiles). oh-my-zsh already ran
 # compinit above, so the `compdef` inside this file works.
 [ -f "$HOME/.zsh_worktree" ] && source "$HOME/.zsh_worktree"
@@ -53,3 +62,11 @@ command -v starship >/dev/null && eval "$(starship init zsh)"
 #   ~/.zshrc.local  — tool PATHs that only exist on some devices (bun, etc.)
 [ -f "$HOME/.zshenv.local" ] && source "$HOME/.zshenv.local"
 [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
+
+# pnpm
+export PNPM_HOME="/home/simon/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+esac
+# pnpm end
