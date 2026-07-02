@@ -68,6 +68,5 @@
   "attribution": {
     "commit": "",
     "pr": ""
-  },
-  "model": "claude-fable-5[1m]"
+  }
 }
