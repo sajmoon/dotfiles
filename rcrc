@@ -1,2 +1,2 @@
-EXCLUDES="README.md install.sh laptop.base mac vim-cheat-sheet.md laptop.base laptop.local"
+EXCLUDES="README.md install.sh laptop.base mac vim-cheat-sheet.md laptop.base laptop.local AGENTS.md"
 DOTFILES_DIRS="$HOME/.dotfiles"
