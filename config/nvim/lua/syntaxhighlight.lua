@@ -1,74 +1,80 @@
-require('nvim-treesitter.configs').setup {
-  -- Install only parsers for languages you actually use
-  ensure_installed = {
-    -- Core languages
-    "javascript",
-    "typescript",
-    "tsx",
-    "jsdoc",
+-- nvim-treesitter 'main' branch + Neovim's built-in treesitter (Neovim 0.11+).
+-- Highlighting itself is provided by Neovim core (vim.treesitter.start); this
+-- plugin's job is to install parsers/queries for languages Neovim doesn't bundle.
 
-    -- Backend/Scripting
-    "bash",
-    "lua",
+local ok, ts = pcall(require, "nvim-treesitter")
+if not ok then
+  return
+end
 
-    -- Config/Data formats
-    "json",
-    "yaml",
-    "toml",
+ts.setup {}
 
-    -- Documentation
-    "markdown",
-    "markdown_inline",
+-- Parsers for the languages you actually use. Bundled parsers (lua, vim,
+-- vimdoc, markdown, bash, c, query, ...) already work without installing
+-- anything. The rest must be compiled, so only attempt installation when a C
+-- compiler is present — otherwise treesitter errors once per parser. Install
+-- build-essential to enable the rest.
+local languages = {
+  -- Core languages
+  "javascript",
+  "typescript",
+  "tsx",
+  "jsdoc",
 
-    -- Version control
-    "git_config",
-    "git_rebase",
-    "gitcommit",
-    "gitignore",
-    "gitattributes",
+  -- Backend/Scripting
+  "bash",
+  "lua",
 
-    -- IaC
-    "terraform",
-    "hcl",
+  -- Config/Data formats
+  "json",
+  "yaml",
+  "toml",
 
-    -- Vim
-    "vim",
-    "vimdoc",
+  -- Documentation
+  "markdown",
+  "markdown_inline",
 
-    -- Web/Markup
-    "html",
-    "css",
+  -- Version control
+  "git_config",
+  "git_rebase",
+  "gitcommit",
+  "gitignore",
+  "gitattributes",
 
-    -- Query language
-    "query",
-  },
+  -- IaC
+  "terraform",
+  "hcl",
 
-  -- Install languages synchronously (only applied to `ensure_installed`)
-  sync_install = false,
+  -- Vim
+  "vim",
+  "vimdoc",
 
-  -- List of parsers to ignore installing
-  ignore_install = { "phpdoc" },
+  -- Web/Markup
+  "html",
+  "css",
 
-  highlight = {
-    -- `false` will disable the whole extension
-    enable = true,
-
-    -- list of language that will be disabled
-    disable = { "c", "rust" },
-
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
-  },
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = "gnn",
-      node_incremental = "grn",
-      scope_incremental = "grc",
-      node_decremental = "grm",
-    },
-  },
+  -- Query language
+  "query",
 }
+
+local has_compiler = vim.fn.executable("cc") == 1
+  or vim.fn.executable("gcc") == 1
+  or vim.fn.executable("clang") == 1
+
+if has_compiler then
+  -- Async; a no-op for parsers that are already installed.
+  ts.install(languages)
+end
+
+-- Turn on treesitter highlighting for any buffer whose filetype has a parser
+-- available (bundled or installed). pcall makes it a no-op for filetypes with
+-- no parser, leaving Vim's regex syntax in place. c/rust stay on regex syntax.
+local disable = { c = true, rust = true }
+vim.api.nvim_create_autocmd("FileType", {
+  callback = function(args)
+    if disable[vim.bo[args.buf].filetype] then
+      return
+    end
+    pcall(vim.treesitter.start, args.buf)
+  end,
+})

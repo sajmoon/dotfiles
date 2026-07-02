@@ -7,6 +7,14 @@ local M = {}
 
 function M.setup()
   telescope.setup {
+    defaults = {
+      -- telescope 0.1.5's previewer uses nvim-treesitter's old `ft_to_lang`
+      -- API, removed in the 'main' branch -> previewer crash. Use regex
+      -- highlighting in previews instead (still colored, just not treesitter).
+      preview = {
+        treesitter = false,
+      },
+    },
     extensions = {
       fzf = {
         fuzzy = true,                    -- false will only do exact matching

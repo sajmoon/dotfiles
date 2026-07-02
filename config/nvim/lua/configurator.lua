@@ -13,5 +13,3 @@ require("git")
 require("lookandfeel")
 require("syntaxhighlight")
 require("navigation")
-
-require("aibuddy").setup()

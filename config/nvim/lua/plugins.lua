@@ -1,5 +1,5 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.uv.fs_stat(lazypath) then
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
   vim.fn.system({
     "git",
     "clone",
@@ -18,10 +18,13 @@ require("lazy").setup({
   { "ellisonleao/gruvbox.nvim" },
   { 'nvim-lualine/lualine.nvim' },
   -- 'flazz/vim-colorschemes',
-  'norcalli/nvim-colorizer.lua',
+  -- catgoose fork: norcalli's is unmaintained and calls the removed vim.tbl_flatten.
+  'catgoose/nvim-colorizer.lua',
 
   -- Treesitter
-  { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
+  -- 'main' branch: the only one supporting Neovim 0.11+/0.12 (master tops out
+  -- at 0.11). Uses the new API — see syntaxhighlight.lua.
+  { 'nvim-treesitter/nvim-treesitter', branch = 'main', build = ':TSUpdate' },
 
   -- Telescope
   {
@@ -105,8 +108,6 @@ require("lazy").setup({
     config = function(_, opts) require("lsp_signature").setup(opts) end
   },
 
-  -- Navigate with hop
-  { 'phaazon/hop.nvim', branch = 'v2' },
   { 'itchyny/vim-cursorword' },
     {
     "aaronik/treewalker.nvim",
@@ -160,41 +161,8 @@ require("lazy").setup({
   { 'janko-m/vim-test' },
 
 
-  {
-    "yetone/avante.nvim",
-    event = "VeryLazy",
-    lazy = false,
-    version = false,
-    build = "make",
-    dependencies = {
-      "stevearc/dressing.nvim",
-      "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-      "hrsh7th/nvim-cmp",
-      "nvim-tree/nvim-web-devicons",
-      {
-        "HakonHarnes/img-clip.nvim",
-        event = "VeryLazy",
-        opts = {
-          default = {
-            embed_image_as_base64 = false,
-            prompt_for_file_name = false,
-            drag_and_drop = {
-              insert_mode = true,
-            },
-            use_absolute_path = true,
-          },
-        },
-      },
-      {
-        'MeanderingProgrammer/render-markdown.nvim',
-        opts = {
-          file_types = { "Avante" },
-        },
-        ft = { "Avante" },
-      },
-    },
-  },
+  -- Icons for lualine/telescope/trouble (previously pulled in via avante)
+  { 'nvim-tree/nvim-web-devicons' },
 })
 
 
