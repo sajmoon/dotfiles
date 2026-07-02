@@ -1,11 +1,5 @@
 {
-  "effortLevel": "xhigh",
-  "skipWorkflowUsageWarning": true,
-  "theme": "auto",
-  "inputNeededNotifEnabled": true,
-  "agentPushNotifEnabled": true,
   "permissions": {
-    "defaultMode": "auto",
     "allow": [
       "Bash(gh pr view:*)",
       "Bash(gh pr list:*)",
@@ -63,6 +57,17 @@
       "mcp__claude_ai_Linear__list_issues",
       "mcp__claude_ai_Linear__get_project",
       "mcp__claude_ai_Linear__list_comments"
-    ]
-  }
+    ],
+    "defaultMode": "auto"
+  },
+  "effortLevel": "xhigh",
+  "skipWorkflowUsageWarning": true,
+  "theme": "auto",
+  "inputNeededNotifEnabled": true,
+  "agentPushNotifEnabled": true,
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "model": "claude-fable-5[1m]"
 }
