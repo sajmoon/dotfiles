@@ -279,6 +279,30 @@ wt() {
 }
 
 # =============================================================================
+# Claude Code integration
+# =============================================================================
+# A worktree's git database lives in the MAIN repo at .git/worktrees/<name>,
+# outside the worktree directory itself. So when Claude Code is launched from
+# inside .worktrees/<name>, that worktree is its workspace root and nearly
+# every git command (plus any read of the main checkout) reaches outside it,
+# triggering an "allow access to this directory?" prompt each time.
+#
+# This transparent wrapper detects when the cwd is a *linked* worktree and
+# pre-authorizes the main worktree root via --add-dir, which covers both
+# .git/worktrees/<name> and the main checkout. Keep typing `claude` as usual.
+
+claude() {
+  local -a extra
+  local main top
+  main=$(git worktree list 2>/dev/null | awk 'NR==1 {print $1}')
+  top=$(git rev-parse --show-toplevel 2>/dev/null)
+  if [[ -n "$main" && -n "$top" && "$main" != "$top" ]]; then
+    extra=(--add-dir "$main")
+  fi
+  command claude "${extra[@]}" "$@"
+}
+
+# =============================================================================
 # Completion
 # =============================================================================
 
