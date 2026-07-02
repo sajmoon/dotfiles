@@ -1,6 +1,4 @@
 # Agent Instructions
 
-Prefer high-quality software that is easy to maintain over quick wins. When
-there is a trade-off between shipping fast and producing something clean,
-robust, and maintainable, choose quality. Estimated time to completion should
-matter less than the quality of the result.
+- Prefer high-quality, maintainable software over quick wins; quality matters more than time to completion.
+- Never add LLM/AI attribution to commits (no `Co-Authored-By` or `Generated with …` trailers).
