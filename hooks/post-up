@@ -1,0 +1,9 @@
+#!/bin/sh
+# rcm EXCLUDES matches basenames, so nested AGENTS.md files can never be
+# linked by rcup while the top-level AGENTS.md is excluded. Link the
+# harness-global instruction files here instead.
+set -e
+
+mkdir -p "$HOME/.codex" "$HOME/.config/opencode"
+ln -sf "$HOME/.dotfiles/GLOBAL_AGENTS.md" "$HOME/.codex/AGENTS.md"
+ln -sf "$HOME/.dotfiles/GLOBAL_AGENTS.md" "$HOME/.config/opencode/AGENTS.md"

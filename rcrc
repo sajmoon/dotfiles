@@ -1,2 +1,2 @@
-EXCLUDES="README.md vim-cheat-sheet.md AGENTS.md"
+EXCLUDES="README.md vim-cheat-sheet.md AGENTS.md GLOBAL_AGENTS.md"
 DOTFILES_DIRS="$HOME/.dotfiles"
