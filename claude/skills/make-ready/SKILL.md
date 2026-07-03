@@ -1,6 +1,6 @@
 ---
 name: make-ready
-description: Get the current branch ready to push — parallel multi-agent review (security, code reuse, architecture, existing-pattern adherence, overengineering, correctness) over the pending diff, then /simplify, then push and shepherd through CI until green. Triggers on "make ready", "ready to push", "get this through CI".
+description: Get the current branch ready to push — parallel multi-agent review (security, code reuse, architecture, existing-pattern adherence, overengineering, correctness) over the pending diff, then /simplify, then make-pr to push and shepherd CI until green. Triggers on "make ready", "ready to push". For just push/PR/CI without the review, use make-pr.
 argument-hint: "[--auto] [--no-push] [scope notes]"
 ---
 
@@ -20,8 +20,6 @@ Arguments (`$ARGUMENTS`): `--auto` skips the pre-push approval; `--no-push` stop
 
 4. **Simplify** — run `/simplify` over the changes; sanity-check its edits.
 
-5. **Push** (unless `--no-push`) — commit, then push the feature branch fast-forward. Unless `--auto`, confirm before the first push.
-
-6. **CI** — watch via `gh` (PR checks, or the branch's latest run). On failure: read the failing logs, fix the root cause (never weaken tests or skip checks), push, re-watch; rerun flaky/infra failures instead of "fixing" them. Stop after ~3 cycles or a repeating failure and hand back. Report the final result + PR link.
+5. **PR & CI** (unless `--no-push`) — unless `--auto`, get a quick go-ahead before pushing anything; then invoke the `make-pr` skill (Skill tool) to commit, push, open the PR, and shepherd CI to green.
 
 Only the main agent edits — review agents never write. Never force-push or push to the default branch.
