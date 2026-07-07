@@ -14,9 +14,9 @@ Arguments (`$ARGUMENTS`): `--auto` skips the pre-push approval; `--no-push` stop
 
 1. **Scope** — diff everything not yet on the branch base (unpushed commits + working tree). Nothing to review → stop.
 
-2. **Review** — spawn read-only agents concurrently (one message), one per lens, each returning findings as `severity · file:line · problem · fix`. Lenses: security, code reuse / DRY, architecture, adherence to existing patterns, overengineering, correctness.
+2. **Review** — spawn read-only agents concurrently (one message), one per lens, each returning findings as `severity · file:line · problem · fix`. Lenses: security, code reuse / DRY, architecture, adherence to existing patterns, overengineering, correctness. In parallel, kick off an **external lens** the way the `codex-review` skill does — `codex review --base <base> -c model_reasoning_effort=low` in the background (Bash `run_in_background`; low effort so it actually finishes — its configured xhigh times out on a real branch). Best-effort, ~4 min cap: if codex isn't logged in, times out, or exits non-zero, note "codex review: skipped" and carry on. Never block the pipeline on it.
 
-3. **Triage & fix** — consolidate, rank, apply the clear fixes; flag judgment calls. Run quick local checks (tests / typecheck / lint) if available.
+3. **Triage & fix** — consolidate all lenses, including codex's (treat its comments as claims to verify against the diff, not gospel — drop the false positives), rank, apply the clear fixes; flag judgment calls. Run quick local checks (tests / typecheck / lint) if available.
 
 4. **Simplify** — run `/simplify` over the changes; sanity-check its edits.
 
