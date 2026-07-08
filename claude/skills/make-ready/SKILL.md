@@ -20,6 +20,6 @@ Arguments (`$ARGUMENTS`): `--auto` skips the pre-push approval; `--no-push` stop
 
 4. **Simplify** — run `/simplify` over the changes; sanity-check its edits.
 
-5. **PR & CI** (unless `--no-push`) — unless `--auto`, get a quick go-ahead before pushing anything; then invoke the `make-pr` skill (Skill tool) to commit, push, open the PR, and shepherd CI to green.
+5. **PR & CI** (unless `--no-push`) — unless `--auto`, get a quick go-ahead before pushing anything; then invoke the `make-pr` skill (Skill tool) to commit, push, open the PR, and shepherd CI to green. Ensure the PR title and body reflect the final reviewed-and-simplified change, not a stale summary — update an existing PR's description if the diff has moved on.
 
 Only the main agent edits — review agents never write. Never force-push or push to the default branch.
