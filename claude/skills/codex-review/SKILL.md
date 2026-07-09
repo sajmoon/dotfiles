@@ -12,8 +12,8 @@ Scope (`$ARGUMENTS`): explicit args win — `--base <branch>` reviews the whole 
 
 1. **Preflight** — `codex login status`; if not logged in, stop and tell the user to run `codex login`.
 
-2. **Run** — codex at its configured `xhigh` effort is far too slow to finish (a 27-line diff didn't complete in 120s; a whole branch timed out at 300s with nothing). Force low effort and a hard timeout so a stuck run can't hang the session:
-   `timeout 300 codex review <scope> -c model_reasoning_effort=low` with the scope chosen above. Capture codex's own exit code directly (`codex …; ec=$?`); don't wrap it so a trailing command masks the code. Expect ~1 min even on tiny diffs; larger scopes take proportionally longer.
+2. **Run** — run codex in the **background** (Bash `run_in_background`) so it isn't bound by the 10-min foreground limit, and wait for the completion notification. Use `high` effort: it's markedly more careful than low/medium (on a small diff it declined a false positive that medium reported as a P1) without the runaway slowness of the configured `xhigh` (which timed out at 300s on a whole branch). Backstop with a generous timeout so a stuck or wandering run can't linger:
+   `timeout 900 codex review <scope> -c model_reasoning_effort=high` with the scope chosen above. Run that bare as the background command — don't append `echo`/other commands, or a trailing success overwrites codex's real exit code (124 on timeout). Runtime is dominated by how much codex explores, not diff size — expect ~30s to several minutes.
 
 3. **On failure** — exit 124 (timeout) or any non-zero exit → report "codex review: timed out / unavailable" and stop. Never synthesize findings from codex's exploration trace.
 
