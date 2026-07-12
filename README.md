@@ -36,3 +36,22 @@ linked; after that a plain `rcup` works.
 - Gotcha: rcm's `EXCLUDES` matches basenames, so excluding the top-level
   `AGENTS.md` also excludes any nested file with that name — that's why the
   codex/opencode links live in the hook instead of being rcup-managed files.
+
+## Agent skills
+
+Skills are `<name>/SKILL.md` directories, and they live in one of two trees
+depending on which harnesses can actually run them:
+
+- `agents/skills/` — shared. Claude Code, Codex, and opencode all pick these
+  up. Add one, run `rcup`, done. Keep them free of harness-specific tools.
+- `claude/skills/` — Claude Code only, for skills that lean on its built-ins
+  (`/code-review`, `/simplify`, the `Skill` tool, `run_in_background`).
+
+`hooks/post-up` does the fan-out, because the two harnesses disagree about
+symlinks. Codex ignores a skill whose `SKILL.md` is a symlink but happily
+follows a symlinked directory, so the hook points `~/.agents/skills` (which
+Codex and opencode both scan) at `agents/skills` wholesale, and `agents/skills`
+is in `EXCLUDES` to keep rcup from file-linking it first. Claude Code reads
+only `~/.claude/skills` and does follow symlinked files, so the hook mirrors
+the shared tree in file by file, leaving room for the Claude-only skills rcup
+links into the same directory.

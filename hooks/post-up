@@ -7,3 +7,41 @@ set -e
 mkdir -p "$HOME/.codex" "$HOME/.config/opencode"
 ln -sf "$HOME/.dotfiles/GLOBAL_AGENTS.md" "$HOME/.codex/AGENTS.md"
 ln -sf "$HOME/.dotfiles/GLOBAL_AGENTS.md" "$HOME/.config/opencode/AGENTS.md"
+
+skills="$HOME/.dotfiles/agents/skills"
+agents_skills="$HOME/.agents/skills"
+
+if [ ! -d "$skills" ]; then
+  echo "post-up: $skills is missing" >&2
+  exit 1
+fi
+
+# Codex and opencode both scan ~/.agents/skills. Codex ignores a skill whose
+# SKILL.md is a symlink but does follow a symlinked directory, so rcup's
+# file-level linking cannot reach it (hence agents/skills in EXCLUDES) — link
+# the directory itself.
+mkdir -p "$HOME/.agents"
+[ -L "$agents_skills" ] || rmdir "$agents_skills" 2>/dev/null || true
+if [ -e "$agents_skills" ] && [ ! -L "$agents_skills" ]; then
+  echo "post-up: $agents_skills is not a symlink; move it aside and re-run" >&2
+  exit 1
+fi
+ln -sfn "$skills" "$agents_skills"
+
+# Claude Code reads only ~/.claude/skills, where rcup already links the
+# Claude-only skills. Mirror the shared tree in file by file rather than
+# symlinking the directory on top of them.
+# First prune links whose source is gone (skill deleted or moved), then
+# drop directories that emptied out.
+claude_skills="$HOME/.claude/skills"
+if [ -d "$claude_skills" ]; then
+  find "$claude_skills" -type l | while read -r link; do
+    [ -e "$link" ] || rm "$link"
+  done
+  find "$claude_skills" -mindepth 1 -type d -empty -delete
+fi
+find "$skills" -type f | while read -r src; do
+  dest="$HOME/.claude/skills/${src#"$skills"/}"
+  mkdir -p "$(dirname "$dest")"
+  ln -sf "$src" "$dest"
+done
