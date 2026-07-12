@@ -12,18 +12,20 @@
 
 [commit]
   template = ~/.gitmessage
+  verbose = true
 
 [grep]
   lineNumber = true
 
 [alias]
+  # remove all branches that have already been merged
   delete-merged-branches-master = "!git co master && git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
   delete-merged-branches-main = "!git co main && git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
+  delete-merged-branches-develop = "!git co develop && git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
   s = status -s
   a = add
   master = checkout master
   ci = commit
-  commit = commit -v
   co = checkout
   blog = for-each-ref --sort='authordate:iso8601' --format=' %(authordate:relative)%09%(refname:short)' refs/heads
 
@@ -34,10 +36,6 @@
   lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
   ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
 
-  # remove all branches that has already been merged
-  delete-merged-branches-master = "!git co master && git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
-  delete-merged-branches-develop = "!git co develop && git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
-
 [push]
   default = current
 	autoSetupRemote = true
@@ -45,22 +43,10 @@
 [url "https://"]
   insteadOf = git://
 
-[include]
-  path = .gitconfig.local
-
-[filter "media"]
-  required = true
-  clean = git media clean %f
-  smudge = git media smudge %f
-
 [filter "lfs"]
   required = true
   clean = git-lfs clean %f
   smudge = git-lfs smudge %f
-
-[diff]
-  compactionHeuristic = true
-
 [difftool]
   tool = nvimdiff
 [merge]
@@ -73,8 +59,12 @@
 [help]
   autocorrect = 1
 [credential "https://github.com"]
-	helper = 
-	helper = !/usr/bin/gh auth git-credential
+	helper =
+	helper = !gh auth git-credential
 [credential "https://gist.github.com"]
-	helper = 
-	helper = !/usr/bin/gh auth git-credential
+	helper =
+	helper = !gh auth git-credential
+
+# Machine-local overrides (~/.gitconfig.local) — kept last so they win.
+[include]
+  path = .gitconfig.local
