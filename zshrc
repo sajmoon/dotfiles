@@ -62,11 +62,3 @@ command -v starship >/dev/null && eval "$(starship init zsh)"
 #   ~/.zshrc.local  — tool PATHs that only exist on some devices (bun, etc.)
 [ -f "$HOME/.zshenv.local" ] && source "$HOME/.zshenv.local"
 [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
-
-# pnpm
-export PNPM_HOME="/home/simon/.local/share/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME/bin:"*) ;;
-  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
-esac
-# pnpm end
