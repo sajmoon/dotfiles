@@ -279,27 +279,40 @@ wt() {
 }
 
 # =============================================================================
-# Claude Code integration
+# Agent harness integration (Claude Code, Codex)
 # =============================================================================
 # A worktree's git database lives in the MAIN repo at .git/worktrees/<name>,
-# outside the worktree directory itself. So when Claude Code is launched from
+# outside the worktree directory itself. So when an agent is launched from
 # inside .worktrees/<name>, that worktree is its workspace root and nearly
-# every git command (plus any read of the main checkout) reaches outside it,
-# triggering an "allow access to this directory?" prompt each time.
+# every git command (plus any read of the main checkout) reaches outside it —
+# Claude Code prompts "allow access to this directory?" and Codex's sandbox
+# escalates every write to the shared git metadata for approval.
 #
-# This transparent wrapper detects when the cwd is a *linked* worktree and
-# pre-authorizes the main worktree root via --add-dir, which covers both
-# .git/worktrees/<name> and the main checkout. Keep typing `claude` as usual.
+# Both CLIs take --add-dir, so these transparent wrappers detect when the cwd
+# is a *linked* worktree and pre-authorize the main worktree root, which
+# covers both .git/worktrees/<name> and the main checkout. Keep typing
+# `claude` / `codex` as usual.
+
+# Print the main worktree root, only when cwd is inside a linked worktree.
+_wt_linked_main() {
+  local main top
+  main=$(_wt_main)
+  top=$(_wt_root)
+  [[ -n "$main" && -n "$top" && "$main" != "$top" ]] && echo "$main"
+}
 
 claude() {
   local -a extra
-  local main top
-  main=$(git worktree list 2>/dev/null | awk 'NR==1 {print $1}')
-  top=$(git rev-parse --show-toplevel 2>/dev/null)
-  if [[ -n "$main" && -n "$top" && "$main" != "$top" ]]; then
-    extra=(--add-dir "$main")
-  fi
+  local main
+  main=$(_wt_linked_main) && extra=(--add-dir "$main")
   command claude "${extra[@]}" "$@"
+}
+
+codex() {
+  local -a extra
+  local main
+  main=$(_wt_linked_main) && extra=(--add-dir "$main")
+  command codex "${extra[@]}" "$@"
 }
 
 # =============================================================================
