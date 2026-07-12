@@ -1,0 +1,4 @@
+# Claude Code writes session-local state (the /model choice) into
+# settings.json through the ~/.claude symlink; strip it on stage so the
+# model pin can never be committed. Filter defined in gitconfig.
+claude/settings.json filter=claude-settings

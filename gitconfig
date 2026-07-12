@@ -47,6 +47,13 @@
   required = true
   clean = git-lfs clean %f
   smudge = git-lfs smudge %f
+
+# Strips the machine/session-local model pin that Claude Code writes into
+# the dotfiles repo's claude/settings.json (see its .gitattributes).
+[filter "claude-settings"]
+  required = true
+  clean = jq 'del(.model)'
+  smudge = cat
 [difftool]
   tool = nvimdiff
 [merge]
