@@ -1,11 +1,7 @@
-vim/bundle/*
 *.swp
-vim/.netrwhist
-vim/tags/*
 tags
 
 *.local
-mac
 
 # global gitignore ignores .claude/ wholesale; track only the project CLAUDE.md
 !.claude/
