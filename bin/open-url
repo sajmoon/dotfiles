@@ -1,0 +1,17 @@
+#!/bin/sh
+# Open each URL argument with whatever this machine has:
+# open (macOS), xdg-open (Linux desktop), wslview / explorer.exe (WSL).
+# explorer.exe returns non-zero even on success, hence the || true.
+
+if command -v open >/dev/null 2>&1; then opener=open
+elif command -v xdg-open >/dev/null 2>&1; then opener=xdg-open
+elif command -v wslview >/dev/null 2>&1; then opener=wslview
+elif command -v explorer.exe >/dev/null 2>&1; then opener=explorer.exe
+else
+  echo "open-url: no URL opener found" >&2
+  exit 1
+fi
+
+for url in "$@"; do
+  "$opener" "$url" || true
+done
