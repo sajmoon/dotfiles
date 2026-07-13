@@ -6,6 +6,10 @@ end
 local luasnip = require('luasnip')
 local lspkind = require('lspkind')
 
+-- Supermaven's inline suggestion, accepted from the <Tab> mapping below.
+-- Guarded so completion still loads if the plugin is absent.
+local ok_sm, supermaven = pcall(require, "supermaven-nvim.completion_preview")
+
 vim.opt.completeopt = "menu,menuone,noselect"
 
 -- Load snippets from SnipMate format
@@ -23,7 +27,6 @@ cmp.setup({
     { name = "treesitter" },
     { name = "emoji" },
     { name = "path" },
-    { name = "copilot" },
   }, {
     { name = 'buffer' },
   }),
@@ -44,9 +47,12 @@ cmp.setup({
     ['<CR>'] = cmp.mapping.confirm({
       select = true,
     }),
-    -- Tab to jump to next snippet placeholder
+    -- Tab, in priority order: accept Supermaven's inline suggestion → pick the
+    -- next cmp item → jump to the next snippet placeholder → plain <Tab>.
     ['<Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
+      if ok_sm and supermaven.has_suggestion and supermaven.has_suggestion() then
+        supermaven.on_accept_suggestion()
+      elseif cmp.visible() then
         cmp.select_next_item()
       elseif luasnip.expand_or_jumpable() then
         luasnip.expand_or_jump()

@@ -116,11 +116,18 @@ require("lazy").setup({
     }
   },
 
-  { "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
+  -- Supermaven: AI inline (ghost-text) completion. Acceptance is wired into
+  -- the <Tab> mapping in completion.lua, so disable_keymaps stops it grabbing
+  -- Tab itself. Run :SupermavenUseFree once to activate the free tier.
+  -- NOTE: Supermaven was acquired by Cursor and is being sunset (free Neovim
+  -- inference continues for now). Stopgap — the <Tab> chain is engine-agnostic,
+  -- so swapping in Copilot / minuet-ai later is a one-plugin change.
+  { "supermaven-inc/supermaven-nvim",
     event = "InsertEnter",
     config = function()
-      require("copilot").setup({})
+      require("supermaven-nvim").setup({
+        disable_keymaps = true,
+      })
     end,
   },
 
