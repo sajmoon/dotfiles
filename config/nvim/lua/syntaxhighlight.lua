@@ -11,9 +11,11 @@ ts.setup {}
 
 -- Parsers for the languages you actually use. Bundled parsers (lua, vim,
 -- vimdoc, markdown, bash, c, query, ...) already work without installing
--- anything. The rest must be compiled, so only attempt installation when a C
--- compiler is present — otherwise treesitter errors once per parser. Install
--- build-essential to enable the rest.
+-- anything. The 'main' branch compiles the rest by shelling out to the
+-- tree-sitter CLI, which in turn needs a C compiler — so only attempt
+-- installation when both are present, otherwise treesitter errors once per
+-- parser. To enable the rest: `npm install -g tree-sitter-cli` (or
+-- `brew install tree-sitter`) plus build-essential for the compiler.
 local languages = {
   -- Core languages
   "javascript",
@@ -60,8 +62,9 @@ local languages = {
 local has_compiler = vim.fn.executable("cc") == 1
   or vim.fn.executable("gcc") == 1
   or vim.fn.executable("clang") == 1
+local has_cli = vim.fn.executable("tree-sitter") == 1
 
-if has_compiler then
+if has_cli and has_compiler then
   -- Async; a no-op for parsers that are already installed.
   ts.install(languages)
 end
