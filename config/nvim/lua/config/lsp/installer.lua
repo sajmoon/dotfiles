@@ -51,6 +51,19 @@ function M.setup(opts)
       function(server_name)
         require('lspconfig')[server_name].setup({})
       end,
+      -- TypeScript/JavaScript: complete a called function with its argument
+      -- placeholders (foo(arg1, arg2), tab through them). Needs snippet-capable
+      -- capabilities so tsserver actually returns the call as a snippet.
+      ["ts_ls"] = function()
+        require('lspconfig').ts_ls.setup({
+          capabilities = require('cmp_nvim_lsp').default_capabilities(),
+          settings = {
+            completions = {
+              completeFunctionCalls = true,
+            },
+          },
+        })
+      end,
     },
   })
 
