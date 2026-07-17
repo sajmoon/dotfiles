@@ -35,6 +35,7 @@ function M.setup(opts)
       "ts_ls",           -- TypeScript/JavaScript
       "lua_ls",          -- Lua
       "vimls",           -- VimScript
+      "elixirls",        -- Elixir (needs elixir/erlang on PATH to run)
 
       -- Shell/IaC
       "bashls",          -- Bash

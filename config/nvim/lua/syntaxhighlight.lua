@@ -27,6 +27,11 @@ local languages = {
   "bash",
   "lua",
 
+  -- Elixir (heex/eex cover Phoenix templates)
+  "elixir",
+  "heex",
+  "eex",
+
   -- Config/Data formats
   "json",
   "yaml",
