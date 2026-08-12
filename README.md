@@ -18,7 +18,8 @@ linked; after that a plain `rcup` works.
 
 - A file `foo` in this repo is linked to `~/.foo`: `zshrc` → `~/.zshrc`,
   `claude/settings.json` → `~/.claude/settings.json`, `config/nvim/...` →
-  `~/.config/nvim/...`, `bin/...` → `~/.bin/...`.
+  `~/.config/nvim/...`, `config/opencode/...` → `~/.config/opencode/...`,
+  `bin/...` → `~/.bin/...`.
 - Linking is file-level: directories are created for real and each file inside
   is a symlink. After adding a file to the repo, re-run `rcup` to link it.
 - To adopt an existing file from `$HOME` into the repo, use `mkrc ~/.somefile`.
@@ -54,4 +55,14 @@ Codex and opencode both scan) at `agents/skills` wholesale, and `agents/skills`
 is in `EXCLUDES` to keep rcup from file-linking it first. Claude Code reads
 only `~/.claude/skills` and does follow symlinked files, so the hook mirrors
 the shared tree in file by file, leaving room for the Claude-only skills rcup
-links into the same directory.
+ links into the same directory.
+
+## OpenCode agents
+
+- `config/opencode/agent/cheap-builder.md` — DeepSeek V4 Flash via OpenRouter
+  for well-scoped implementation work.
+- `config/opencode/agent/gpt-builder.md` — GPT for complex or high-risk
+  implementation work.
+- Use a primary agent to plan and review. Delegate implementation with
+  `@cheap-builder` or `@gpt-builder`. OpenRouter and OpenAI credentials are
+  configured separately with `/connect` and are not stored in this repo.
