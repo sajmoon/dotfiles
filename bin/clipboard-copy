@@ -1,0 +1,22 @@
+#!/bin/sh
+# Copy stdin to the system clipboard with whatever this machine has:
+# pbcopy (macOS), clip.exe (WSL), wl-copy / xclip (Linux desktop).
+#
+# clip.exe is looked up by absolute path as well as on PATH: tmux runs this
+# with the server's PATH, which on WSL usually lacks the /mnt/c Windows
+# interop entries that an interactive login shell gets.
+
+if command -v pbcopy >/dev/null 2>&1; then
+  exec pbcopy
+elif command -v clip.exe >/dev/null 2>&1; then
+  exec clip.exe
+elif [ -x /mnt/c/Windows/System32/clip.exe ]; then
+  exec /mnt/c/Windows/System32/clip.exe
+elif command -v wl-copy >/dev/null 2>&1; then
+  exec wl-copy
+elif command -v xclip >/dev/null 2>&1; then
+  exec xclip -selection clipboard
+fi
+
+echo "clipboard-copy: no clipboard tool found" >&2
+exit 1
