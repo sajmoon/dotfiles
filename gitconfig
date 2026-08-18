@@ -75,3 +75,5 @@
 # Machine-local overrides (~/.gitconfig.local) — kept last so they win.
 [include]
   path = .gitconfig.local
+[pull]
+	ff = only
