@@ -30,8 +30,8 @@ source $ZSH/oh-my-zsh.sh
 
 # ── User configuration ─────────────────────────────────────────────
 
-# PATH: user-local bins (zoxide, language toolchains, etc.)
-export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+# PATH: dotfile-managed and user-local bins (zoxide, language toolchains, etc.)
+export PATH="$HOME/.bin:$HOME/.local/bin:$HOME/bin:$PATH"
 
 # Editor: always Neovim. Alias vi/vim so muscle memory never opens the
 # stock vi/vim, and point EDITOR/VISUAL at it for git, fc, etc.
