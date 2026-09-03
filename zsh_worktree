@@ -30,6 +30,13 @@
 #                    current worktree and force-delete its branch (same as
 #                    `wt rm` on the worktree you're standing in). Use when
 #                    you're finished with a worktree and want it gone.
+#   wt clean [-y] [days] [--risky-days N]
+#                    Remove stale worktrees. A worktree is stale when neither
+#                    its branch nor its files have been touched for `days`
+#                    (default 14); one holding uncommitted changes or unpushed
+#                    commits gets a longer grace period (--risky-days, default
+#                    days + 7). Worktrees a running process sits in are always
+#                    kept. Prints a plan and removes nothing unless -y/--yes.
 #   wt take <name>   From root: remove a named worktree and check out its
 #                    branch here. Refuses if root has uncommitted changes.
 #   wt send [name]   Dual-mode:
@@ -91,11 +98,35 @@ _wt_sync() {
   fi
 }
 
+# Age in whole days since the worktree was last touched: the newer of its
+# last commit and the newest file mtime in the tree (.git excluded).
+_wt_age_days() {
+  local dir="$1" commit_ts file_ts newest
+  commit_ts=$(git -C "$dir" log -1 --format=%ct 2>/dev/null)
+  file_ts=$(find "$dir" -name .git -prune -o -type f -printf '%T@\n' 2>/dev/null \
+    | sort -rn | head -1)
+  file_ts="${file_ts%%.*}"
+  newest=$(( commit_ts > file_ts ? commit_ts : file_ts ))
+  print -r -- $(( ($(date +%s) - newest) / 86400 ))
+}
+
+# True if a running process has its cwd inside $1 — someone is standing in
+# this worktree right now. Linux only; elsewhere the glob is empty and no
+# worktree is ever reported as in use.
+_wt_in_use() {
+  local dir="$1" link cwd
+  for link in /proc/[0-9]*/cwd(N); do
+    cwd=$(readlink "$link" 2>/dev/null) || continue
+    [[ "$cwd" == "$dir" || "$cwd" == "$dir"/* ]] && return 0
+  done
+  return 1
+}
+
 wt() {
   local cmd="$1"
 
   if [[ -z "$cmd" ]]; then
-    echo "Usage: wt <new|get|go|ls|root|rm|done|take|send> [name]"
+    echo "Usage: wt <new|get|go|ls|root|rm|clean|done|take|send> [name]"
     return 1
   fi
 
@@ -295,6 +326,88 @@ wt() {
       echo "→ done with '${target:t}', back at root"
       ;;
 
+    clean)
+      local yes=0 days=14 risky_days=""
+      shift
+      while [[ "$1" == -* ]]; do
+        case "$1" in
+          -y|--yes) yes=1; shift ;;
+          --risky-days) risky_days="$2"; shift 2 ;;
+          *) echo "wt clean: unknown flag '$1'"; return 1 ;;
+        esac
+      done
+      [[ -n "$1" ]] && days="$1"
+      : ${risky_days:=$(( days + 7 ))}
+
+      local main
+      main=$(_wt_main) || { echo "wt: not inside a git repository"; return 1 }
+      git -C "$main" worktree prune
+
+      local -a dirs doomed
+      dirs=("$main"/.worktrees/*(N/))
+      if (( ${#dirs} == 0 )); then
+        echo "wt: no worktrees"
+        return 0
+      fi
+
+      local dir name branch age dirty unpushed state action limit
+      printf '%-28s %5s  %-22s %s\n' WORKTREE AGE STATE ACTION
+      for dir in "${dirs[@]}"; do
+        git -C "$dir" rev-parse --is-inside-work-tree &>/dev/null || continue
+        name="${dir:t}"
+        age=$(_wt_age_days "$dir")
+
+        dirty=0
+        [[ -n "$(git -C "$dir" status --porcelain)" ]] && dirty=1
+        # Commits reachable from HEAD but from no remote-tracking ref: work
+        # that exists only here.
+        unpushed=$(git -C "$dir" rev-list --count HEAD --not --remotes 2>/dev/null)
+
+        if (( dirty && unpushed )); then
+          state="dirty, $unpushed unpushed"
+        elif (( dirty )); then
+          state="dirty"
+        elif (( unpushed )); then
+          state="$unpushed unpushed"
+        else
+          state="clean"
+        fi
+
+        limit=$(( dirty || unpushed ? risky_days : days ))
+        if _wt_in_use "$dir"; then
+          action="keep (in use)"
+        elif (( age >= limit )); then
+          action="REMOVE"
+          doomed+=("$dir")
+        else
+          action="keep (< ${limit}d)"
+        fi
+        printf '%-28s %4dd  %-22s %s\n' "$name" "$age" "$state" "$action"
+      done
+
+      if (( ${#doomed} == 0 )); then
+        echo
+        echo "nothing to clean"
+        return 0
+      fi
+
+      if (( ! yes )); then
+        echo
+        echo "dry run — nothing removed. Re-run as 'wt clean${1:+ $1} --yes' to remove ${#doomed} worktree(s)."
+        return 0
+      fi
+
+      echo
+      for dir in "${doomed[@]}"; do
+        branch=$(git -C "$dir" rev-parse --abbrev-ref HEAD 2>/dev/null)
+        git -C "$main" worktree remove --force "$dir" || continue
+        if [[ -n "$branch" && "$branch" != "HEAD" ]]; then
+          git -C "$main" branch -D "$branch" 2>/dev/null
+        fi
+      done
+      echo "→ removed ${#doomed} worktree(s)"
+      ;;
+
     take)
       local name="$2"
       if [[ -z "$name" ]]; then
@@ -369,7 +482,7 @@ wt() {
 
     *)
       echo "wt: unknown subcommand '$cmd'"
-      echo "Usage: wt <new|get|go|ls|root|rm|done|take|send> [name]"
+      echo "Usage: wt <new|get|go|ls|root|rm|clean|done|take|send> [name]"
       return 1
       ;;
 
@@ -432,6 +545,7 @@ _wt() {
         'ls[list all worktrees]' \
         'root[cd to the main worktree]' \
         'rm[remove a worktree and its branch]' \
+        'clean[remove worktrees untouched for N days (dry run unless -y)]' \
         'done[remove the current worktree and its branch, return to root]' \
         'take[pull a worktree branch back into root]' \
         'send[move branch to worktree (from root), or to root (from worktree)]'
