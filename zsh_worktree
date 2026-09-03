@@ -7,8 +7,15 @@
 # gitignore_global so it won't pollute any repo's history.
 #
 # Subcommands:
-#   wt new [name]    Create a worktree + branch and cd into it.
+#   wt new [name]    Create a worktree + NEW branch and cd into it.
 #                    Omit name to get a timestamped throwaway: tmp-YYYYMMDDHHMMSS
+#   wt get [-f] <branch>
+#                    Adopt an EXISTING branch (e.g. one a cloud agent pushed).
+#                    Fetches origin, then puts the branch in .worktrees/<branch
+#                    with slashes flattened to dashes> and cds there. Idempotent:
+#                    run it again later and it just cds in and fast-forwards.
+#                    Refuses if the local branch has diverged from origin;
+#                    -f/--force resets it to origin instead.
 #   wt go <name>     cd into an existing worktree (you move, work stays).
 #   wt ls            List all worktrees for the current repo.
 #   wt root          cd to the main worktree (the original repo root).
@@ -35,6 +42,7 @@
 # Tab completion:
 #   wt <TAB>              → subcommands
 #   wt go/rm/take <TAB>   → existing worktree names from .worktrees/
+#   wt get <TAB>          → local and origin branch names
 # =============================================================================
 
 _wt_main() {
@@ -49,11 +57,45 @@ _wt_default_branch() {
   git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's|refs/remotes/origin/||' || echo main
 }
 
+# Path of the worktree that has branch $1 checked out, if any.
+_wt_branch_worktree() {
+  local branch="$1" wt_path="" line
+  while IFS= read -r line; do
+    case "$line" in
+      worktree\ *) wt_path="${line#worktree }" ;;
+      branch\ refs/heads/"$branch") print -r -- "$wt_path"; return 0 ;;
+    esac
+  done < <(git worktree list --porcelain)
+  return 1
+}
+
+# Fast-forward the current worktree onto origin/<branch>, or report divergence.
+_wt_sync() {
+  local branch="$1" force="$2"
+  local head_sha remote_sha base
+  head_sha=$(git rev-parse HEAD) || return 1
+  remote_sha=$(git rev-parse "origin/$branch") || return 1
+  [[ "$head_sha" == "$remote_sha" ]] && return 0
+
+  base=$(git merge-base HEAD "origin/$branch")
+  if [[ "$base" == "$head_sha" ]]; then
+    git merge --ff-only "origin/$branch"
+  elif (( force )); then
+    git reset --hard "origin/$branch"
+  else
+    echo "wt: local '$branch' has diverged from origin/$branch"
+    echo "    commits here that origin does not have:"
+    git --no-pager log --oneline "origin/$branch..HEAD" | sed 's/^/      /'
+    echo "    re-run as 'wt get -f $branch' to discard them and reset to origin"
+    return 1
+  fi
+}
+
 wt() {
   local cmd="$1"
 
   if [[ -z "$cmd" ]]; then
-    echo "Usage: wt <new|go|ls|root|rm|done|take|send> [name]"
+    echo "Usage: wt <new|get|go|ls|root|rm|done|take|send> [name]"
     return 1
   fi
 
@@ -70,6 +112,60 @@ wt() {
       cd "$dir"
       ;;
 
+    get)
+      local force=0
+      shift
+      while [[ "$1" == -* ]]; do
+        case "$1" in
+          -f|--force) force=1; shift ;;
+          *) echo "wt get: unknown flag '$1'"; return 1 ;;
+        esac
+      done
+      local branch="${1#refs/heads/}"
+      branch="${branch#origin/}"
+      if [[ -z "$branch" ]]; then
+        echo "Usage: wt get [-f|--force] <branch>"
+        return 1
+      fi
+
+      local main
+      main=$(_wt_main) || { echo "wt: not inside a git repository"; return 1 }
+
+      # Refresh the remote-tracking ref. Not fatal: the branch may be local-only.
+      git fetch --quiet origin "+refs/heads/${branch}:refs/remotes/origin/${branch}" 2>/dev/null
+
+      local has_local=0 has_remote=0
+      git show-ref --verify --quiet "refs/heads/$branch" && has_local=1
+      git show-ref --verify --quiet "refs/remotes/origin/$branch" && has_remote=1
+
+      if (( ! has_local && ! has_remote )); then
+        echo "wt: branch '$branch' not found locally or on origin"
+        return 1
+      fi
+
+      # One worktree per branch: reuse the existing one, wherever it is.
+      local dir
+      dir=$(_wt_branch_worktree "$branch")
+      if [[ -z "$dir" ]]; then
+        dir="$main/.worktrees/${branch//\//-}"
+        if [[ -e "$dir" ]]; then
+          echo "wt: '$dir' exists but is not a worktree for '$branch'"
+          return 1
+        fi
+        if (( has_local )); then
+          git worktree add "$dir" "$branch" || return 1
+        else
+          git worktree add --track -b "$branch" "$dir" "origin/$branch" || return 1
+        fi
+      elif [[ "$dir" == "$main" ]]; then
+        echo "wt: '$branch' is checked out in the main worktree"
+      fi
+
+      cd "$dir" || return 1
+      echo "→ $dir"
+      (( has_remote )) && _wt_sync "$branch" "$force"
+      ;;
+
     go)
       local name="$2"
       if [[ -z "$name" ]]; then
@@ -80,6 +176,8 @@ wt() {
       local main
       main=$(_wt_main) || { echo "wt: not inside a git repository"; return 1 }
       local wt_dir="$main/.worktrees/$name"
+      # Accept a branch name too: wt get flattens slashes to dashes.
+      [[ ! -d "$wt_dir" ]] && wt_dir="$main/.worktrees/${name//\//-}"
 
       if [[ ! -d "$wt_dir" ]]; then
         echo "wt: worktree '$name' not found"
@@ -271,7 +369,7 @@ wt() {
 
     *)
       echo "wt: unknown subcommand '$cmd'"
-      echo "Usage: wt <new|go|ls|root|rm|take|send> [name]"
+      echo "Usage: wt <new|get|go|ls|root|rm|done|take|send> [name]"
       return 1
       ;;
 
@@ -329,6 +427,7 @@ _wt() {
     cmd)
       _values 'subcommand' \
         'new[create a new worktree and branch, cd into it]' \
+        'get[adopt an existing branch into a worktree, cd into it]' \
         'go[cd into an existing worktree]' \
         'ls[list all worktrees]' \
         'root[cd to the main worktree]' \
@@ -343,6 +442,11 @@ _wt() {
         main=$(_wt_main 2>/dev/null) || return
         local dir="$main/.worktrees"
         [[ -d "$dir" ]] && _values 'worktree' "$dir"/*(N:t)
+      elif [[ $words[2] == get ]]; then
+        local -a branches
+        branches=(${(f)"$(git for-each-ref --format='%(refname:strip=2)' \
+          refs/heads refs/remotes/origin 2>/dev/null)"})
+        _values 'branch' ${branches:#HEAD}
       fi
       ;;
   esac
