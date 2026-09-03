@@ -1,0 +1,6 @@
+# herdr configuration — see `herdr --default-config` for every option.
+
+[keys]
+# tmux keeps the default ctrl+b prefix; herdr takes ctrl+a so the two nest
+# without fighting over the same key.
+prefix = "ctrl+a"
