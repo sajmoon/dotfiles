@@ -6,3 +6,6 @@
 prefix = "ctrl+a"
 split_vertical = "prefix+%"
 split_horizontal = 'prefix+"'
+previous_agent = "prefix+comma"
+next_agent = "prefix+."
+focus_agent = "prefix+alt+1..9"
