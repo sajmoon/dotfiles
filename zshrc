@@ -33,6 +33,19 @@ source $ZSH/oh-my-zsh.sh
 # PATH: dotfile-managed and user-local bins (zoxide, language toolchains, etc.)
 export PATH="$HOME/.bin:$HOME/.local/bin:$HOME/bin:$PATH"
 
+# Herdr has no native WSL clipboard backend. Make it use the xclip adapter in
+# ~/.bin, which forwards pane-aware copies to the Windows clipboard.
+if [[ -n ${WSL_DISTRO_NAME:-} ]]; then
+  herdr() {
+    DISPLAY=herdr-windows-clipboard command herdr "$@"
+  }
+
+  # Do not expose the clipboard-only DISPLAY value to pane applications.
+  if [[ ${HERDR_ENV:-} == 1 && ${DISPLAY:-} == herdr-windows-clipboard ]]; then
+    unset DISPLAY
+  fi
+fi
+
 # Editor: always Neovim. Alias vi/vim so muscle memory never opens the
 # stock vi/vim, and point EDITOR/VISUAL at it for git, fc, etc.
 if command -v nvim >/dev/null 2>&1; then

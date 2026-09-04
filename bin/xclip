@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# Herdr's Linux clipboard backend only tries xclip when DISPLAY is set. In
+# WSL, send Herdr's pane-aware selections to the Windows clipboard instead.
+if [ "${DISPLAY:-}" = "herdr-windows-clipboard" ]; then
+  case " $* " in
+    *" -out "*|*" -o "*)
+      exec "$HOME/.bin/powershell.exe" -NoProfile -NonInteractive -Command \
+        '[Console]::OutputEncoding = [System.Text.UTF8Encoding]::new($false); [Console]::Out.Write((Get-Clipboard -Raw))'
+      ;;
+    *)
+      exec "$HOME/.bin/clipboard-copy"
+      ;;
+  esac
+fi
+
+exec /usr/bin/xclip "$@"
