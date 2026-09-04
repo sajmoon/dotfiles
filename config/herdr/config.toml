@@ -4,3 +4,5 @@
 # tmux keeps the default ctrl+b prefix; herdr takes ctrl+a so the two nest
 # without fighting over the same key.
 prefix = "ctrl+a"
+split_vertical = "prefix+%"
+split_horizontal = 'prefix+"'
