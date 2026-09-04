@@ -1,15 +1,24 @@
+onboarding = false
 # herdr configuration — see `herdr --default-config` for every option.
+
+[theme]
+# Matches the TokyoNight scheme in alacritty.yml.
+name = "tokyo-night"
 
 [ui]
 agent_panel_sort = "priority"
 
 [keys]
-# tmux keeps the default ctrl+b prefix; herdr takes ctrl+a so the two nest
-# without fighting over the same key.
-prefix = "ctrl+a"
+# Herdr uses ctrl+b as its command prefix.
+prefix = "ctrl+b"
 split_vertical = "prefix+%"
 split_horizontal = 'prefix+"'
 previous_agent = "prefix+comma"
 next_agent = "prefix+."
 focus_agent = "prefix+1..9"
 switch_tab = "prefix+alt+1..9"
+
+# Worktrees, grouped with the default new_worktree = "prefix+shift+g",
+# to mirror the `wt new` / `wt go` / `wt rm` trio in zsh_worktree.
+open_worktree = "prefix+shift+o"
+remove_worktree = "prefix+shift+m"
